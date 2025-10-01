@@ -79,6 +79,14 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// Configure Kestrel server options
+builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestHeadersTotalSize = 32768; // 32KB
+    options.Limits.MaxRequestHeaderCount = 100;
+    options.Limits.MaxRequestLineSize = 8192;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

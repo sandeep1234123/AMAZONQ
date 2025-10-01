@@ -4,19 +4,18 @@
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
+        <div class="col-md-5">
+            <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4><i class="fas fa-desktop me-2"></i>Application 1</h4>
-                    <small>Business Application Portal</small>
+                    <h3><i class="fas fa-desktop me-2"></i>Application 1</h3>
+                    <p class="mb-0">Business Management Portal</p>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <div class="text-center mb-4">
-                        <i class="fas fa-lock fa-3x text-primary mb-3"></i>
-                        <h5>SSO Not Active</h5>
-                        <p class="text-muted">Please authenticate to access Application 1</p>
+                        <i class="fas fa-user-circle fa-4x text-primary mb-3"></i>
+                        <h5>Login to Application 1</h5>
                     </div>
-                    
+
                     <form method="post" action="/Home/AuthenticateApp1">
                         <div class="mb-3">
                             <label class="form-label">
@@ -38,7 +37,7 @@
                             </button>
                         </div>
                     </form>
-                    
+
                     <div class="text-center">
                         <div class="divider my-3">
                             <span class="text-muted">OR</span>
@@ -48,30 +47,13 @@
                             <i class="fas fa-link me-2"></i>Use SSO Portal
                         </a>
                     </div>
-                    
-                    <hr class="my-4">
-                    
-                    <div class="row text-center">
-                        <div class="col-4">
-                            <i class="fas fa-chart-bar fa-2x text-info mb-2"></i>
-                            <small class="d-block">Analytics</small>
-                        </div>
-                        <div class="col-4">
-                            <i class="fas fa-users fa-2x text-success mb-2"></i>
-                            <small class="d-block">User Management</small>
-                        </div>
-                        <div class="col-4">
-                            <i class="fas fa-cog fa-2x text-warning mb-2"></i>
-                            <small class="d-block">Settings</small>
-                        </div>
-                    </div>
                 </div>
-                <div class="card-footer text-center">
+                
+                <div class="card-footer text-center bg-light">
                     <small class="text-muted">
-                        <a href="http://localhost:5000" class="text-decoration-none">
+                        <a href="http://localhost:5000" class="text-decoration-none me-3">
                             <i class="fas fa-home me-1"></i>SSO Portal
                         </a>
-                        |
                         <a href="http://localhost:5102" class="text-decoration-none">
                             <i class="fas fa-desktop me-1"></i>Application 2
                         </a>
@@ -95,8 +77,23 @@
         border-radius: 15px;
     }
     
-    .card-header {
-        border-radius: 15px 15px 0 0 !important;
+    .divider {
+        position: relative;
+    }
+    
+    .divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #dee2e6;
+    }
+    
+    .divider span {
+        background: white;
+        padding: 0 15px;
     }
     
     .btn:hover {

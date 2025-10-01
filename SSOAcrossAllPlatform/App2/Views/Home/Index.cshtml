@@ -1,8 +1,101 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Application 2 - Login";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white text-center">
+                    <h4><i class="fas fa-chart-line me-2"></i>Application 2</h4>
+                    <small>Analytics & Reporting Portal</small>
+                </div>
+                <div class="card-body">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="alert alert-success text-center">
+                            <i class="fas fa-check-circle fa-2x mb-2"></i>
+                            <h5>Welcome back!</h5>
+                            <p>You are already logged in via SSO</p>
+                            <a href="@Url.Action("Dashboard")" class="btn btn-success">
+                                <i class="fas fa-chart-bar me-1"></i>Go to Dashboard
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center mb-4">
+                            <i class="fas fa-lock fa-3x text-info mb-3"></i>
+                            <h5>Secure Login Required</h5>
+                            <p class="text-muted">Please authenticate to access Application 2</p>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <a href="@Url.Action("Login")" class="btn btn-info btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login via SSO Portal
+                            </a>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-shield-alt me-1"></i>
+                                Secured by Single Sign-On
+                            </small>
+                        </div>
+                    }
+                    
+                    <hr class="my-4">
+                    
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <i class="fas fa-chart-pie fa-2x text-primary mb-2"></i>
+                            <small class="d-block">Reports</small>
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-download fa-2x text-success mb-2"></i>
+                            <small class="d-block">Export Data</small>
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-calendar fa-2x text-warning mb-2"></i>
+                            <small class="d-block">Scheduling</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">
+                        <a href="http://localhost:5000" class="text-decoration-none">
+                            <i class="fas fa-home me-1"></i>SSO Portal
+                        </a>
+                        |
+                        <a href="http://localhost:5101" class="text-decoration-none">
+                            <i class="fas fa-desktop me-1"></i>Application 1
+                        </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        min-height: 100vh;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+</style>

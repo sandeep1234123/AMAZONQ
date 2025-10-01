@@ -1,0 +1,142 @@
+@{
+    ViewData["Title"] = "Application 2 - Home";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0"><i class="fas fa-home me-2"></i>Application 2 - Home</h4>
+                        <small>SSO Active - Welcome @(User.Identity?.Name ?? "User")</small>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("Dashboard")" class="btn btn-outline-light btn-sm me-2">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                        <a href="http://localhost:5000" class="btn btn-outline-light btn-sm me-2">
+                            <i class="fas fa-home me-1"></i>SSO Portal
+                        </a>
+                        <a href="@Url.Action("Logout")" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- SSO Status -->
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>SSO Session Active</strong> - You are automatically logged in via Single Sign-On
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-chart-pie fa-2x mb-2"></i>
+                                    <h4>2,156</h4>
+                                    <small>Reports Generated</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-download fa-2x mb-2"></i>
+                                    <h4>$125,890</h4>
+                                    <small>Data Exported</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-calendar fa-2x mb-2"></i>
+                                    <h4>48</h4>
+                                    <small>Scheduled Tasks</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-users fa-2x mb-2"></i>
+                                    <h4>87%</h4>
+                                    <small>User Engagement</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card border-info">
+                                <div class="card-body">
+                                    <h6><i class="fas fa-user me-2"></i>User Information</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><strong>Name:</strong> @(User.Identity?.Name ?? "N/A")</li>
+                                        <li><strong>Email:</strong> @(User.FindFirst("email")?.Value ?? "N/A")</li>
+                                        <li><strong>Roles:</strong> @string.Join(", ", User.FindAll(System.Security.Claims.ClaimTypes.Role).Select(c => c.Value))</li>
+                                        <li><strong>Login Time:</strong> @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-success">
+                                <div class="card-body">
+                                    <h6><i class="fas fa-key me-2"></i>Keycloak Details</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><strong>Realm:</strong> sso-realm</li>
+                                        <li><strong>Client:</strong> app2-client</li>
+                                        <li><strong>Server:</strong> http://localhost:8080</li>
+                                        <li><strong>Status:</strong> <span class="badge bg-success">Connected</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card border-info">
+                                <div class="card-body text-center">
+                                    <h6><i class="fas fa-network-wired me-2"></i>Application Navigation</h6>
+                                    <div class="btn-group" role="group">
+                                        <a href="http://localhost:5101" class="btn btn-outline-primary">
+                                            <i class="fas fa-desktop me-1"></i>Application 1
+                                        </a>
+                                        <button class="btn btn-info" disabled>
+                                            <i class="fas fa-desktop me-1"></i>Application 2 (Current)
+                                        </button>
+                                        <a href="http://localhost:5000" class="btn btn-outline-secondary">
+                                            <i class="fas fa-home me-1"></i>SSO Portal
+                                        </a>
+                                    </div>
+                                    <div class="mt-3">
+                                        <small class="text-muted">
+                                            <i class="fas fa-shield-alt me-1"></i>
+                                            Seamless switching between applications with Single Sign-On
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body { background-color: #f8f9fa; }
+    .card { border: none; border-radius: 10px; }
+    .btn:hover { transform: translateY(-2px); transition: all 0.3s ease; }
+</style>

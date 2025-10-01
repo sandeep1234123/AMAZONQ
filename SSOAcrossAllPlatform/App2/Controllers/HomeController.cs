@@ -18,38 +18,46 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public async Task<IActionResult> Index(string? ssoToken)
+    public IActionResult Index(string? ssoToken, string? error)
     {
-        // Check if user is already authenticated - show dashboard directly
+        // If user is already authenticated via Keycloak SSO, show App2 home page directly
         if (User.Identity?.IsAuthenticated == true)
         {
-            return RedirectToAction("Dashboard");
+            return View("App2Home");
         }
 
-        // Check for SSO token from common login
-        if (!string.IsNullOrEmpty(ssoToken))
+        // If there was an authentication error (silent auth failed), show login page
+        if (!string.IsNullOrEmpty(error))
         {
-            var isValidToken = await ValidateSSOToken(ssoToken);
-            if (isValidToken)
-            {
-                // Redirect to Keycloak for silent authentication
-                return Challenge(new AuthenticationProperties
-                {
-                    RedirectUri = Url.Action("Dashboard"),
-                    Parameters = { { "prompt", "none" } }
-                }, OpenIdConnectDefaults.AuthenticationScheme);
-            }
+            return View();
         }
 
-        // If no SSO token and not authenticated, redirect to CommonLogin
-        return Redirect("http://localhost:5000");
+        // Try silent authentication to check for active SSO session
+        return Challenge(new AuthenticationProperties
+        {
+            RedirectUri = Url.Action("Index"),
+            Parameters = { { "prompt", "none" } }
+        }, OpenIdConnectDefaults.AuthenticationScheme);
     }
 
     public IActionResult Login()
     {
-        // Redirect to common login page
-        var commonLoginUrl = _configuration["SSOSettings:CommonLoginUrl"];
-        return Redirect(commonLoginUrl);
+        // Show App2 login page
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult AuthenticateApp2(string username, string password)
+    {
+        // Simple hardcoded authentication for App2
+        if (username == "app2user" && password == "App2Pass123")
+        {
+            // Create local session and redirect to App2 Dashboard
+            return RedirectToAction("Dashboard");
+        }
+        
+        ViewBag.Error = "Invalid username or password";
+        return View("Login");
     }
 
     [Authorize]

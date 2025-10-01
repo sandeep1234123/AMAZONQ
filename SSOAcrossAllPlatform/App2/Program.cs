@@ -38,6 +38,20 @@ builder.Services.AddAuthentication(options =>
     options.Scope.Add("roles");
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = true;
+    
+    options.Events = new OpenIdConnectEvents
+    {
+        OnRemoteFailure = context =>
+        {
+            if (context.Failure?.Message.Contains("login_required") == true ||
+                context.Failure?.Message.Contains("interaction_required") == true)
+            {
+                context.Response.Redirect("/Home/Index?error=sso_not_active");
+                context.HandleResponse();
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
 builder.Services.AddAuthorization(options =>

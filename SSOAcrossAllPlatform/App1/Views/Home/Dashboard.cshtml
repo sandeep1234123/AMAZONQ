@@ -105,10 +105,81 @@
                         </div>
                     </div>
 
+                    <!-- Dummy Stats -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-users fa-2x mb-2"></i>
+                                    <h4>1,247</h4>
+                                    <small>Active Users</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+                                    <h4>$89,432</h4>
+                                    <small>Revenue</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+                                    <h4>342</h4>
+                                    <small>Orders</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                    <h4>94%</h4>
+                                    <small>Growth</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Keycloak Details -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0"><i class="fas fa-key me-2"></i>Keycloak Authentication Details</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul class="list-unstyled">
+                                                <li><strong>Realm:</strong> sso-realm</li>
+                                                <li><strong>Client ID:</strong> app1-client</li>
+                                                <li><strong>Auth Server:</strong> http://localhost:8080</li>
+                                                <li><strong>Token Issuer:</strong> @(User.FindFirst("iss")?.Value ?? "N/A")</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul class="list-unstyled">
+                                                <li><strong>Session ID:</strong> @(User.FindFirst("sid")?.Value ?? "N/A")</li>
+                                                <li><strong>Token Type:</strong> Bearer</li>
+                                                <li><strong>Auth Method:</strong> OpenID Connect</li>
+                                                <li><strong>SSO Status:</strong> <span class="badge bg-success">Active</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Quick Actions -->
                     <div class="row">
                         <div class="col-md-3 mb-3">
-                            <div class="card bg-primary text-white">
+                            <div class="card bg-gradient-primary text-white">
                                 <div class="card-body text-center">
                                     <i class="fas fa-plus fa-2x mb-2"></i>
                                     <h5>Create</h5>
@@ -117,7 +188,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <div class="card bg-success text-white">
+                            <div class="card bg-gradient-success text-white">
                                 <div class="card-body text-center">
                                     <i class="fas fa-edit fa-2x mb-2"></i>
                                     <h5>Manage</h5>
@@ -126,7 +197,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <div class="card bg-warning text-white">
+                            <div class="card bg-gradient-warning text-white">
                                 <div class="card-body text-center">
                                     <i class="fas fa-chart-pie fa-2x mb-2"></i>
                                     <h5>Reports</h5>
@@ -135,7 +206,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <div class="card bg-info text-white">
+                            <div class="card bg-gradient-info text-white">
                                 <div class="card-body text-center">
                                     <i class="fas fa-cog fa-2x mb-2"></i>
                                     <h5>Settings</h5>
