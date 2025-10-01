@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Application 3 Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Application 3</h1>
+    <p class="lead">You are successfully authenticated via SSO!</p>
+    
+    <div class="mt-4">
+        <a asp-action="Dashboard" class="btn btn-primary btn-lg">Go to Dashboard</a>
+        <a asp-action="Features" class="btn btn-outline-primary btn-lg">View Features</a>
+    </div>
+    
+    <div class="mt-5">
+        <h3>SSO Navigation</h3>
+        <p>Navigate to other applications without re-authentication:</p>
+        <div class="btn-group" role="group">
+            <a href="http://localhost:5000" class="btn btn-outline-secondary">Common Login</a>
+            <a href="http://localhost:5101" class="btn btn-outline-info">Application 1</a>
+            <a href="http://localhost:5102" class="btn btn-outline-success">Application 2</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container">
+    <h2>@ViewBag.AppName Dashboard</h2>
+    
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>User Information</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> @ViewBag.UserName</p>
+                    <p><strong>Email:</strong> @ViewBag.Email</p>
+                    <p><strong>User ID:</strong> @ViewBag.UserId</p>
+                    <p><strong>Roles:</strong> 
+                        @if (ViewBag.Roles != null)
+                        {
+                            @string.Join(", ", ViewBag.Roles)
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Quick Actions</h4>
+                </div>
+                <div class="card-body">
+                    <a asp-action="Features" class="btn btn-primary mb-2 w-100">App3 Features</a>
+                    <a href="http://localhost:5000" class="btn btn-outline-secondary mb-2 w-100">Common Login</a>
+                    <a href="http://localhost:5101" class="btn btn-outline-info mb-2 w-100">Go to App1</a>
+                    <a href="http://localhost:5102" class="btn btn-outline-success mb-2 w-100">Go to App2</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
