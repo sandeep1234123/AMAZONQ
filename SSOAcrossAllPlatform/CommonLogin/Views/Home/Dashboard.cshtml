@@ -21,7 +21,10 @@
                         <div class="alert alert-danger">@ViewBag.Error</div>
                     }
                     
-                    <h5 class="mb-4">Your Authorized Applications</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0">Switch Between Applications</h5>
+                        <span class="badge bg-success">SSO Active</span>
+                    </div>
                     
                     @if (ViewBag.Applications != null && ((List<CommonLogin.Controllers.ApplicationInfo>)ViewBag.Applications).Any())
                     {
@@ -35,9 +38,10 @@
                                             <h5 class="card-title">@app.DisplayName</h5>
                                             <p class="card-text text-muted">Access your application with single sign-on</p>
                                             <a href="@Url.Action("AccessApp", new { appName = app.Name })" 
-                                               class="btn btn-primary">
-                                                <i class="fas fa-external-link-alt me-1"></i>Launch App
+                                               class="btn btn-primary btn-lg w-100">
+                                                <i class="fas fa-rocket me-2"></i>Switch to @app.DisplayName
                                             </a>
+                                            <small class="text-muted mt-2 d-block">Single Sign-On Enabled</small>
                                         </div>
                                     </div>
                                 </div>
@@ -58,20 +62,32 @@
                         <div class="col-md-6">
                             <h6>Session Information</h6>
                             <ul class="list-unstyled">
-                                <li><strong>User ID:</strong> @User.FindFirst("sub")?.Value</li>
-                                <li><strong>Email:</strong> @ViewBag.Email</li>
-                                <li><strong>Roles:</strong> @string.Join(", ", User.FindAll(System.Security.Claims.ClaimTypes.Role).Select(c => c.Value))</li>
+                                <li><strong>User ID:</strong> @(User.FindFirst("sub")?.Value ?? "N/A")</li>
+                                <li><strong>Username:</strong> @(User.FindFirst("preferred_username")?.Value ?? ViewBag.UserName)</li>
+                                <li><strong>Email:</strong> @(ViewBag.Email ?? "N/A")</li>
+                                <li><strong>First Name:</strong> @(User.FindFirst("given_name")?.Value ?? "N/A")</li>
+                                <li><strong>Last Name:</strong> @(User.FindFirst("family_name")?.Value ?? "N/A")</li>
+                                <li><strong>Roles:</strong> @(User.FindAll(System.Security.Claims.ClaimTypes.Role).Any() ? string.Join(", ", User.FindAll(System.Security.Claims.ClaimTypes.Role).Select(c => c.Value)) : "No roles assigned")</li>
+                                <li><strong>Session Started:</strong> @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <h6>SSO Status</h6>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center mb-3">
                                 <i class="fas fa-check-circle text-success fa-2x me-2"></i>
                                 <div>
                                     <strong>Active Session</strong><br>
                                     <small class="text-muted">Single Sign-On is active across all applications</small>
                                 </div>
                             </div>
+                            <h6>Keycloak Details</h6>
+                            <ul class="list-unstyled small">
+                                <li><strong>Authority:</strong> http://localhost:8080/realms/sso-realm</li>
+                                <li><strong>Client ID:</strong> common-login</li>
+                                <li><strong>Token Issuer:</strong> @(User.FindFirst("iss")?.Value ?? "N/A")</li>
+                                <li><strong>Audience:</strong> @(User.FindFirst("aud")?.Value ?? "N/A")</li>
+                                <li><strong>Auth Time:</strong> @(User.FindFirst("auth_time")?.Value != null ? DateTimeOffset.FromUnixTimeSeconds(long.Parse(User.FindFirst("auth_time").Value)).ToString("yyyy-MM-dd HH:mm:ss") : "N/A")</li>
+                            </ul>
                         </div>
                     </div>
                 </div>

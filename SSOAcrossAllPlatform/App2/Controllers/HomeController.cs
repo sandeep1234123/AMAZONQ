@@ -20,10 +20,10 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index(string? ssoToken)
     {
-        // Check if user is already authenticated
+        // Check if user is already authenticated - show dashboard directly
         if (User.Identity?.IsAuthenticated == true)
         {
-            return View("Dashboard");
+            return RedirectToAction("Dashboard");
         }
 
         // Check for SSO token from common login
@@ -41,7 +41,8 @@ public class HomeController : Controller
             }
         }
 
-        return View();
+        // If no SSO token and not authenticated, redirect to CommonLogin
+        return Redirect("http://localhost:5000");
     }
 
     public IActionResult Login()
@@ -51,13 +52,14 @@ public class HomeController : Controller
         return Redirect(commonLoginUrl);
     }
 
-    [Authorize(Policy = "App2Access")]
+    [Authorize]
     public IActionResult Dashboard()
     {
-        ViewBag.UserName = User.Identity?.Name;
-        ViewBag.Email = User.FindFirst("email")?.Value;
+        ViewBag.UserName = User.Identity?.Name ?? User.FindFirst("preferred_username")?.Value ?? "Unknown User";
+        ViewBag.Email = User.FindFirst("email")?.Value ?? "No email";
         ViewBag.Roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
         ViewBag.AppName = "Application 2";
+        ViewBag.UserId = User.FindFirst("sub")?.Value;
         
         return View();
     }

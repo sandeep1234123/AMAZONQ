@@ -1,0 +1,108 @@
+@{
+    ViewData["Title"] = "Application 2 Reports";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0"><i class="fas fa-file-alt me-2"></i>Application 2 Reports</h4>
+                        <small>Comprehensive reporting dashboard</small>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("Dashboard")" class="btn btn-outline-light btn-sm me-2">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                        </a>
+                        <a href="http://localhost:5000" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-home me-1"></i>SSO Portal
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Advanced Analytics</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="advancedChart" width="400" height="150"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-download fa-3x text-primary mb-3"></i>
+                                    <h5>Export Data</h5>
+                                    <p class="text-muted">Download reports in various formats</p>
+                                    <button class="btn btn-primary">Download CSV</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-calendar fa-3x text-success mb-3"></i>
+                                    <h5>Schedule Reports</h5>
+                                    <p class="text-muted">Automated report generation</p>
+                                    <button class="btn btn-success">Schedule</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-warning">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-share fa-3x text-warning mb-3"></i>
+                                    <h5>Share Reports</h5>
+                                    <p class="text-muted">Collaborate with team members</p>
+                                    <button class="btn btn-warning">Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<script>
+// Advanced Chart
+const advancedCtx = document.getElementById('advancedChart').getContext('2d');
+new Chart(advancedCtx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+            label: 'Revenue',
+            data: [65000, 59000, 80000, 81000, 56000, 55000, 70000, 85000, 90000, 75000, 82000, 95000],
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            tension: 0.4
+        }, {
+            label: 'Expenses',
+            data: [28000, 48000, 40000, 19000, 86000, 27000, 45000, 55000, 60000, 45000, 52000, 65000],
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
