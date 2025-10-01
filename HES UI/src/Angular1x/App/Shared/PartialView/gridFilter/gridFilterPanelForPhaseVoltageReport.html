@@ -1,0 +1,189 @@
+<div class="row">
+    <table style="float: right;">
+        <tr>
+            <td style="padding-left: 10px;"></td>
+            <td style="text-align: left;width: 10%;">
+                <h4 style="color:#afacac">{{ 'Menu.PeriodOfInterest' |
+                    translate}}</h4>
+            </td>
+            <td style="padding-left: 10px;border-left: 3px solid;"></td>
+            <td  style="text-align: left;padding-bottom: 15px;border-right: 3px solid;">
+                <h4 style="color:#afacac">{{
+                    filter.filterTitle |translate}}</h4>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="padding-right: 10px;">
+                <div style="display: inline;">
+                    <ul class="dashBoardDateRangePicker dashboardDatePickerMargin">
+                        <li>
+                            <a style="width: 175px;" href="javascript:;" class="btn btn-greensea no-border"
+                                ng-hide="false" aria-hidden="false">
+                                <input id="daterange" type="daterange" min-date="{{filter.minimumDate}}"
+                                    max-date={{filter.maximumDate}} readonly="readonly" ng-change="setDate()"
+                                    ng-model="filter.date" ranges="ranges"
+                                    class="rnagePickerinput ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched"
+                                    format={{filter.calendarFormat}} aria-invalid="false">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td style=" border-left: 3px solid;
+            padding-left: 105px;
+        "> </td>
+            <td style="border-right: 3px solid;">
+
+                <div class="container">
+                    <div class="box" style="margin-left: 15px;">
+                        <div class="labelStyle ng-binding" style="
+                text-align: left; ">{{filter.voltageRating}} V</div><br>
+                        <div style="
+                margin-top: -26px;
+                font-size: 12px;
+                text-align: left;
+                color: #333;
+            ">Voltage Rating</div>
+                    </div>
+
+                    <div class="box custom-container" style="padding: 0px !important;border:2px solid green;""> 
+                        <label class=" custom-label">{{ 'Menu.Normal' |translate}}</label>
+
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: justify;"
+                                    disabled="true" ng-model="filter.phaseVoltage.Negative.Normal" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container"
+                                style="border-right: 1px solid #007bff;border-left: 1px solid #007bff;">
+                                <input class="placeholderInput custom-textbox" step="1" min="0"
+                                    ng-attr-max="{{getMaxValue(filter.acceptable)}}" ng-model="filter.normal" type="number"
+                                    ng-change="inputElementFocus(filter.normal,'normal')" ng-blur="inputElementBlur(filter.normal,'normal')"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: end;" disabled="true"
+                                    ng-model="filter.phaseVoltage.Positive.Normal" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box custom-container" style="padding: 0px !important;border:2px solid yellow;"">
+                        <label class=" custom-label">{{ 'Menu.Acceptable' |translate}}</label>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: justify;"
+                                    disabled="true" ng-model="filter.phaseVoltage.Negative.Acceptable" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container"
+                                style="border-right: 1px solid #007bff;border-left: 1px solid #007bff;">
+                                <input class="placeholderInput custom-textbox" step="1" ng-attr-min="{{getMinValue(filter.normal)}}"
+                                    ng-attr-max="{{getMaxValue(filter.notAcceptable)}}" ng-model="filter.acceptable" type="number"
+                                    ng-change="inputElementFocus(filter.acceptable,'acceptable')" ng-blur="inputElementBlur(filter.acceptable,'acceptable')"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: end;" disabled="true"
+                                    ng-model="filter.phaseVoltage.Positive.Acceptable" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box  custom-container" style="padding: 0px !important;border:2px solid orange;"">
+                        <label class=" custom-label">{{ 'Menu.NotAcceptable' |translate}}</label>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox" style="text-align: justify;"
+                                    disabled="true" ng-model="filter.phaseVoltage.Negative.NotAcceptable" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container"
+                                style="border-right: 1px solid #007bff;border-left: 1px solid #007bff;">
+                                <input class="placeholderInput custom-textbox" step="1"
+                                    ng-attr-min="{{getMinValue(filter.acceptable)}}" max="100" ng-model="filter.notAcceptable"
+                                    type="number" ng-change="inputElementFocus(filter.notAcceptable,'notacceptable')" ng-blur="inputElementBlur(filter.notAcceptable,'notAcceptable')"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox" style="text-align: end;" disabled="true"
+                                    ng-model="filter.phaseVoltage.Positive.NotAcceptable" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="shift" style="padding-left: 15px;width: 10%;"> <button style="margin-right: 0px; " type="button"
+                    class="btn btn-primary applyButton" ng-click="applyFilter()">{{
+                    'Menu.Apply' |translate}}</button>
+                <button type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' |
+                    translate}}</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        /* Use flexbox to create a horizontal layout */
+    }
+
+    .box {
+        width: 20%;
+        /* Set the width of each div */
+        height: 20%;
+        /* Set the height of each div */
+    }
+</style>
+<style>
+    .custom-container {
+        position: relative;
+        margin-left: 30px !important;
+        border-radius: 5px;
+    }
+
+    .custom-label {
+        position: absolute;
+        top: -12px;
+        left: 10px;
+        background-color: white;
+        padding: 0 5px;
+        font-weight: normal;
+        font-size: 12px;
+        color: #333;
+    }
+
+    .custom-textbox {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+
+    .labelStyle {
+        font-size: 20px;
+    }
+
+    .rnagePickerinput.daterangepicker {
+        position: absolute !important;
+    }
+
+    .panelColorClass {
+        background: white !important
+    }
+</style>

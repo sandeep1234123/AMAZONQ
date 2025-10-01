@@ -1,0 +1,28 @@
+﻿<div layout="column">
+    <!--<label>{{'Menu.MeterNumber' | translate}}<span class="error" style="font-size:medium"> &nbsp;*</span></label>-->  
+    <md-content class="md-padding">
+        <md-autocomplete ng-disabled="ctrl.isDisabled"
+                         md-no-cache="ctrl.noCache"
+                         md-selected-item="ctrl.selectedItem"
+                         md-search-text="ctrl.searchText"
+                         md-selected-item-change="ctrl.selectedItemChange(item)"
+                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                         md-item-text="item.display"
+                         md-min-length="0"
+                         md-menu-class="autoCompleteTextBox"
+                         placeholder="{{ctrl.placeholder}}"
+                         md-require-match = "true"
+                         md-select-on-match = "true">
+            <md-item-template>
+                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+            </md-item-template>
+            <md-not-found>
+                No match Found
+            </md-not-found>
+        </md-autocomplete> 
+    </md-content>
+    <p class="help-block">
+        <span class="error" ng-if="ctrl.isValid">{{ctrl.errormessage}}</span>
+        <span class="error" ng-if="ctrl.isRangeValid">{{ctrl.rangeerrormessage}}</span>
+    </p>
+</div>

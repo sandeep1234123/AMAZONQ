@@ -1,0 +1,167 @@
+﻿<style>
+  .menu .pageheader .page-bar .page-breadcrumb>li:first-child {
+    padding-left: 0px !important;
+    margin-right: 0px !important;
+  }
+</style>
+<div style="padding: 0px;" ng-controller="FeederDetailsTabCtrl" class="page page-datatables page-chat">
+  <div class="pagecontent">
+    <div class="col-md-12" style="display: inline; background: white;padding-top: 15px;padding-left: 0px;">
+      <div class="col-md-4">
+        <div class="container">
+          <div class="image-div">
+            <img src='../../../../Angular1x/images/Tag2.png'>
+          </div>
+          <div class="content-div">
+            <span class="headerStyle">
+              <nobr>{{originalDeviceName}}</nobr>
+            </span>
+          </div>
+          <div class="image-div">
+            <img src='../../../../Angular1x/images/Tag3.png'>
+          </div>
+        </div>
+      </div>
+      <div ng-if="showHierarchy" class="col-md-6">
+      <ul class="hierarchy">
+        <div ng-repeat="hierarchy in hierarchyDetils">
+          <li style="display: inline-block;">
+            <i class="setStyle" ng-class="hierarchy.Icon"></i>
+            {{hierarchy.LevelName}}
+          </li>
+          <li ng-if="hierarchyDetils.length!=hierarchy.Level" style="display: inline-block;"
+            class="fa fa-angle-right setAngleStyle arrowStyle"></li>
+        </div>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-12 table-custom menu" style="padding-top: 0px;">
+    <div class="pageheader">
+      <div class="page-bar">
+        <ul class="nav-left page-breadcrumb" style="padding-top: 15px;">
+          <li ng-repeat="tab in FeederDetailsTabs track by $index">
+            <a ng-if="$index!=3" href="javascript:;" ng-click="tabClick(tab,$index)"
+              ng-class="selectedTabId === $index ? 'selected-outer-tab':'' ">{{tab.title}}</a>
+          </li>
+
+          <li ng-click="tabClick(FeederDetailsTabs[3],3)">
+            <a href="javascript:;" ng-class="selectedTabId === 3 ? 'selected-outer-tab':'' ">
+              {{FeederDetailsTabs[3].title}}
+              <i style="padding-left: 15px;font-size: 20px;" id="downArrow" class="fa fa-caret-down "></i>
+              <i style="padding-left: 15px;font-size: 20px; display: none;" id="upArrow" class="fa fa-caret-up"></i>
+            </a>
+          </li>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="javascript:;" ng-repeat="tab in ReportsTabs track by $index"
+              ng-click="selectReportClick(tab,$index)"
+              ng-class="selectedTabReportId === $index ? 'selected-report-tab':'' ">{{tab.title}}</a>
+          </div>
+
+        </ul>
+        <ul ng-show="showRefresh" class="pull-right page-breadcrumb" style="padding-top: 15px;">
+          <li style="padding-top: 7px;">
+            <i class="glyphicon glyphicon-refresh gridFilterIcon button-success" style="color: green;margin-top: 5px;"
+              title="{{ 'Menu.Refresh' | translate}}" ng-click="refresh()"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div style="border-top: 2px solid #42c2e9;  margin: 0px;margin-top: -10px;" class="col-md-12 horizontal-line ">
+  </div>
+
+</div>
+</div>
+
+<style>
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    left: 23%;
+    top: 64px;
+    color: #42c2e9 !important;
+    border-bottom: 7px solid;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    cursor: pointer;
+  }
+
+
+  .dropdown-content a {
+    color: #95a2a9;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown a:hover {
+    background-color: #ddd;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .selected-report-tab {
+    background-color: #F5F5F5 !important;
+    color: #42C2E9 !important;
+    border-radius: 4px;
+    padding: 7px;
+  }
+
+  .selectedTabReportId {
+    border: 1px solid red;
+  }
+</style>
+<style>
+  .hierarchy {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+  }
+
+  .hierarchy li {
+    margin-right: 10px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .hierarchy li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .setStyle {
+    font-weight: 900;
+    margin-right: 10px;
+    color: #007bff;
+    /* You can change the color here */
+  }
+
+  .setAngleStyle {
+    font-weight: 900;
+    margin-right: 10px;
+    color: black;
+  }
+
+  .arrowStyle {
+    border-radius: 0px !important;
+    background-color: white !important;
+    box-shadow: none !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    margin-right: 10px !important;
+  }
+</style>

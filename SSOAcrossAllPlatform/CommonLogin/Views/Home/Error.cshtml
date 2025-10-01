@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "SSO Error";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white text-center">
+                    <h3><i class="fas fa-exclamation-triangle me-2"></i>Authentication Error</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <h5><i class="fas fa-times-circle me-2"></i>Connection Failed</h5>
+                        <p>Unable to connect to Keycloak authentication server.</p>
+                    </div>
+                    
+                    <h6>Possible Issues:</h6>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">
+                            <i class="fas fa-server text-danger me-2"></i>
+                            Keycloak server is not running on port 8080
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-cog text-warning me-2"></i>
+                            Incorrect realm or client configuration
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-network-wired text-info me-2"></i>
+                            Network connectivity issues
+                        </li>
+                    </ul>
+                    
+                    <h6>Quick Fix Steps:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">1. Start Keycloak</h6>
+                                    <code>cd keycloak-23.0.7<br>bin\kc.bat start-dev --http-port=8080</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">2. Verify Connection</h6>
+                                    <a href="http://localhost:8080" target="_blank" class="btn btn-sm btn-primary">
+                                        Test Keycloak
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-center">
+                        <a href="@Url.Action("Index")" class="btn btn-primary me-2">
+                            <i class="fas fa-redo me-1"></i>Try Again
+                        </a>
+                        <a href="http://localhost:8080" target="_blank" class="btn btn-outline-secondary">
+                            <i class="fas fa-external-link-alt me-1"></i>Open Keycloak Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #dc3545 0%, #6f42c1 100%);
+        min-height: 100vh;
+    }
+    
+    .card {
+        border-radius: 15px;
+    }
+    
+    code {
+        background: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 4px;
+        display: block;
+        font-size: 0.9rem;
+    }
+</style>

@@ -1,0 +1,57 @@
+<tr ng-if="vm.data.rowData.length > 0" class="{{record.rowClass}} {{($index % 2)==0? ' evenRow': ' oddRow'}}" ng-repeat="record in vm.data.rowData | filter : vm.search() | orderBy:vm.propertyName:vm.reverse| startFrom:currentPage*pageSize
+    | limitTo:pageSize track by $index ">
+    <td ng-if="vm.data.isShowSrNo " style="text-align: right;" class="numericColumn"> {{vm.srNumber+$index}}</td>
+
+    <td style="vertical-align: middle;text-align: left;">{{record[vm.data.headingData[0].name]}}</td>
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[1].name]}}</td>
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[2].name]}}</td>
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[3].name]}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[4].name],'0.00')}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[5].name],'0.00')}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[6].name],'0.00')}}</td>
+    <td class="vertical-align: middle;">{{FormatData(record[vm.data.headingData[7].name],'datetime')}}</td>
+
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[8].name],'0.00')}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[9].name],'0.00')}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[10].name],'0.00')}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[11].name],'0.00')}}</td>
+
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[12].name],'0.00')}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[13].name],'0.00')}}</td>
+    <td class="numericColumn">{{FormatData(record[vm.data.headingData[14].name],'0.00')}}</td>
+
+    <td class="numericColumn">{{record[vm.data.headingData[15].name]}}</td>
+    <td class="numericColumn">{{record[vm.data.headingData[16].name]}}</td>
+    <td class="numericColumn">{{record[vm.data.headingData[16].name]}}</td>
+
+    <!-- <td class="numericColumn">{{FormatData(record[vm.data.headingData[16].name],'0.00')}}</td> -->
+</tr>
+
+<tr ng-if="vm.data.rowData.length==0">
+    <td></td>
+    <td style=" vertical-align: middle; ">{{'Menu.NoRecordFound'|translate }}</td>
+    <td></td>
+    <td></td>
+
+</tr>
+<style>
+    .customTable td {
+        text-align: center;
+        border-right: 1px solid #c6c3c669;
+    }
+
+    .verticalAlign {
+        vertical-align: middle !important;
+    }
+
+    .text-medium-emphasis {
+        color: rgba(44, 56, 74, .681) !important;
+        font-weight: 700px;
+    }
+
+    .numericColumn {
+        text-align: right !important;
+        padding-right: 15px !important;
+        vertical-align: middle !important;
+    }
+</style>

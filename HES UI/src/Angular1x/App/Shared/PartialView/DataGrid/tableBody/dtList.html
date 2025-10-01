@@ -1,0 +1,49 @@
+<tr class="{{record.rowClass}} {{($index % 2)==0? ' evenRow': ' oddRow'}} " ng-repeat="record in vm.data.rowData | startFrom:currentPage*pageSize
+    | limitTo:pageSize track by $index ">
+
+    <td ng-if="vm.data.isShowSrNo" style="background:  #c6c3c669;text-align: center;padding-left: 15px;
+    border-right: 1px solid #c6c3c669;">{{vm.srNumber+$index}}</td>
+
+    <td style="text-align: center;padding-left: 15px;padding-right: 15px; border-right: 1px solid #c6c3c669;"
+        ng-repeat="col in vm.data.headingData | filter:{visible : true}  track by $index">
+
+        <span ng-if="!col.IsLink && col.name !='isLG'">{{FormatData(record[col.name],col.Format)}}</span>
+
+        <span ng-if="col.IsLink" data-toggle="tooltip" class="grid-link-cell ng-binding" style="cursor: pointer;"
+            ng-click="linkColumnClicked(col.name,record) " role="button"
+            tabindex="0">{{FormatLinkData(record,col,record[col.name])}}</span>
+
+        <span ng-if="col.name =='isLG'">
+            <div ng-class="record[col.name]?'redCircle': record['MeterID']!=null?'greenCircle':''" class="circle"></div>
+        </span>
+    </td>
+    <td style="padding: 2px;" class="firstActiontd" ng-if="vm.data.Actions && vm.data.Actions.length > 0"
+        ng-include="vm.data.rowActionTemplateUrl"></td>
+    <td style="padding: 2px;" class="firstActiontd"
+        ng-if="vm.data.Actions && vm.data.Actions.length > 0 && !vm.data.rowActionTemplateUrl"
+        ng-include="'Angular1x/App/Shared/PartialView/DataGrid/rowAction.html'" style="padding:2px"></td>
+    <td></td>
+</tr>
+<style>
+    table tr td:nth-child(9),
+    td:nth-child(10),
+    td:nth-child(11) {
+        background: #61c5490f;
+    }
+
+    .circle {
+        border-radius: 54%;
+        width: 24px;
+        height: 24px;
+        color: #000;
+        margin-left: 25px;
+    }
+
+    .redCircle {
+        background: red;
+    }
+
+    .greenCircle {
+        background: green;
+    }
+</style>

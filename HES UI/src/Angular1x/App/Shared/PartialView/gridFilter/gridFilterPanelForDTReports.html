@@ -1,0 +1,187 @@
+<div class="row">
+    <table style="float: right;">
+        <tr ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded">
+            <td style="padding-left: 50px;"></td>
+            <td ng-if="filter.showReportType" style="text-align: center;"><label>{{ 'Menu.ReportType' |
+                    translate}}</label></td>
+            <td style="padding-left: 50px;"></td>
+            <td style="text-align: center;"><label>{{ 'Menu.DateRange' |
+                    translate}}</label></td>
+
+            <td style="padding-left: 50px;"></td>
+            <td colspan=3 style="text-align: center;"><label>{{ 'Menu.Value'
+                    |translate}}</label></td>
+            <td></td>
+        </tr>
+        <tr ng-show="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded">
+            <td style="padding-left: 3%;"><label>{{ 'Menu.DateRange' | translate}}</label></td>
+            <td colspan=1 style="padding-left: 20%;"><label>{{
+                    filter.filterTitle |translate}}</label></td>
+            <td style="padding-left: 50px;"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded"></td>
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded"
+                ng-if="filter.showReportType">
+                <select ng-change="onControlClick(filter.selectedReportType)" class="form-control" name="dropdown"
+                    id="dropdown" ng-model="filter.selectedReportType"
+                    ng-options="opt.value as opt.Name for opt in  filter.reportType">
+                </select>
+            </td>
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded"></td>
+            <td>
+                <div style="display: inline;">
+                    <ul class="dashBoardDateRangePicker dashboardDatePickerMargin">
+                        <li>
+                            <a style="width: 175px;" href="javascript:;" class="btn btn-greensea no-border"
+                                ng-hide="false" aria-hidden="false">
+                                <input id="daterange" type="daterange" min-date="{{filter.minimumDate}}"
+                                    max-date={{filter.maximumDate}} readonly="readonly" ng-change="setDate()"
+                                    ng-model="filter.date" ranges="ranges"
+                                    class="rnagePickerinput ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched"
+                                    format={{filter.calendarFormat}} aria-invalid="false">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded"></td>
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded">
+                <input style="padding-right: 0px;height: 30px;background-color: #d1e8d15c;" ng-model="filter.normal"
+                    class="form-control input-sm" min="0" type="number" step="1">
+            </td>
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded" style="padding-left: 5px;padding-right: 15px;
+    font-style: italic; vertical-align: bottom;">{{ 'Menu.Normal' |translate}}</td>
+
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded"><input
+                    style="padding-right: 0px;height: 30px;background-color: #ffffbf75;" ng-model="filter.acceptable"
+                    class="form-control input-sm" min="0" type="number" step="1"></td>
+
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded" style="padding-left: 5px;padding-right: 15px;
+    font-style: italic; vertical-align: bottom;">{{ 'Menu.Acceptable' |translate}}</td>
+
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded"><input
+                    style="padding-right: 0px;height: 30px;background-color: #ffd0a382;" ng-model="filter.notAcceptable"
+                    class="form-control input-sm" min="0" type="number" step="1"></td>
+
+            <td ng-hide="filter.showVoltageUnbalanced || filter.showVoltageLoadedUnloaded" style="padding-left: 5px;padding-right: 15px;
+    font-style: italic; vertical-align: bottom;">{{ 'Menu.NotAcceptable' |translate}}</td>
+
+
+            <td ng-show="filter.showVoltageUnbalanced" style="width:74%">
+                <input id="criteria1"
+                    style="padding-right: 0px;height: 35px;background-color: #d1e8d15c;display: inline;width:8%"
+                    ng-model="filter.criteria1" ng-change="inputElementFocus(filter.criteria1,'Criteria1')"
+                    class="form-control input-sm" min="0" type="number" step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic;
+    vertical-align: bottom;">{{ 'Menu.Criteria1' |translate}}</span>
+
+                <input id="criteria2"
+                    style="padding-right: 0px;height: 35px;background-color: #ffffbf75;display: inline;width:8%"
+                    ng-model="filter.criteria2" ng-change="inputElementFocus(filter.criteria2,'Criteria2')"
+                    class="form-control input-sm" min="0" type="number" step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic; vertical-align: bottom;">{{
+                    'Menu.Criteria2' |translate}}
+                </span>
+
+                <input id="criteria3"
+                    style="padding-right: 0px;height: 35px;background-color: #ffd0a382;display: inline;width:8%"
+                    ng-model="filter.criteria3" ng-change="inputElementFocus(filter.criteria3,'Criteria3')"
+                    class="form-control input-sm" min="0" type="number" step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic; vertical-align: bottom;">{{
+                    'Menu.Criteria3' |translate}}</span>
+
+                <select style="display: inline;width:15%;height: 35px" class="form-control" name="dropdown" id="dropdown"
+                    ng-model="filter.unBalancedCriteria"
+                    ng-options="opt.value as opt.Name for opt in  filter.criteriaDropDown">
+                </select>
+                <span style=" padding-left: 5px;
+    vertical-align: bottom;
+    font-size: 20px;">>=</span>
+                <input style="padding-right: 0px;height: 35px;background-color: #ffffbf75;display: inline;width:8%"
+                    ng-model="filter.unBalancedCriteria" class="form-control input-sm" min="0" type="number"
+                    step="1">
+                <span style=" padding-left: 5px;
+    vertical-align: bottom;
+    font-size: 20px;">%</span>
+            </td>
+
+            <td ng-show="filter.showVoltageLoadedUnloaded" style="width:74%">
+                <input id="criteria1"
+                    style="padding-right: 0px;height: 35px;background-color: #d1e8d15c;display: inline;width:8%"
+                    ng-model="filter.criteria1" ng-change="inputElementFocus(filter.criteria1,'Criteria1')"
+                    class="form-control input-sm" min="0" type="number" step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic;
+    vertical-align: bottom;">{{ 'Menu.Criteria1' |translate}}</span>
+
+                <input id="criteria2"
+                    style="padding-right: 0px;height: 35px;background-color: #ffffbf75;display: inline;width:8%"
+                    ng-model="filter.criteria2" ng-change="inputElementFocus(filter.criteria2,'Criteria2')"
+                    class="form-control input-sm" min="0" type="number" step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic; vertical-align: bottom;">{{
+                    'Menu.Criteria2' |translate}}
+                </span>
+
+                <input id="criteria3"
+                    style="padding-right: 0px;height: 35px;background-color: #e4ab7557;display: inline;width:8%"
+                    ng-model="filter.criteria3" ng-change="inputElementFocus(filter.criteria3,'Criteria3')"
+                    class="form-control input-sm" min="0" type="number" step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic; vertical-align: bottom;">{{
+                    'Menu.Criteria3' |translate}}</span>
+
+                <input id="criteria4"
+                    style="padding-right: 0px;height: 35px;background-color: #ffd0a382;display: inline;width:8%"
+                    ng-model="filter.criteria4" ng-change="inputElementFocus(filter.criteria4,'Criteria4')"
+                    class="form-control input-sm" min="0" type="number" step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic; vertical-align: bottom;">{{
+                    'Menu.Criteria4' |translate}}</span>
+            </td>
+
+
+            <td class="shift" style="padding-right: 15px;"> <button style="margin-right: 0px; " type="button"
+                    class="btn btn-primary applyButton" ng-click="applyFilter()">{{
+                    'Menu.Apply' |translate}}</button>
+                <button type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' |
+                    translate}}</button>
+            </td>
+        </tr>
+        <tr ng-show="filter.showVoltageLoadedUnloaded">
+            <td style="width:15%">
+
+            </td>
+            <td colspan=1 style="padding-top: 15px;">
+                <label>{{ 'Menu.CriteriaForLoaded' |translate}}</label>
+                <label style="padding-left: 7%;">{{ 'Menu.CriteriaForUnLoaded' |translate}}</label>
+            </td>
+        </tr>
+        <tr ng-show="filter.showVoltageLoadedUnloaded">
+            <td style="width:15%">
+
+            </td>
+            <td style="width:74%;">
+                <select style="display: inline;width:15%;height: 35px" class="form-control" name="dropdown" id="dropdown"
+                    ng-model="filter.loadedCriteria"
+                    ng-options="opt.value as opt.Name for opt in  filter.criteriaLoadedDropDown">
+                </select>
+                <input style="padding-right: 0px;height: 35px;background-color: #ffffbf75;display: inline;width:8%"
+                    ng-model="filter.loadedCriteria" class="form-control input-sm" min="0" type="text"
+                    step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic; vertical-align: bottom;">{{
+                    'Menu.HourMintueSymbol' |translate}}</span>
+
+                <select style="display: inline;width:15%;height: 35px" class="form-control" name="dropdown" id="dropdown"
+                    ng-model="filter.unloadedCriteria"
+                    ng-options="opt.value as opt.Name for opt in  filter.criteriaLoadedDropDown">
+                </select>
+                <input style="padding-right: 0px;height: 35px;background-color: #ffffbf75;display: inline;width:8%"
+                    ng-model="filter.unloadedCriteria" class="form-control input-sm" min="0" type="text"
+                    step="1">
+                <span style="padding-left: 5px;padding-right: 15px;font-style: italic; vertical-align: bottom;">{{
+                    'Menu.HourMintueSymbol' |translate}}</span>
+            </td>
+
+        </tr>
+
+    </table>
+</div>

@@ -1,0 +1,43 @@
+<tr ng-if="vm.data.rowData.length > 0" class=" {{record.rowClass}}" ng-repeat="record in vm.data.rowData | filter : vm.search() | orderBy:vm.propertyName:vm.reverse| startFrom:currentPage*pageSize
+    | limitTo:pageSize track by $index ">
+    <td ng-if="vm.data.isShowSrNo " style="text-align: right;" class="numericColumn"> {{vm.srNumber+$index}}</td>
+
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[1].name]}}</td>
+    <td style="vertical-align: middle;">{{FormatData(record[vm.data.headingData[2].name],'date')}}</td>
+    <td style="vertical-align: middle;">{{FormatData(record[vm.data.headingData[3].name],'date')}}</td>
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[4].name]}}</td>
+    <td style="vertical-align: middle;">{{FormatData(record[vm.data.headingData[5].name],'date')}}</td>
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[6].name]}}</td>
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[7].name]}}</td>
+    <td style="vertical-align: middle;"><button ng-click="onControlClick(record[vm.data.headingData[0].name])" ng-disabled="record[vm.data.headingData[4].name]" class="btn btn-info">Publish</button></td>
+
+</tr>
+
+<tr ng-if="vm.data.rowData.length==0">
+    <td></td>
+    <td style=" vertical-align: middle; ">{{'Menu.NoRecordFound'|translate }}</td>
+    <td></td>
+    <td></td>
+
+</tr>
+<style>
+    .customTable td {
+        text-align: center;
+        border-right: 1px solid #c6c3c669;
+    }
+
+    .verticalAlign {
+        vertical-align: middle !important;
+    }
+
+    .text-medium-emphasis {
+        color: rgba(44, 56, 74, .681) !important;
+        font-weight: 700px;
+    }
+
+    .numericColumn {
+        text-align: right !important;
+        padding-right: 15px !important;
+        vertical-align: middle !important;
+    }
+</style>

@@ -1,0 +1,67 @@
+﻿<div class="row">
+    <table style="float: right;" class="styleHierarchyTable">
+        <tr>
+            <td style="padding-left: 50px;"></td>
+            <td style="text-align: left;padding-left: 25px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.HierarchyDefinition' |translate}}</h4>
+            </td>
+            <td style="text-align: left;" ng-repeat="item in filter.hierarchyDetails"
+                ng-disabled="item.enableDropdown">
+                <h4 style="color:#afacac;padding-left: 5px;" class="ng-binding">{{
+                    item.Name |translate}}</h4>
+                <span style="color:red" ng-show="item.Mandatory">*</span>
+
+            </td>
+
+            <td style="padding-left: 50px;"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="padding-left: 20px;">
+                <select
+                    ng-change="onControlClick('hierarchyDefinition'+'~'+filter.selectedHierarchyDefinition)"
+                    class="form-control" ng-model="filter.selectedHierarchyDefinition">
+                    <option value="">Select</option>
+                    <option ng-repeat="option in  filter.hierarchyDefinition"
+                        value="{{option.DefinitionID}}">
+                        {{option.Name}}</option>
+
+                </select>
+            </td>
+            <td ng-show="filter.hierarchyFilter" ng-repeat="item in filter.hierarchyDetails"
+                style="padding-left: 5px;">
+                <select ng-disabled="!item.enableDropdown"
+                    ng-change="onControlClick('hierarchyDetails'+'~'+filter['selectedHierarchyDetailsLevel' + item.Level]+'~'+item.Level)"
+                    class="form-control" ng-model="filter['selectedHierarchyDetailsLevel' + item.Level]">
+                    <option value="">Select</option>
+                    <option ng-repeat="option in filter['L' + item.Level]"
+                        value="{{option['L' + item.Level]}}">
+                        {{option['L' + item.Level + '_Name']}}</option>
+
+                </select>
+            </td>
+        </tr>
+
+    </table>
+</div>
+<style>
+    .custom-container {
+        position: relative;
+        margin-left: 30px !important;
+        border-radius: 5px;
+    }
+
+    .labelStyle {
+        font-size: 20px;
+    }
+
+    .panelColorClass {
+        background: white !important
+    }
+
+    .dropdown-menu {
+        position: absolute !important;
+    }
+</style>

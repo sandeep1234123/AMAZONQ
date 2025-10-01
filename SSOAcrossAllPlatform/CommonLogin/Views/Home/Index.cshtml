@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "SSO Platform Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>SSO Platform Login</h3>
+                    <p class="mb-0">Single Sign-On across all applications</p>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+                    
+                    <form method="post" asp-action="Login">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username or Email</label>
+                            <input type="text" class="form-control" id="username" name="username" 
+                                   placeholder="Enter your username or email" required>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login with SSO
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-center">
+                        <h6 class="text-muted">Supported Identity Providers</h6>
+                        <div class="row mt-3">
+                            <div class="col-4">
+                                <div class="border rounded p-2">
+                                    <i class="fab fa-microsoft text-primary fa-2x"></i>
+                                    <small class="d-block mt-1">Active Directory</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border rounded p-2">
+                                    <i class="fab fa-google text-danger fa-2x"></i>
+                                    <small class="d-block mt-1">Google</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border rounded p-2">
+                                    <i class="fab fa-microsoft text-info fa-2x"></i>
+                                    <small class="d-block mt-1">Microsoft 365</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    <small>Powered by Keycloak 23.0.7</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(45deg, #5a6fd8, #6a4190);
+        transform: translateY(-1px);
+    }
+</style>

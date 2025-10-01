@@ -1,0 +1,18 @@
+﻿<p class="input-group" style="width: 220px;">
+    <input type="text"
+           class="form-control datePickerFont"
+           ng-change="DatePicker.dateSelected()"
+           datepicker-append-to-body="true"
+           datetime-picker="{{DatePicker.scheduleDatePicker.format}}"
+           min-date="DatePicker.minDate"
+           max-date="DatePicker.maxDate"
+           ng-model="DatePicker.selectedDate"
+           is-open="DatePicker.open"
+           datepicker-options="DatePicker.scheduleDatePicker.datepickerOptions" button-bar="DatePicker.buttonBar"
+            enable-time="DatePicker.enableTime" readonly
+            ng-class="DatePicker.disabledCalender?'disabledCalender':'enabledCalender'"
+            ng-disabled="DatePicker.disabledCalender" />
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default datePickerbtn" ng-disabled="DatePicker.disabledCalender" ng-click="DatePicker.openCalendar($event)"><i class="fa fa-calendar"></i></button>
+    </span>
+</p>

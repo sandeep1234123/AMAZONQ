@@ -1,0 +1,6 @@
+
+<div ng-if="col.name == 'FeederNameColumn'">
+    <span ng-if="record['DTCount'] <= 0"> {{record[col.name]}}</span>
+    <span class="grid-link-cell" ng-if="record['DTCount'] > 0" ng-click="performAction(record)"> {{record[col.name]}}</span>
+</div>
+<span class="customTableContaintMobile showMobileView" ng-if="col.name !=vm.data.linkColumnName"> {{record[col.name]}}</span>

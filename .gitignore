@@ -1,0 +1,40 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.pdb
+*.exe
+packages/
+.vs/
+
+# Keycloak
+keycloak-*/
+*.zip
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets
+appsettings.Production.json
+*.pfx
+*.p12
+
+# Temporary files
+*.tmp
+*.temp
+
+# Angular
+node_modules/
+dist/
+.angular/
+**/.angular/cache/
+**/*.pack

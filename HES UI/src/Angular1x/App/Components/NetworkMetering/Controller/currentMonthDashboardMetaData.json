@@ -1,0 +1,37 @@
+[
+    {
+        "GraphTitle": "FeederLoss",
+        "Values": [
+            {
+                "Threshold": 60,
+                "Step": 5,
+                "Min": 35,
+                "Max": 85,
+                "Unit": "%"
+            }
+        ]
+    },
+    {
+        "GraphTitle": "DtOutageCount",
+        "Values": [
+            {
+                "Threshold": 35,
+                "Step": 5,
+                "Min": 5,
+                "Max": 60
+            }
+        ]
+    },
+    {
+        "GraphTitle": "DtOutageDuration",
+        "Values": [
+            {
+                "Threshold": 1773,
+                "Step": 50,
+                "Min": 1573,
+                "Max": 2123,
+                "Unit": "min"
+            }
+        ]
+    }
+]

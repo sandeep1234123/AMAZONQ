@@ -1,0 +1,286 @@
+﻿<div class="page page-datatables">
+    <!-- page header -->
+    <!-- page header -->
+    <div class="pageheader">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.FeederList">{{ 'Menu.FeederList' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.FeederList">{{ 'Menu.ManageDT' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="pagecontent">
+        <!-- row -->
+
+        <div class="row">
+            <!-- col -->
+            <div class="col-md-12">
+                <section class="tile" fullscreen="isFullscreen02">
+                    <!-- tile header -->
+                    <div class="tile-header dvd dvd-btm">
+                        <h1 class="custom-font"><strong>{{ 'Menu.DTAssociation'|translate }}</strong></h1>
+                        <ul class="controls">
+                            <li ng-click="isAssociateDTClicked()" style="margin-top: 4px;
+                            font-size: 15px;">
+                                <span class="glyphicon glyphicon-plus text-success addNewRecord"></span>
+                            </li>
+                            <li>
+                                <i class="glyphicon glyphicon-refresh gridFilterIcon button-success"
+                                    style="color: green;margin-top: 12px;" title="{{ 'Menu.Refresh' | translate}}"
+                                    ng-click="onRefreshClick()"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tile-body table-custom" style="padding-top: 0px;">
+                        <alert alert-data="alertData"></alert>
+                        <form class="form-inline">
+                            <hes-data-grid data="gridData" perform-action="performAction"
+                                    on-link-action="onLinkAction"></hes-data-grid>
+                        </form>
+                    </div>
+                    <!-- /tile body -->
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="removeDTModal" style="padding-top:15%">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:1000px">
+            <div class="modal-header">
+                <h4 class="modal-title">Disassociate DT with Feeder {{FeederCode}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row col-md-12">
+                    <alert alert-data="alertModalData"></alert>
+                    <div class="form-group col-md-4" style="padding-left: 0px;">
+                        <label>{{ 'Menu.DTName' | translate }}</label>
+                        <input class="form-control" disabled="true" ng-model="DisassociateDTName" type="text">
+                    </div>
+                    <div class="form-group col-md-4" style="padding-left: 0px;">
+                        <label>{{ 'Menu.DTCode' | translate }}</label>
+                        <input class="form-control" disabled="true" ng-model="DisassociateDTCode" type="text">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>{{ 'Menu.AssociationDate' | translate }}</label>
+                        <div layout-wrap layout-gt-xs="row">
+                            <div flex-gt-xs="100">
+                                <hes-Date-Picker maximum-date="maxDate" minimum-date="minDateForMeterAssociation"
+                                    selected-value="DTAssociationDate" disabled="true" enable-time=false
+                                    data=" "></hes-Date-Picker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>{{ 'Menu.LastReadingDate' | translate }}</label>
+                        <div layout-wrap layout-gt-xs="row">
+                            <div flex-gt-xs="100">
+                                <hes-Date-Picker maximum-date="maxDate" minimum-date="minDateForDTDisassociation"
+                                    selected-value="DTDisassociationDate" enable-time=false data=" "></hes-Date-Picker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-5" style="padding-left: 0px;">
+                        <label>{{ 'Menu.ReasonForRemoval' | translate }}</label>
+                        <div layout-wrap layout-gt-xs="row">
+                            <div flex-gt-xs="100">
+                                <textarea rows="3" cols="200" class="form-control" ng-model="DTreasonForRemoval"
+                                    ng-maxlength="500" type="text" name="Remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-disabled="disableDisassociatedDTSubmit"
+                        ng-click="isDisassociateDTClicked()">
+                        {{ 'Menu.DisassociateDT' | translate }}</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"">
+                        {{ 'Menu.Close' | translate }}</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class=" modal" id="addDTModal" style="padding-top:15%">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width:1000px">
+                                <div class="modal-header">
+                                    <h4 ng-hide="isEditDT" class="modal-title">Associate DT with Feeder {{FeederCode}}
+                                    </h4>
+                                    <h4 ng-show="isEditDT" class="modal-title">Edit</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="tile-body table-custom" style="padding-left: 0px;">
+                                        <alert alert-data="alertDataForDTAssociation"></alert>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <label>{{ 'Menu.DTCode' | translate }}</label><span
+                                                        ng-hide="isEditDT"
+                                                        style="color:red;margin-left: 5px;font-size: 15px;">*</span>
+                                                    <div ng-hide="isEditDT" class="search-input-container">
+                                                        <form class="form">
+                                                            <input type="search" class="form-control" autocomplete="off"
+                                                                id="searchBoxFilter" ng-keydown="handleKeyDown($event)"
+                                                                ng-click="updateSuggestions()"
+                                                                ng-focus="showSuggestions = true"
+                                                                ng-change="updateSuggestions()"
+                                                                placeholder="Enter DT Code" name="{{selectedName}}"
+                                                                ng-model="filter.searchQuery"
+                                                                style="border: 1px solid #cccccc !important;">
+                                                        </form>
+                                                        <div class="suggestion-list" id="element"
+                                                            ng-if="showSuggestions && filteredSuggestions.length > 0">
+                                                            <ul>
+                                                                <li ng-repeat="suggestion in filteredSuggestions"
+                                                                    ng-click="selectData(suggestion)">
+                                                                    {{suggestion.DTCode }}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-show="isEditDT" class="search-input-container">
+                                                        <input ng-disabled="true" type="search" class="form-control"
+                                                            ng-model="AssociateDTCode"
+                                                            style="border: 1px solid #cccccc !important;">
+                                                    </div>
+                                                    <p class="help-block">
+                                                        <span id="reqDTName" class="reqError"></span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>{{ 'Menu.AssociationDate' | translate
+                                                        }}</label>
+                                                    <div layout-wrap layout-gt-xs="row">
+                                                        <div flex-gt-xs="100">
+                                                            <hes-Date-Picker minimum-date="minDateForAssociation"
+                                                                maximum-date="maxDateOfAssociation"
+                                                                selected-value="DTAssociationDate" enable-time=false
+                                                                data=" "></hes-Date-Picker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>{{ 'Menu.IsNearestIsFarthest' | translate }}</label>
+                                                    <select class="form-control" name="ddlDistance"
+                                                        ng-model="SelectDistance">
+                                                        <option ng-repeat="option in  distanceValues"
+                                                            value="{{option.value}}">
+                                                            {{option.Name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button ng-hide="isEditDT" type="button" class="btn btn-success"
+                                        ng-disabled="disableAssociateMeter" ng-click="AssociateDTWithFeeder()">
+                                        {{ 'Menu.AssociateDT' | translate }}</button>
+                                    <button ng-show="isEditDT" type="button" class="btn btn-success"
+                                        ng-disabled="disableAssociateMeter" ng-click="AssociateDTWithFeeder()">
+                                        {{ 'Menu.UpdateDT' | translate }}</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"">
+                                                {{ 'Menu.Close' | translate }}</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <style>
+                    .btn-toolbar {
+                        padding-top: 10px;
+                    }
+                    .reAlign {
+                    margin-right: -18px !important;
+                    margin-top: 0px !important;
+                }
+                </style>
+                <style>
+                    .placeholder::placeholder {
+                        text-align: right;
+                    }
+
+                    .reqError {
+                        color: #ff0000;
+                        font-weight: bold;
+                    }
+
+                    input#input-1 {
+                        border-bottom: 1px solid;
+                    }
+
+                    .tableFixHead {
+                        max-height: 225px !important;
+                    }
+                </style>
+                <style>
+                    .search-input-container {
+                        position: relative;
+                    }
+
+                    .show {
+                        display: block;
+                    }
+
+                    .suggestion-list {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                        position: absolute;
+                        background-color: white;
+                        border: 1px solid #ddd;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        z-index: 1;
+                        width: 100%;
+                        max-height: 150px;
+                        overflow-y: auto;
+                    }
+
+                    .suggestion-list li {
+                        padding: 8px 10px;
+                        cursor: pointer;
+                    }
+
+                    .suggestion-list li:hover {
+                        background-color: #f0f0f0;
+                    }
+
+                    .suggestion-list {
+                        top: 100%;
+                    }
+
+                    .paddingBottom {
+                        padding-bottom: 60px !important;
+                    }
+
+                    .removePaddingBottom {
+                        padding-bottom: 0px !important;
+                    }
+                </style>

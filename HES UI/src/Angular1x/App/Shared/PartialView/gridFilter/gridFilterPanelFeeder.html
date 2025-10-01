@@ -1,0 +1,178 @@
+﻿<div class="form-group col-md-7" style=" display: inline;float: left;margin-left: -50px;">
+    <div class="spacer2 spacerTop" style="display: inline; float: inherit">
+        <label ng-if="filter.labelForDateFilter!=null" class="pStyle">{{filter.labelForDateFilter |
+            translate}}</label>&nbsp;&nbsp;&nbsp;
+        <label class="pStyle" style="padding-left: 10px;">{{ 'Menu.From' | translate }}</label>
+    </div>
+    <div class="spacerTop" style="display: inline; float: inherit;padding-left: 5px;">
+        <hes-Date-Picker maximum-date="filter.maxDate" minimum-date="filter.minDate" selected-value="filter.fromDate">
+        </hes-Date-Picker>
+    </div>
+    <div class="spacer spacerTop" style="display: inline; float: inherit;">
+        <label class="pStyle">{{ 'Menu.To' | translate }}</label>
+    </div>
+    <div class=" spacerTop" style="display: inline; float: inherit;padding-left: 5px;">
+        <hes-Date-Picker maximum-date="filter.maxDate" minimum-date="filter.fromDate" selected-value="filter.toDate">
+        </hes-Date-Picker>
+    </div>
+</div>
+<div ng-hide="filter.hideSearch" class="form-group col-md-4 spacerTop" style="margin-left: -50px;">
+    <div style="padding-left: 10px;float: inherit;display:inline">
+        <div class="search-bar">
+            <div style="padding-right: 15px;float: inherit;display:inline">
+                <label class="pStyle">{{ 'Menu.SearchBy' | translate }}</label>
+            </div>
+            <div class="search-input-container" ng-controller="FeederListCtrl">
+                <form class="form">
+                    <input type="search" class="text-form" autocomplete="off" id="searchBoxFilter"
+                        ng-keydown="handleKeyDown($event)" ng-click="updateSuggestions()"
+                        ng-focus="showSuggestions = true" ng-change="updateSuggestions()"
+                        placeholder="{{selectedPlaceholder}}" name="{{selectedName}}" ng-model="filter.searchQuery">
+                    <i class="fa fa-search search-icon"></i>
+                    <div class="dropdown">
+                        <i class="fa fa-caret-down dropdown-icon" ng-click="toggleDropdown()"></i>
+                        <ul class="dropdown-menu-search" ng-class="{ 'show': isDropdownOpen }">
+                            <li ng-click="changePlaceholder('feederName')">{{ 'Menu.FeederName' | translate }} </li>
+                            <li ng-click="changePlaceholder('feederCode')">{{ 'Menu.FeederCode' | translate }}</li>
+                            <li ng-click="changePlaceholder('feederMeterId')">{{ 'Menu.Meter' | translate }}</li>
+                        </ul>
+                    </div>
+                </form>
+                <div class="suggestion-list" id="element" ng-if="showSuggestions && filteredSuggestions.length > 0">
+                    <ul>
+                        <li ng-repeat="suggestion in filteredSuggestions" ng-click="selectData(suggestion)">
+                            {{suggestion.FeederName }} {{ suggestion.FeederCode }}{{ suggestion.MeterId }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="spacer spacerTop col-md-2" style="display: inline;float: inherit;">
+    <button style="margin-top: 15px;" type="button" class="btn btn-primary applyButton" ng-click="applyFilter()">{{
+        'Menu.Apply' |
+        translate}}</button>
+    <button style="margin-top: 15px;" type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' |
+        translate}}</button>
+</div>
+</div>
+
+<style>
+    .spacerTop {
+        margin-top: 20px;
+    }
+
+    .pStyle {
+        margin-top: 10px;
+    }
+
+    .form {
+        border: none;
+        padding: 0;
+        display: flex;
+
+    }
+
+    .text-form {
+        width: 300px;
+        border: 0px solid #555;
+        color: black;
+        border-radius: 4px;
+        padding: 8px 4px 9px 40px;
+        background-color: white;
+    }
+
+    input[type="search"]:focus {
+        box-shadow: 0 0 10px 0 #1183d6;
+        border-color: #1183d6;
+        outline: none;
+        /* caret-color: red; */
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        margin-top: -5px;
+    }
+
+    .search-input-container {
+        position: relative;
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-60%);
+        color: black;
+    }
+
+    .dropdown-icon {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-60%);
+        color: black;
+    }
+
+    .dropdown-menu-search {
+        position: absolute;
+        top: 70%;
+        left: 60%;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+        list-style: none;
+        padding: 5px;
+        margin: 0;
+        color: black;
+        display: none;
+    }
+
+    .dropdown-menu-search.show {
+        display: block;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .dropdown-menu-search li {
+        padding: 4px 8px;
+        cursor: pointer;
+    }
+
+    .dropdown-menu-search li:hover {
+        background-color: #f0f0f0;
+    }
+
+    .suggestion-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+        width: 100%;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    .suggestion-list li {
+        padding: 8px 10px;
+        cursor: pointer;
+    }
+
+    .suggestion-list li:hover {
+        background-color: #f0f0f0;
+    }
+
+    .suggestion-list {
+        top: 100%;
+    }
+</style>

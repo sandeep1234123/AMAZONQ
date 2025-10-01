@@ -1,0 +1,45 @@
+﻿<!-- <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group ml-2" style="display: inline-flex;">
+       
+        <button type="button" class="btn btn-sm btn-primary">{{ 'Menu.ACTION'  | translate }}</button>
+        <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+            <i class="fa fa-sort-desc" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu gridMenu dropdown-menu-right" >
+            <li ng-repeat="action in vm.data.Actions" class="customGridActionItems" ng-click="performAction(action.actionName,record)">
+                <span>{{'Menu.'+ action.label  | translate}}</span>
+            </li>
+        </ul>
+    </div>
+</div> -->
+<div class="dropdown">
+    <!-- <select class="form-control select btn btn-default dropdown-toggle">
+        <option class="option" value="" selected style="display:none"> {{ 'Menu.ACTION' | translate }}</option>
+        <option disabled style="font-size: .5em;"></option>
+        <option class="option" ng-repeat="x in vm.data.Actions" value="{{x.label}}">{{x.label}}</option>
+        <option class="option" disabled style="font-size: .5em;color: white;">------------------------</option>
+    </select> -->
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="true">
+        {{ 'Menu.ACTION' | translate }}
+        <span class="caret"></span>
+    </button>
+    <ul  class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+        <li ng-repeat="action in vm.data.Actions"  >
+            <a href="#" ng-click="performAction(action.actionName,record)">{{'Menu.'+ action.label  | translate}}</a>
+        </li>
+    </ul>
+</div>
+<!-- <style>
+    .option {
+        font-size: 20px;
+        text-align: justify;
+        background-color: white;
+        margin-top: 20px;
+    }
+
+    .select {
+        background-color: rgba(30, 143, 255, 0.2);
+    }
+</style> -->

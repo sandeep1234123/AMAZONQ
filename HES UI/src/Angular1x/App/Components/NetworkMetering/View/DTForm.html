@@ -1,0 +1,511 @@
+﻿<div class="page page-datatables">
+    <div class="pageheader">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.DTList">{{ 'Menu.DT' | translate }}</a>
+                </li>
+                <li>
+                    <a href="javascript:;">{{ vm.formLabel }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pagecontent">
+        <!-- row -->
+
+        <div class="row">
+            <!-- col -->
+            <div class="col-md-12">
+                <section class="tile" fullscreen="isFullscreen02">
+                    <!-- tile header -->
+                    <div class="tile-header dvd dvd-btm">
+                        <h1 class="custom-font"><strong>{{ 'Menu.DT' | translate }}</strong></h1>
+                        <div class="pull-right">
+                            <label style="font-size:xx-small;">{{ 'Menu.RequiredNote' | translate }} <span
+                                    style="color:red">(*)</span></label>
+                        </div>
+                    </div>
+                    <!-- /tile header -->
+                    <!-- /tile body -->
+                    <div class="tile-body table-custom">
+                        <div class="row">
+                            <form role="form" novalidate>
+                                <div class="tile-body">
+                                    <alert alert-data="vm.alertData"></alert>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <div><label>{{ 'Menu.DTCode' | translate }}</label><label class="error"
+                                                    style="font-size:medium"> &nbsp;*</label></div>
+                                            <div layout-wrap layout-gt-xs="row">
+                                                <div flex-gt-xs="100">
+                                                    <input class="form-control" ng-model="vm.DTCode" type="text"
+                                                        name="txtDTCode" id="txtDTCode"
+                                                        ng-keyup="vm.EnableAddMeter($event,'reqDtCode')"
+                                                        ng-disabled="vm.IsDisabled">
+                                                    <p class="help-block">
+                                                        <span id="reqDtCode" class="reqError"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <div><label>{{ 'Menu.DTName' | translate }}</label><label class="error"
+                                                    style="font-size:medium"> &nbsp;*</label></div>
+                                            <div layout-wrap layout-gt-xs="row">
+                                                <div flex-gt-xs="100">
+                                                    <input class="form-control" ng-model="vm.DTName" type="text"
+                                                        name="txtDTName" id="txtDTName"
+                                                        ng-keyup="vm.EnableAddMeter($event,'reqDtName')"
+                                                        ng-disabled="vm.IsDisabled">
+                                                    <p class="help-block">
+                                                        <span id="reqDtName" class="reqError"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <div><label>{{ 'Menu.DTCapacity' | translate }}</label><label class="error"
+                                                    style="font-size:medium"> &nbsp;*</label></div>
+                                            <div layout-wrap layout-gt-xs="row">
+                                                <div flex-gt-xs="100">
+                                                    <input class="form-control" ng-model="vm.DTCapacity" type="text"
+                                                        name="txtDTCapacity" id="txtDTCapacity"
+                                                        ng-keyup="vm.EnableAddMeter($event,'reqCapacity')">
+                                                    <p class="help-block">
+                                                        <span id="reqCapacity" class="reqError"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>{{ 'Menu.TypeOfDT' | translate }}</label><label class="error"
+                                                style="font-size:medium"> &nbsp;*</label>
+                                            <select class="form-control" name="ddlTypeOfDT" required
+                                                ng-model="vm.SelectedTypeOfDT" ng-disabled="vm.IsDisabled">
+                                                <option ng-repeat="option in  vm.TypeOfDT" value="{{option.value}}">
+                                                    {{option.Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label>{{ 'Menu.Location' | translate }}</label>
+                                            <div layout-wrap="" layout-gt-xs="row" class="layout-wrap layout-gt-xs-row">
+                                                <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                    <div class="input-container">
+                                                        <input class="form-control placeholderInput"
+                                                            ng-model="vm.Latitude" type="text" name="txtLatitude"
+                                                            id="txtLatitude">
+                                                        <div class="placeholder">{{ 'Menu.Lat' | translate }}</div>
+                                                    </div>
+
+                                                </div>
+                                                <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                    <div class="input-container">
+                                                        <input class="form-control  placeholderInput"
+                                                            ng-model="vm.Longitude" type="text" name="txtLongitude"
+                                                            id="txtLongitude">
+                                                        <div class="placeholder">{{ 'Menu.Long' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>{{ 'Menu.InstalledOn' | translate }}</label>
+                                            <div layout-wrap layout-gt-xs="row">
+                                                <div flex-gt-xs="100">
+                                                    <hes-Date-Picker disabled="vm.IsDisabled" maximum-date="vm.maxDate"
+                                                        selected-value="vm.InstalledOn " enable-time=false
+                                                        data=" "></hes-Date-Picker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div ng-if="showHierarchy"
+                                            ng-include="'/Angular1x/App/Components/NetworkMetering/View/HierarchyPartialView.html'"
+                                            ng-controller="HierarchyPartialViewController"></div>
+
+                                    </div>
+
+                                    <div class="tile-body table-custom dvd dvd-btm"
+                                        ng-class="vm.alertDataForAssociationAndDisassociation.showAlert?'paddingBottom':'removePaddingBottom'"
+                                        style="padding-left: 0px;">
+                                        <div class="row col-md-12">
+                                            <alert alert-data="vm.alertDataForAssociationAndDisassociation"></alert>
+                                        </div>
+                                    </div>
+                                    <div ng-if="vm.editDTCode" ng-show="vm.ShowOldMeterInformation"
+                                        class="tile-body table-custom" style="padding-left: 0px;">
+                                        <div class="row col-md-12">
+                                            <div class="form-group col-md-3" style="padding-left: 0px;">
+                                                <label>{{ 'Menu.MeterNumber' | translate }}</label>
+                                                <input class="form-control" disabled="true" ng-model="vm.OldMeterID"
+                                                    type="text">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>{{ 'Menu.OldAssociationDate' | translate }}</label>
+                                                <div layout-wrap layout-gt-xs="row">
+                                                    <div flex-gt-xs="100">
+                                                        <hes-Date-Picker disabled="true"
+                                                            selected-value="vm.OldDateOfAssociation"></hes-Date-Picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" style="padding-left: 30px;width: 27%;">
+                                                <label>{{ 'Menu.OldMultiplyingFactor' | translate }}</label>
+                                                <div layout-wrap layout-gt-xs="row">
+                                                    <div flex-gt-xs="100">
+                                                        <input class="form-control" disabled="true" ng-model="vm.OldMF"
+                                                            type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>{{ 'Menu.OldInitialReading' | translate }}</label>
+                                                <div layout-wrap="" layout-gt-xs="row"
+                                                    class="layout-wrap layout-gt-xs-row">
+                                                    <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                        <input class="form-control" disabled="true"
+                                                            ng-model="vm.OldInitial_kWh" type="text">
+                                                    </div>
+                                                    <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                        <input class="form-control" disabled="true"
+                                                            ng-model="vm.OldInitial_kVAh" type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>{{ 'Menu.OldExternalCTRatio' | translate }}</label>
+                                                <div layout-wrap="" layout-gt-xs="row"
+                                                    class="layout-wrap layout-gt-xs-row">
+                                                    <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                        <input class="form-control" disabled="true"
+                                                            ng-model="vm.OldExternalCTRatio" type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>{{ 'Menu.OldExternalPTRatio' | translate }}</label>
+                                                <div layout-wrap="" layout-gt-xs="row"
+                                                    class="layout-wrap layout-gt-xs-row">
+                                                    <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                        <input class="form-control" disabled="true"
+                                                            ng-model="vm.OldExternalPTRatio" type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div ng-show="vm.ShowDisassociationContainer" class="tile-body table-custom"
+                                        style="padding-left: 0px;">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>{{ 'Menu.FinalReading' | translate }}</label><label class="error"
+                                                    style="font-size:medium"> &nbsp;*</label>
+                                                <div layout-wrap="" layout-gt-xs="row"
+                                                    class="layout-wrap layout-gt-xs-row">
+                                                    <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                        <div class="input-container">
+                                                            <input class="form-control placeholderInput"
+                                                                ng-model="vm.Final_kWh" type="text" name="txtFinal_kWh"
+                                                                id="txtFinal_kWh" aria-invalid="false"
+                                                                ng-keyup="vm.ClearErrorFieldMessage('reqFinalkWh')">
+                                                            <p class="help-block">
+                                                                <span id="reqFinalkWh" class="reqError"></span>
+                                                            </p>
+                                                            <div class="placeholder">{{ 'Menu.kWh' | translate }}</div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                        <div class="input-container">
+                                                            <input class="form-control placeholderInput"
+                                                                ng-model="vm.Final_kVAh" type="text"
+                                                                name="txtFinal_kVAh" id="txtFinal_kVAh"
+                                                                aria-invalid="false"
+                                                                ng-keyup="vm.ClearErrorFieldMessage('reqFinalkVAh')">
+                                                            <p class="help-block">
+                                                                <span id="reqFinalkVAh" class="reqError"></span>
+                                                            </p>
+                                                            <div class="placeholder">{{ 'Menu.kVAh' | translate }}</div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>{{ 'Menu.LastReadingDate' | translate }}</label>
+                                                <div layout-wrap layout-gt-xs="row">
+                                                    <div flex-gt-xs="100">
+                                                        <hes-Date-Picker maximum-date="vm.maxDate"
+                                                            mum-date="vm.minDateForMeterAssociation"
+                                                            selected-value="vm.DisassociationDate" enable-time=false
+                                                            data=" "></hes-Date-Picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>{{ 'Menu.ReasonForRemoval' | translate }}</label>
+                                                <div layout-wrap layout-gt-xs="row">
+                                                    <div flex-gt-xs="100">
+                                                        <textarea rows="3" cols="200" class="form-control"
+                                                            ng-model="vm.reasonForRemoval" ng-maxlength="500"
+                                                            type="text" name="Remarks"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ng-show="vm.ShowAssociateContainer" -->
+                                    <div ng-show="vm.ShowAssociateContainer" class="tile-body table-custom"
+                                        style="padding-left: 0px;border-top: 1px solid #e5e5e5;">
+                                        <div class="row">
+                                            <div>
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3" style="width:26%">
+                                                        <label>{{ 'Menu.NewMeterNumber' | translate }}</label>
+                                                        <hes-Meter-Number-Auto-Complete
+                                                            selected-valid="vm.invalidMeterOne" is-range-valid="false"
+                                                            selected-value="vm.selectedMeter"
+                                                            data='vm.AutoCompleteMeterData'></hes-Meter-Number-Auto-Complete>
+                                                        <p class="help-block">
+                                                            <span id="reqMeterNumber" class="reqError"></span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>{{ 'Menu.AssociationDate' | translate }}</label>
+                                                        <div layout-wrap layout-gt-xs="row">
+                                                            <div flex-gt-xs="100">
+                                                                <hes-Date-Picker maximum-date="vm.maxDate"
+                                                                    mum-date="vm.minDateForMeterAssociation"
+                                                                    selected-value="vm.AssociationDate"
+                                                                    enable-time=false data=" "></hes-Date-Picker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3" style="width: 27%;">
+                                                        <label>{{ 'Menu.MultiplyingFactor' | translate
+                                                            }}</label>
+                                                        <label class="error" style="font-size:medium">
+                                                            &nbsp;*</label>
+                                                        <div layout-wrap layout-gt-xs="row">
+                                                            <div flex-gt-xs="100">
+                                                                <input class="form-control"
+                                                                    ng-model="vm.MultiplyingFactor" type="text"
+                                                                    name="txtMultiplyingFactor"
+                                                                    id="txtMultiplyingFactor"
+                                                                    ng-keyup="vm.ClearErrorFieldMessage('reqMultipyingFactor')">
+                                                                <p class="help-block">
+                                                                    <span id="reqMultipyingFactor"
+                                                                        class="reqError"></span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3">
+                                                        <label class="ng-binding">{{ 'Menu.InitialReading' |
+                                                            translate
+                                                            }}</label><label class="error" style="font-size:medium">
+                                                            &nbsp;*</label>
+                                                        <div layout-wrap="" layout-gt-xs="row"
+                                                            class="layout-wrap layout-gt-xs-row">
+                                                            <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                                <div class="input-container">
+                                                                    <input class="form-control placeholderInput"
+                                                                        ng-model="vm.Initial_kWh" type="text"
+                                                                        name="txtInitial_kWh" id="txtInitial_kWh"
+                                                                        aria-invalid="false"
+                                                                        ng-keyup="vm.ClearErrorFieldMessage('reqInitialkWh')">
+                                                                    <p class="help-block">
+                                                                        <span id="reqInitialkWh"
+                                                                            class="reqError"></span>
+                                                                    </p>
+                                                                    <div class="placeholder">{{ 'Menu.kWh' | translate
+                                                                        }}</div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                                <div class="input-container">
+                                                                    <input class="form-control placeholderInput"
+                                                                        ng-model="vm.Initial_kVAh" type="text"
+                                                                        name="txtInitial_kVAh" id="txtInitial_kVAh"
+                                                                        aria-invalid="false"
+                                                                        ng-keyup="vm.ClearErrorFieldMessage('reqInitialkVAh')">
+                                                                    <p class="help-block">
+                                                                        <span id="reqInitialkVAh"
+                                                                            class="reqError"></span>
+                                                                    </p>
+                                                                    <div class="placeholder">{{ 'Menu.kVAh' | translate
+                                                                        }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3" style="padding-left: 30px;">
+                                                        <label class="ng-binding">{{ 'Menu.ExternalCTRatio' |
+                                                            translate
+                                                            }}</label><label class="error" style="font-size:medium">
+                                                            &nbsp;*</label>
+                                                        <div layout-wrap="" layout-gt-xs="row"
+                                                            class="layout-wrap layout-gt-xs-row">
+                                                            <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                                <div class="input-container">
+                                                                    <input class="form-control placeholderInput"
+                                                                        ng-model="vm.ExternalCTRatio" type="text"
+                                                                        name="txtExternalCTRatio"
+                                                                        id="txtExternalCTRatio" aria-invalid="false"
+                                                                        ng-keyup="vm.ClearErrorFieldMessage('reqExternalCTRatio')">
+                                                                    <p class="help-block">
+                                                                        <span id="reqExternalCTRatio"
+                                                                            class="reqError"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3" style="padding-left: 30px;">
+                                                        <label class="ng-binding">{{ 'Menu.ExternalPTRatio' |
+                                                            translate
+                                                            }}</label><label class="error" style="font-size:medium">
+                                                            &nbsp;*</label>
+                                                        <div layout-wrap="" layout-gt-xs="row"
+                                                            class="layout-wrap layout-gt-xs-row">
+                                                            <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                                <div class="input-container">
+                                                                    <input class="form-control placeholderInput"
+                                                                        ng-model="vm.ExternalPTRatio" type="text"
+                                                                        name="txtExternalPTRatio"
+                                                                        id="txtExternalPTRatio" aria-invalid="false"
+                                                                        ng-keyup="vm.ClearErrorFieldMessage('reqExternalPTRatio')">
+                                                                    <p class="help-block">
+                                                                        <span id="reqExternalPTRatio"
+                                                                            class="reqError"></span>
+                                                                    </p>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- <div flex-gt-xs="50" class="flex-gt-xs-50">
+                                                                <div class="input-container">
+                                                                    <input class="form-control placeholderInput"
+                                                                        ng-model="vm.Initial_kVAh" type="text"
+                                                                        name="txtInitial_kVAh" id="txtInitial_kVAh"
+                                                                        aria-invalid="false"
+                                                                        ng-keyup="vm.ClearErrorFieldMessage('reqInitialkVAh')">
+                                                                    <p class="help-block">
+                                                                        <span id="reqInitialkVAh"
+                                                                            class="reqError"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="form-group col-md-12">
+                                            <button ng-if="!vm.editDTCode" type="button"
+                                                ng-show="!vm.ShowAssociateContainer"
+                                                ng-class="vm.disableAddMeterButton?'disableAssociate':'enableAssociate'"
+                                                class="btn btn-success" ng-click="vm.isAssociateClicked()"
+                                                ng-disabled="vm.disableAddMeterButton">
+                                                {{ 'Menu.AssociateMeter' | translate }}</button>
+
+                                            <button ng-if="!vm.editDTCode" type="button"
+                                                ng-show="vm.ShowAssociateContainer" class="btn btn-danger"
+                                                ng-click="vm.Clear()">
+                                                {{ 'Menu.DisassociateMeter' | translate }}</button>
+
+                                            <button ng-if="vm.editDTCode" type="button" ng-show="vm.ShowAssociatedMeter"
+                                                class="btn btn-success" ng-click="vm.isAssociateClicked()">
+                                                {{ 'Menu.AssociateMeter' | translate }}</button>
+
+                                            <button ng-if="vm.editDTCode" type="button"
+                                                ng-show="vm.ShowDisassociateMeter" class="btn btn-danger"
+                                                ng-click="vm.isDisassociateClicked()">
+                                                {{ 'Menu.DisassociateMeter' | translate }}</button>
+
+                                            <button ng-if="vm.editDTCode" type="button"
+                                                ng-show="vm.ShowDisassociateMeter" class="btn btn-warning"
+                                                ng-click="vm.isChangeMeterClicked()">
+                                                {{ 'Menu.ChangeMeter' | translate }}</button>
+
+                                            <div class="pull-right">
+                                                <img src="../../../../Angular1x/images/hourglass.gif" height="20"
+                                                    alt="Loding..." ng-if="vm.disableSubmitButton" />
+                                                <button class="btn btn-default" ng-click="vm.back()"
+                                                    ng-disabled="vm.disableSubmitButton">{{ 'Menu.Cancel' |
+                                                    translate
+                                                    }}</button>
+                                                <button type="submit" class="btn btn-primary" ng-click="vm.submitForm()"
+                                                    ng-disabled="vm.disableSubmitButton">{{ 'Menu.lbl_SUBMIT' |
+                                                    translate}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .disableAssociate {
+        cursor: not-allowed;
+    }
+
+    .enableAssociate {
+        cursor: pointer;
+    }
+</style>
+<style type="text/css">
+    .reqError {
+        color: #ff0000;
+        font-weight: bold;
+    }
+
+    .paddingBottom {
+        padding-bottom: 60px !important;
+    }
+
+    .removePaddingBottom {
+        padding-bottom: 0px !important;
+    }
+
+    .styleHierarchyTable {
+        float: left !important;
+    }
+
+    .styleHierarchyTable td {
+        padding-left: 15px !important;
+    }
+
+    .styleHierarchyTable td h4 {
+        display: inline-block !important;
+        max-width: 100% !important;
+        margin-bottom: 5px !important;
+        font-weight: 700 !important;
+        color: #616f77 !important;
+        font-size: 14px !important;
+    }
+</style>

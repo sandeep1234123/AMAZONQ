@@ -1,0 +1,16 @@
+﻿
+<tr>
+    <th ng-if="vm.data.isShowSrNo" class="firstActionth" style="word-wrap:normal;vertical-align: middle;">
+        <span style="width: 42px;display: inline-block;">{{ 'Menu.SRNO' | translate }}
+    </th>
+    <th class="customTableHeaderhover" style="vertical-align: middle;">{{("Menu."+
+        vm.data.headingData[0].name | translate)}}</th>
+
+    <th class="customTableHeaderhover" style="text-align: center;vertical-align: middle;">
+        {{("Menu."+ vm.data.headingData[1].name | translate)}}</th>
+    <th class="customTableHeaderhover" style="text-align: center;vertical-align: middle;">
+        {{("Menu."+
+        vm.data.headingData[4].name | translate)}}</th>
+    <th class="customTableHeaderhover" style="vertical-align: middle;">{{("Menu."+
+        vm.data.headingData[7].name | translate)}}</th>
+</tr>

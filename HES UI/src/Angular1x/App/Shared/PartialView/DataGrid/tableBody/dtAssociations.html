@@ -1,0 +1,56 @@
+<tr class="{{record.rowClass}} {{($index % 2)==0? ' evenRow': ' oddRow'}} " ng-repeat="record in vm.data.rowData | startFrom:currentPage*pageSize
+    | limitTo:pageSize track by $index ">
+
+    <td ng-if="vm.data.isShowSrNo" style="background:  #c6c3c669;text-align: center;padding-left: 15px;
+    border-right: 1px solid #c6c3c669;">{{vm.srNumber+$index}}</td>
+
+    <td style="padding-left: 15px;padding-right: 15px; border-right: 1px solid #c6c3c669;"
+        ng-repeat="col in vm.data.headingData | filter:{visible : true}  track by $index">
+        <span
+            ng-if="col.name!='IsFarthestDT' && col.name!='IsNearestDT'">{{FormatData(record[col.name],col.Format)}}</span>
+        <span ng-if="(col.name=='IsFarthestDT' || col.name=='IsNearestDT') && record[col.name]=='True'">
+          
+            <i ng-if="record[col.name]=='True'" class="fa fa-check" style="font-size:25px;color:green"></i>
+            <span style="font-size:25px;color:green"><!--CHECKMARK_PLACEHOLDER--></span>
+
+        </span>
+    </td>
+    <td style="text-align: center;" >
+        <i ng-if="record['IsDTDisassociated']==false && vm.data.showActionColum" ng-click="linkColumnClicked(record,$index)"
+            title="{{ 'Menu.RemoveDTFromFeeder' | translate}}" class="fa fa-close" style="font-size:25px;color:red"></i>
+
+        <i ng-if="record['IsDTDisassociated']==false && vm.data.showActionColum" ng-click="onControlClick(record)"
+            title="{{ 'Menu.EditDTAssociation' | translate}}" class="fa fa-pencil"
+            style="font-size:25px;color:blue"></i>
+    </td>
+
+</tr>
+<tr ng-if="vm.data.rowData.length==0">
+    <td></td>
+    <td style="vertical-align: middle; ">{{ 'Menu.NoRecordFound'|translate }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<style>
+    th:last-child {
+        width: 0px !important
+    }
+    #feederWiseModalData table tbody tr td:nth-child(4),
+    #feederWiseModalData table tbody tr td:nth-child(5)
+    {
+        text-align: left !important;
+    }
+    #feederWiseModalData table tbody tr td:nth-child(2),
+    #feederWiseModalData table tbody tr td:nth-child(3)
+    {
+        text-align: center !important;
+    }
+    #feederWiseModalData table tbody tr td:nth-child(6),
+    #feederWiseModalData table tbody tr td:nth-child(7),
+    #feederWiseModalData table tbody tr td:nth-child(8)
+    {
+        text-align: right !important;
+    }
+</style>

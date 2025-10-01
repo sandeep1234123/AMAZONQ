@@ -1,0 +1,118 @@
+@{
+    ViewData["Title"] = "SSO Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">Welcome, @ViewBag.UserName!</h4>
+                        <small>@ViewBag.Email</small>
+                    </div>
+                    <a href="@Url.Action("Logout")" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+                    
+                    <h5 class="mb-4">Your Authorized Applications</h5>
+                    
+                    @if (ViewBag.Applications != null && ((List<CommonLogin.Controllers.ApplicationInfo>)ViewBag.Applications).Any())
+                    {
+                        <div class="row">
+                            @foreach (var app in (List<CommonLogin.Controllers.ApplicationInfo>)ViewBag.Applications)
+                            {
+                                <div class="col-md-4 mb-3">
+                                    <div class="card border-primary h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-desktop fa-3x text-primary mb-3"></i>
+                                            <h5 class="card-title">@app.DisplayName</h5>
+                                            <p class="card-text text-muted">Access your application with single sign-on</p>
+                                            <a href="@Url.Action("AccessApp", new { appName = app.Name })" 
+                                               class="btn btn-primary">
+                                                <i class="fas fa-external-link-alt me-1"></i>Launch App
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No applications are currently available for your role. Please contact your administrator.
+                        </div>
+                    }
+                    
+                    <hr class="my-4">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Session Information</h6>
+                            <ul class="list-unstyled">
+                                <li><strong>User ID:</strong> @User.FindFirst("sub")?.Value</li>
+                                <li><strong>Email:</strong> @ViewBag.Email</li>
+                                <li><strong>Roles:</strong> @string.Join(", ", User.FindAll(System.Security.Claims.ClaimTypes.Role).Select(c => c.Value))</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>SSO Status</h6>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success fa-2x me-2"></i>
+                                <div>
+                                    <strong>Active Session</strong><br>
+                                    <small class="text-muted">Single Sign-On is active across all applications</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+    
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(45deg, #5a6fd8, #6a4190);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .border-primary {
+        border-color: #667eea !important;
+    }
+    
+    .text-primary {
+        color: #667eea !important;
+    }
+</style>

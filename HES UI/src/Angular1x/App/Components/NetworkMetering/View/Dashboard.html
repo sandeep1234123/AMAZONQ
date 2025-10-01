@@ -1,0 +1,586 @@
+<div class="page page-datatables">
+    <div class="pageheader">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pagecontent">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="tile" fullscreen="isFullscreen02">
+                    <div class="tile-header dvd dvd-btm">
+                        <h1 class="custom-font" style="font-size: 30px;">{{ 'Menu.DASHBOARD' | translate }}</h1>
+                        <ul class="controls" style="padding:2px">
+                            <li id="PreviousMonth" ng-click="getPreviousMonth()"
+                                style="padding:9px;background-color: #337ab7;color:white;font-size: 15px;">
+                                {{previousMonthDateText}}</li>
+                            <li id="CurrentMonth" ng-click="getCurrentMonth()"
+                                style="padding: 9px;background-color:#E1ECF4;color:#337ab7;font-size: 15px;">
+                                {{currentMonthDateText}}</li>
+                            <li>
+                                <i class="glyphicon glyphicon-refresh gridFilterIcon button-success"
+                                    style="color: green;top: -1px;" title="{{ 'Menu.Refresh' | translate}}"
+                                    ng-click="onRefreshClick()"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <grid-filter filter-data="filterData" ng-if="showFilterPanel"> </grid-filter>
+                </section>
+                <div class="row col-md-12">
+                    <div class="col-md-3">
+                        <div class="outerDiv">
+                            <table class="tableStyle">
+                                <tr class="firstTr">
+                                    <td colspan="2">
+                                        <div id="text">{{'Menu.active'|translate}}</div>
+                                        <div>
+                                            <div class="progress-container" ng-click="activeDtFeeder('dt')">
+                                                <div class="description-text-first description-text">
+                                                    {{'Menu.DTText'|translate}}
+                                                </div>
+                                                <div class="percentage-text percentage-text-first">
+                                                    {{dashboardTitles.activeDtPercent}} %
+                                                </div>
+
+                                                <div class="progress-bar">
+                                                    <div class="colored-part-first colored-part"
+                                                        ng-style="formatStyle(dashboardTitles.activeDtPercent)"></div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-container-second" ng-click="activeDtFeeder('feeder')">
+                                                <div class="description-text-second description-text">
+                                                    {{'Menu.Feeder'|translate}}
+                                                </div>
+                                                <div class="percentage-text-second percentage-text">
+                                                    {{dashboardTitles.activeFeederPercent}} %
+                                                </div>
+
+                                                <div class="progress-bar">
+                                                    <div class="colored-part-second colored-part"
+                                                        ng-style="formatStyle(dashboardTitles.activeFeederPercent)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="emptyTr">
+                                    <td colspan="2"></td>
+                                </tr>
+                                <tr style="background-color: white;">
+                                    <td uib-tooltip="{{'Menu.ActiveDTTooltip'|translate}}" tooltip-placement="top"
+                                        tooltip-append-to-body="true" tooltip-append-to="parent" class="numberStyle"
+                                        style="border-right: 1px solid #cccfd4;" ng-click="activeDtFeeder('dt')">
+                                        <span class="numberTagStyle">
+                                            {{dashboardTitles.ActiveDT}}
+                                        </span>
+                                        <br>
+                                        <span class="tagStyle">{{'Menu.DTText'|translate}}</span>
+                                    </td>
+                                    <td uib-tooltip="{{'Menu.ActiveFeederTooltip'|translate}}" tooltip-placement="top"
+                                        tooltip-append-to-body="true" tooltip-append-to="parent" class="numberStyle"
+                                        ng-click="activeDtFeeder('feeder')">
+                                        <span class="numberTagStyle">
+                                            {{dashboardTitles.ActiveFeeder}}
+                                        </span>
+                                        <br>
+                                        <span class="tagStyle">{{'Menu.Feeder'|translate}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="emptyTr">
+                                    <td colspan="2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="outerDiv">
+                            <table class="tableStyle">
+                                <tr class="firstTr">
+                                    <td colspan="2" style="height: 141px; ">
+                                        <div id="text">{{'Menu.dtmapped'|translate}}</div>
+                                        <div>
+                                            <div class="progress-container" ng-click="unMappedDt('dt')">
+                                                <div class="description-text-first description-text" style="top:-9px">
+                                                    {{'Menu.MappedDT'|translate}}
+                                                </div>
+                                                <div class="percentage-text percentage-text-first" style="top:7px">
+                                                    {{dashboardTitles.mappedDTPercent}} %
+                                                </div>
+
+                                                <div class="progress-bar" style="margin-top: 7px;">
+                                                    <div class="colored-part-first colored-part"
+                                                        ng-style="formatStyle(dashboardTitles.mappedDTPercent)"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="emptyTr">
+                                    <td colspan="2"></td>
+                                </tr>
+                                <tr style="background-color: white;">
+                                    <td uib-tooltip="{{'Menu.MappedDTTooltip'|translate}}" tooltip-placement="top"
+                                        tooltip-append-to-body="true" tooltip-append-to="parent" class="numberStyle"
+                                        style="border-right: 1px solid #cccfd4" ng-click="unMappedDt('dt')">
+                                        <span class="numberTagStyle">
+                                            {{dashboardTitles.MappedDT}}
+                                        </span>
+                                        <br>
+                                        <span class="tagStyle">{{'Menu.MappedDT'|translate}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="emptyTr">
+                                    <td colspan="2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="outerDiv">
+                            <table class="tableStyle">
+                                <tr class="firstTr">
+                                    <td colspan="2">
+                                        <div id="text">{{'Menu.metered'|translate}}</div>
+                                        <div>
+                                            <div class="progress-container" ng-click="unmeteredDTFeeder('dt')">
+                                                <div class="description-text-first description-text">
+                                                    {{'Menu.DTText'|translate}}
+                                                </div>
+                                                <div class="percentage-text percentage-text-first">
+                                                    {{dashboardTitles.dTWithMeterPercent}} %
+                                                </div>
+
+                                                <div class="progress-bar">
+                                                    <div class="colored-part-first colored-part"
+                                                        ng-style="formatStyle(dashboardTitles.dTWithMeterPercent)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-container-second"
+                                                ng-click="unmeteredDTFeeder('feeder')">
+                                                <div class="description-text-second description-text">
+                                                    {{'Menu.Feeder'|translate}}
+                                                </div>
+                                                <div class="percentage-text-second percentage-text">
+                                                    {{dashboardTitles.feederWithMeterPercent}} %
+                                                </div>
+
+                                                <div class="progress-bar">
+                                                    <div class="colored-part-second colored-part"
+                                                        ng-style="formatStyle(dashboardTitles.feederWithMeterPercent)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="emptyTr">
+                                    <td colspan="2"></td>
+                                </tr>
+                                <tr style="background-color: white;">
+                                    <td uib-tooltip="{{'Menu.UnmeteredDTTooltip'|translate}}" tooltip-placement="top"
+                                        tooltip-append-to-body="true" tooltip-append-to="parent" class="numberStyle"
+                                        style="border-right: 1px solid #cccfd4" ng-click="unmeteredDTFeeder('dt')">
+                                        <span class="numberTagStyle">
+                                            {{dashboardTitles.DTWithMeter}}
+                                        </span>
+                                        <br>
+                                        <span class="tagStyle">{{'Menu.DTText'|translate}}</span>
+                                    </td>
+                                    <td uib-tooltip="{{'Menu.UnmeteredFeederTooltip'|translate}}"
+                                        tooltip-placement="top" tooltip-append-to-body="true" tooltip-append-to="parent"
+                                        class="numberStyle" ng-click="unmeteredDTFeeder('feeder')">
+                                        <span class="numberTagStyle">
+                                            {{dashboardTitles.FeederWithMeter}}
+                                        </span>
+                                        <br>
+                                        <span class="tagStyle">{{'Menu.Feeder'|translate}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="emptyTr">
+                                    <td colspan="2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="height: 233px;  ">
+                        <div class="outerDiv"
+                            style="border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;width:100%">
+                            <div uib-tooltip="{{'Menu.UnderloadedDTTooltip'|translate}}" tooltip-placement="left"
+                                tooltip-append-to-body="true" tooltip-append-to="parent"
+                                ng-click="getUnderloadOverloadData('underload')" class="watermark-container" style="height: 161px;
+                            background-color: #f1f19aba;padding: 2px 10px 10px 10px;">
+                                <i class="watermark-icon fa fa-dashboard fa-flip-horizontal"></i>
+                                <div id="text1" class="ng-binding">
+                                    {{'Menu.underloadeddt'|translate}}
+                                </div>
+                                <div id="text2" style=" text-align: left;font-size: 25px;">
+                                    {{underloadOverloadData.Underload}}
+                                </div>
+                            </div>
+                            <div uib-tooltip="{{'Menu.OverloadedDTTooltip'|translate}}" tooltip-placement="left"
+                                tooltip-append-to-body="true" tooltip-append-to="parent"
+                                ng-click="getUnderloadOverloadData('overload')"
+                                style="height: 47px;background-color: #efc8c8;padding: 2px 10px 10px 10px ;margin-top: 10px;">
+                                <div id="text1" class="ng-binding">
+                                    {{'Menu.overloadeddt'|translate}}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-12" style="padding-top:45px">
+                    <div class="col-md-3" style="height: 233px;">
+                        <div class="outerDiv">
+                            <table class="tableStyle" style="background-color: #8aa0ce;" ng-click="isFeederLoss()">
+                                <tr>
+                                    <td style="padding: 0px 16px;">
+                                        <span class="chartText1" style="color:white;">
+                                            <span
+                                                style="font-weight: bolder;font-size: 30px;">{{vm.totalThresholdCountForFeederLoss}}
+                                            </span>
+                                            <span>(
+                                                >=
+                                                {{vm.thresholdValueForFeederLoss}} %)</span>
+                                        </span>
+                                        <br>
+                                        <span style="color:white;"
+                                            class="chartText2">{{'Menu.FeederLoss'|translate}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <hc-stack-dashboard-chart class="graphStyle" ng-if="showGraph.feederLoss"
+                                            data="vm.feederLossData">
+                                        </hc-stack-dashboard-chart>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="height: 233px;">
+                        <div class="outerDiv">
+                            <table class="tableStyle" style="background-color: #8aa0ce;" ng-click="isOutageCount()">
+                                <tr>
+                                    <td style="padding: 0px 16px;">
+                                        <span class="chartText1" style="color:white;">
+                                            <span
+                                                style="font-weight: bolder;font-size: 30px;">{{vm.totalThresholdCountForOutage}}
+                                            </span>
+                                            <span>(
+                                                >=
+                                                {{vm.thresholdValueForOutage}} )</span>
+                                        </span>
+                                        <br>
+                                        <span style="color:white;"
+                                            class="chartText2">{{'Menu.DTOutageCount'|translate}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <hc-stack-dashboard-chart class="graphStyle" ng-if="showGraph.outageCount"
+                                            data="vm.outageCountData">
+                                        </hc-stack-dashboard-chart>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="height: 233px;">
+                        <div class="outerDiv">
+                            <table class="tableStyle" style="background-color: #8aa0ce;" ng-click="isOutageDuration()">
+                                <tr>
+                                    <td style="padding: 0px 16px;">
+                                        <span class="chartText1" style="color:white;">
+                                            <span
+                                                style="font-weight: bolder;font-size: 30px;">{{vm.totalThresholdCountForOutageDuration}}
+                                            </span>
+                                            <span>(
+                                                >=
+                                                {{vm.thresholdValueForOutageDuration}} {{vm.outageDurationUnit}})</span>
+                                        </span>
+                                        <br>
+                                        <span style="color:white;"
+                                            class="chartText2">{{'Menu.DTOutageDuration'|translate}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <hc-stack-dashboard-chart class="graphStyle" ng-if="showGraph.outageDuration"
+                                            data="vm.outageDurationData">
+                                        </hc-stack-dashboard-chart>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="height: 280px;margin-top:-47px;">
+                        <div class="outerDiv"
+                            style="border-top-left-radius: 0px;border-top-right-radius: 0px;width:100%">
+
+                            <div uib-tooltip="{{'Menu.OverloadedDTTooltip'|translate}}" tooltip-placement="left"
+                                tooltip-append-to-body="true" tooltip-append-to="parent"
+                                ng-click="getUnderloadOverloadData('overload')" class="watermark-container"
+                                style="height: 109px;background-color: #efc8c8;margin-top: -15px;padding:10px">
+                                <i style="top:-8%;left:35%" class="watermark-icon fa fa-dashboard"></i>
+                                <div id="text2" style=" text-align: left;font-size: 25px;">
+                                    {{underloadOverloadData.OverLoad}}
+                                </div>
+                            </div>
+                            <div uib-tooltip="{{'Menu.UnbalacedDTTooltip'|translate}}" tooltip-placement="left"
+                                tooltip-append-to-body="true" tooltip-append-to="parent"
+                                ng-click="getUnderloadOverloadData('unbalanced')" class="watermark-container"
+                                style="height: 158px;background-color: #efd096;margin-top: 10px;padding:2px 10px 10px 10px">
+                                  <i style="top:55%;left:35%;rotate: -8deg;" class="watermark-icon fa fa-balance-scale"></i>
+                                <div id="text1" class="ng-binding">
+                                    {{'Menu.unbalanceddt'|translate}}
+                                </div>
+                                <div id="text2" style=" text-align: left;font-size: 25px;">
+                                    {{underloadOverloadData.Unbalanced}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .highcharts-background {
+        fill: transparent;
+    }
+
+    .progress-container {
+        position: relative;
+        padding: 10px 15px 40px 15px;
+        margin-top: 25px;
+    }
+
+    .progress-container-second {
+        position: relative;
+        padding: 0px 15px 15px 15px;
+    }
+
+    .description-text-first {
+        top: -40px;
+    }
+
+    .description-text {
+        text-align: left;
+        line-height: 30px;
+        color: black;
+        position: absolute;
+    }
+
+    .description-text-second {
+        top: -50px;
+    }
+
+    .percentage-text-first {
+        top: -24px;
+    }
+
+    .percentage-text-second {
+        top: -35px;
+    }
+
+    .percentage-text {
+        text-align: right;
+        line-height: 30px;
+        color: black;
+        position: absolute;
+        right: 7px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .progress-bar {
+        width: 80%;
+        height: 10px;
+        background-color: white;
+        position: relative;
+        margin-top: -25px;
+        border-radius: 5px;
+    }
+
+    .colored-part {
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    .colored-part-first {
+        background-color: #39f;
+    }
+
+    .colored-part-second {
+        background-color: #d44343;
+    }
+
+    #text {
+        font-size: 34px;
+        font-weight: bolder;
+        color: #89828273;
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    #text1 {
+        font-size: 21px;
+        font-weight: bolder;
+        color: #898282cc;
+        text-align: right;
+        padding-right: 10px;
+        padding-top: 5px;
+    }
+
+    #text2 {
+        font-size: 35px;
+        font-weight: bolder;
+        color: #898282cc;
+        /* padding-left: 10px; */
+        margin-top: 10px;
+        /* optional spacing */
+    }
+
+    .outerDiv {
+        background: white;
+        padding: 10px 10px 10px 10px;
+        border-radius: 12px;
+        width: 317px;
+        height: 100%;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
+    }
+
+    .tableStyle {
+        height: 100%;
+        width: 297.404px;
+        border: 1px solid #b6b6de;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .firstTr {
+        background-color: #e5e6e7;
+        height: 115px;
+    }
+
+    .emptyTr {
+        height: 8px;
+        background-color: white;
+    }
+
+    .tagStyle {
+        color: #2c384aae;
+        font-size: 17px;
+    }
+
+    .numberStyle {
+        width: 50%;
+        text-align: center;
+    }
+
+    .numberTagStyle {
+        font-weight: bold;
+        font-size: 2.25rem;
+    }
+
+    .graphStyle {
+        height: 100px;
+        width: 100%;
+        display: block;
+        margin-bottom: -25px;
+    }
+
+    .chartText1 {
+        font-size: 15px;
+        font-weight: 500
+    }
+
+    .chartText2 {
+        font-size: 18px
+    }
+
+    .tile .tile-header.dvd .controls>li {
+        border-left: none;
+        border: 1px solid #9da5b1;
+        border-radius: 5px;
+        margin-right: 5px;
+    }
+
+    .custom-data-label {
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        border-radius: 5px;
+        padding: 5px 10px;
+        color: black;
+        font-size: 10px;
+        text-align: left;
+    }
+
+    .custom-data-label::after {
+        content: "";
+        position: absolute;
+        bottom: -47%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 8px;
+        border-style: solid;
+        border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent;
+    }
+
+    .highcharts-tooltip {
+        z-index: 9999;
+    }
+</style>
+<style>
+    .watermark-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        height: 161px;
+        background-color: #f1f19aba;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    .watermark-icon {
+        position: absolute;
+        top: 25%;
+        left: 35%;
+        font-size: 100px;
+        color: rgba(0, 0, 0, 0.1);
+    }
+</style>
+<style>
+    .watermark-container-image {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .watermark-image {
+        position: absolute;
+        top: 30%;
+        left: 30%;
+        width: 35%;
+        height: 60%;
+        object-fit: cover;
+        opacity: 0.5;
+    }
+</style>

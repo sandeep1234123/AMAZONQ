@@ -1,0 +1,64 @@
+﻿<div class="page page-core page-login">
+    <div class="cont">
+        <!-- <div class="PGCIL-top-left"><img ng-src="../../../../Angular1x/images/Branding/header-top-left-icon.png" />
+        </div> -->
+        <div class="demo">
+            <div class="login">
+                <div class="login__form">
+                    <img ng-src="{{homeLogoPath}}" height="100" />
+
+                    <strong>
+                        <p>{{homeLogoTitle}}</p>
+                    </strong>
+                    <form name="loginform" class="form-validation mt-20" submit-validate ng-submit="login(loginform)"
+                        role="form" novalidate>
+
+                        <div class="login__row">
+                            <svg class="svg login__icon name svg-icon" viewBox="0 0 20 20">
+                                <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
+                            </svg>
+                            <input type="text" name="txtUserName" class="login__input name changeForPGCIL" focus
+                                ng-model="user.username" next-control-id="txtPassword"
+                                placeholder="{{ 'Menu.lbl_USERNAME' | translate }}" required />
+                            <p class="help-block">
+                                <span class="error"
+                                    ng-if="loginform.txtUserName.$error.required && !loginform.txtUserName.$pristine">{{
+                                    'Menu.LOGIN_USERNAME_REQ' | translate }}</span>
+                            </p>
+                        </div>
+                        <br />
+                        <div class="login__row">
+
+                            <svg class="svg login__icon pass svg-icon" viewBox="0 0 20 20">
+                                <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
+                            </svg>
+                            <input type="password" class="login__input pass changeForPGCIL" name="txtPassword"
+                                id="txtPassword" ng-model="user.password"
+                                placeholder="{{ 'Menu.lbl_PASSWORD' | translate }}"
+                                ng-keypress="onPasswordKeyPressed($event)" required />
+                            <i style="margin-left:-21px" class="fa fa-eye-slash fa-sm" id="showandhidePassword"
+                                ng-click="onclick('txtPassword','showandhidePassword')"></i>
+                            <p class="help-block">
+                                <span class="error"
+                                    ng-if="loginform.txtPassword.$error.required && !loginform.txtPassword.$pristine">{{
+                                    'Menu.LOGIN_PASSWORD_REQ' | translate }}</span>
+                            </p>
+                        </div>
+                        <input type="submit" id="loginbtn" value="{{ 'Menu.LoginButton' | translate }}"
+                            class="login__submit" />
+                        <!-- <a  ui-sref="core.forgotpass" class="pull-right">{{ 'Menu.ForgotPasswordLink' | translate }}</a> -->
+                    </form>
+                    <p class="login__signup" style="background-color: white;color: red; margin-top: 15%;">
+                        {{responseMsg}}</p>
+                    <p style="color:white; padding-top:30px; font-weight: normal; font-size: 0.875em;">{{
+                        'Menu.CopyrightText' | translate }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .login__input {
+    width: 22rem !important;
+}
+</style>

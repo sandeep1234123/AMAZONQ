@@ -1,0 +1,162 @@
+﻿<div class="page page-datatables page-chat">
+    <div class="pageheader dashboardMargin">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.DTList">{{ 'Menu.DT' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="">{{ 'Menu.DTInformation' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ng-if="!isProcessing" ng-controller="DTDetailsTabCtrl" onload="onload(0,requestDetails,'DTInformation',true)"
+        ng-include="'Angular1x/App/Components/NetworkMetering/View/DTDetailsTabs.html'"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="tile bgTileColor" fullscreen="isFullscreen03">
+
+            </section>
+        </div>
+    </div>
+
+    <section class="tile bgTileColor" fullscreen="isFullscreen03">
+        <div class="row" style="display: flex;">
+            <div class="col-md-12" style="font-size: 15px;">
+                <div class="col-md-4" style="margin-top: 15px;">
+                    <div class="panel panel-info" style="height: auto;">
+                        <div class="panel-heading">
+                            <div style="display: inline;">
+                                {{vm.DTCode}}
+                            </div>
+                            <div style="display: inline; float: right;">
+                                {{vm.TypeOfDT}}
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div style="margin-bottom: 0%;" class="col-md-12 col-sm-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.FeederHT'|translate}}</label>
+                                    <span id="status" class="col-md-6 col-sm-6 col-xs-6 ">{{vm.Feeder}}</span>
+                                </div>
+                            </div>
+                            <div class="row spacingTop ">
+                                <div style="margin-bottom: 0%;" class="col-md-12 col-sm-12 col-xs-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.CapacityDT'|translate
+                                        }}</label>
+                                    <span class="col-md-6 col-sm-6 col-xs-6 ">{{vm.DTCapacity}} kVA</span>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 0%;" class="row spacingTop">
+                                <div class="col-md-12 col-sm-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.InstalledOn'|translate}}</label>
+                                    <span
+                                        class="col-md-6 col-sm-6 col-xs-6 ">{{FormatData(vm.InstalledOn,'shortdate')}}</span>
+                                </div>
+                            </div>
+                            <div class="row spacingTop">
+                                <div style="margin-bottom: 0%;" class="col-md-12 col-sm-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.Meter'|translate}}</label>
+                                    <span id="status" class="col-md-6 col-sm-6 col-xs-6 ">{{vm.MeterID}}</span>
+                                </div>
+                            </div>
+                            <div class="row spacingTop">
+                                <div style="margin-bottom: 0%;" class="col-md-12 col-sm-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.DateofAssociation'|translate}}</label>
+                                    <span id="status"
+                                        class="col-md-6 col-sm-6 col-xs-6 ">{{FormatData(vm.DateofAssociation,'shortdate')}}</span>
+                                </div>
+                            </div>
+                           
+
+                            <div ng-show="vm.IsLG" class="row spacingTop">
+                                <div class="col-md-12 col-sm-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.LastOutageTime'|translate}}</label>
+                                    <span id="status" class="col-md-6 col-sm-6 col-xs-6 ">{{vm.PowerOutageSince}}</span>
+                                </div>
+                            </div>
+                            <div ng-show="!vm.IsLG" class="row spacingTop">
+                                <div class="col-md-12 col-sm-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.LastOutageDate'|translate}}</label>
+                                    <span id="status" class="col-md-6 col-sm-6 col-xs-6 ">{{vm.LastOutageDate}}</span>
+                                </div>
+                            </div>
+                            <div ng-show="!vm.IsLG" class="row spacingTop">
+                                <div class="col-md-12 col-sm-12">
+                                    <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-4 col-xs-7 removeLeftRightPadding">{{'Menu.LastPowerOutageDuration'|translate}}</label>
+                                    <span id="status" ng-if="vm.LastPowerOutageDuration"
+                                        class="col-md-6 col-sm-6 col-xs-6 ">{{FormatData(vm.LastPowerOutageDuration,'timeinseconds')}}
+                                        (day.HH:mm:ss)</span>
+                                </div>
+                            </div>
+                            <div class="row spacingTop">
+                                <div style="margin-bottom: 3%;" class="col-md-12 col-sm-12">
+                                    <!-- <label style="margin-bottom: 0%;"
+                                        class="col-md-6 col-sm-6 col-xs-6 removeLeftRightPadding">{{'Menu.LastCommsDateTime'|translate}}</label>
+                                    <span id="status"
+                                        class="col-md-6 col-sm-6 col-xs-6 ">{{FormatData(vm.LastCommsDateTime,'datetime')}}</span> -->
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div ng-include="'Angular1x/App/Components/NetworkMetering/View/tabInformationPartialView.html'"></div>
+    </section>
+</div>
+<style>
+    b,
+    .textAlignVertical {
+        vertical-align: -webkit-baseline-middle;
+    }
+
+    .reAlign {
+        margin-top: 0px;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .yellow {
+        color: yellow;
+    }
+
+    .blue {
+        color: blue;
+    }
+
+    .spacingTop {
+        margin-top: 10px;
+    }
+
+    table {
+        font-size: 15px;
+    }
+
+    .displayInline {
+        display: inline;
+    }
+
+    .paramMarginfLeft {
+        margin-left: 50px;
+    }
+</style>

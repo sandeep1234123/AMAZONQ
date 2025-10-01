@@ -1,0 +1,44 @@
+﻿<div class="form-group col-md-7" style=" display: inline;float: left;margin-left: -50px;">
+    <div class="spacer2 spacerTop" style="display: inline; float: inherit">
+        <label ng-if="filter.labelForDateFilter!=null" class="pStyle">{{filter.labelForDateFilter |
+            translate}}</label>&nbsp;&nbsp;&nbsp;
+        <label class="pStyle" style="padding-left: 10px;">{{ 'Menu.From' | translate }}</label>
+    </div>
+    <div class="spacerTop" style="display: inline; float: inherit;padding-left: 5px;">
+        <hes-Date-Picker maximum-date="filter.maxDate" minimum-date="filter.minDate" selected-value="filter.fromDate">
+        </hes-Date-Picker>
+    </div>
+    <div class="spacer spacerTop" style="display: inline; float: inherit;">
+        <label class="pStyle">{{ 'Menu.To' | translate }}</label>
+    </div>
+    <div class=" spacerTop" style="display: inline; float: inherit;padding-left: 5px;">
+        <hes-Date-Picker maximum-date="filter.maxDate" minimum-date="filter.fromDate" selected-value="filter.toDate">
+        </hes-Date-Picker>
+    </div>
+</div>
+
+<div class="spacer spacerTop col-md-2" style="display: inline;float: inherit;">
+    <button style="margin-top: 15px;" type="button" class="btn btn-primary applyButton" ng-click="applyFilter()">{{
+        'Menu.Apply' |
+        translate}}</button>
+    <button style="margin-top: 15px;" type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' |
+        translate}}</button>
+</div>
+</div>
+
+<style>
+    .spacerTop {
+        margin-top: 20px;
+    }
+
+    .pStyle {
+        margin-top: 10px;
+    }
+
+    .form {
+        border: none;
+        padding: 0;
+        display: flex;
+
+    }
+</style>

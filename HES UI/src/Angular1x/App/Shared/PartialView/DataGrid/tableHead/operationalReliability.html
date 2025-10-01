@@ -1,0 +1,58 @@
+<tr>
+    <th rowspan="2" ng-if="vm.data.isShowSrNo" class="firstActionth" style="word-wrap:normal;vertical-align: middle;">
+        <span style="width: 42px;display: inline-block;">{{ 'Menu.SRNO' | translate }}
+    </th>
+    <th class="" rowspan="2">{{"Menu.DTRCode" | translate}}
+    </th>
+    <th class="" rowspan="2">{{"Menu.DTRName" | translate}}
+    </th>
+    <th class="" rowspan="2">{{"Menu.MeterNumber" | translate}}
+    </th>
+    <th class="" rowspan="2">{{"Menu.LatLong" | translate}}
+    </th>
+    <th class="" rowspan="2">{{"Menu.CapacitykVA" | translate}}
+    </th>
+    <th class="" colspan="3">{{"Menu.MaximumPowerDemandDT" |
+        translate}}</th>
+    <th class="" colspan="3">{{"Menu.MinimumPowerDemandDT" |
+        translate}}</th>
+    <th class="" colspan="4">{{"Menu.LoadingCondition" |
+        translate}} (HH:mm)</th>
+    <th class="" rowspan="2">{{"Menu.PF" |
+        translate}}</th>
+    <th class="" rowspan="2">{{"Menu.LF" |
+        translate}}</th>
+    <th class="" colspan="2">{{"Menu.Interruptions" |
+        translate}}</th>
+    <!-- <th class="" rowspan="2">
+        <div style="padding-bottom: 2px;">{{"Menu.DataAvailability" |
+            translate}}</div> <br> %
+    </th> -->
+
+</tr>
+<tr>
+    <th>{{("Menu.kVA" | translate)}}</th>
+    <th>{{("Menu.kW" | translate)}}</th>
+    <th>{{("Menu.DateTime" | translate)}}</th>
+
+    <th>{{("Menu.kVA" | translate)}}</th>
+    <th>{{("Menu.kW" | translate)}}</th>
+    <th>{{("Menu.DateTime" | translate)}}</th>
+
+    <th>{{("Menu.20" | translate)}} %</th>
+    <th>{{("Menu.2080" | translate)}} %</th>
+    <th>{{("Menu.8095" | translate)}} %</th>
+    <th>{{("Menu.95" | translate)}} %</th>
+
+    <th>{{("Menu.Number" | translate)}}</th>
+    <th>{{("Menu.Hours" | translate)}}</th>
+
+
+</tr>
+<style>
+    th {
+        background-color: #5D7B9D !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+</style>

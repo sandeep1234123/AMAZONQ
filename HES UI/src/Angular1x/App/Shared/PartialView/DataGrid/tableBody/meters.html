@@ -1,0 +1,23 @@
+<tr class="{{record.rowClass}} {{($index % 2)==0? ' evenRow': ' oddRow'}} " 
+ng-repeat="record in vm.data.rowData | startFrom:currentPage*pageSize
+    | limitTo:pageSize track by $index ">
+
+    <td ng-if="vm.data.isShowSrNo" style="background:  #c6c3c669;text-align: center;padding-left: 15px;
+    border-right: 1px solid #c6c3c669;">{{vm.srNumber+$index}}</td>
+
+    <td style="text-align: center;padding-left: 15px;padding-right: 15px; border-right: 1px solid #c6c3c669;"
+        ng-repeat="col in vm.data.headingData | filter:{visible : true}  track by $index">
+        <span ng-if="col.name!='Download' && !col.IsLink">{{FormatData(record[col.name],col.Format)}}</span>
+       
+        <span ng-if="col.name=='Download'"><i class="fa fa-download" title="Download"
+                ng-click="performAction('downloadSessionFile',record[col.name])" role="button" tabindex="0">
+            </i></span>
+
+        <span ng-if="col.IsLink" data-toggle="tooltip" class="grid-link-cell ng-binding" style="cursor: pointer;"
+            ng-click="linkColumnClicked(col.name,record) " role="button"
+            tabindex="0">{{FormatLinkData(record,col,record[col.name])}}</span>
+        </span>
+
+    </td>
+    <td></td>
+</tr>

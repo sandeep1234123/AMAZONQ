@@ -1,0 +1,35 @@
+﻿<tr>
+    <th rowspan="2" ng-if="vm.data.isShowSrNo" class="firstActionth" style="word-wrap:normal;vertical-align: middle;">
+        <span style="width: 42px;display: inline-block;">{{ 'Menu.SRNO' | translate }}
+    </th>
+    <th class="customTableHeaderhover" rowspan="2" style="vertical-align: middle;">{{("Menu.Hour" | translate)}}
+    </th>
+    <th class="customTableHeaderhover" rowspan="2" style="vertical-align: middle;">{{("Menu.CurrentUnbalance%" |
+        translate)}}
+    </th>
+    <th class="customTableHeaderhover" rowspan="2" style="vertical-align: middle;">{{("Menu.AverageCurrent" |
+        translate)}} (A)
+    </th>
+    <th class="customTableHeaderhover" colspan="6" style="vertical-align: middle;">{{("Menu.PhaseRelativeUnbalance%" |
+        translate)}}</th>
+    </th>
+
+</tr>
+<tr>
+    <th style="vertical-align: middle;background-color: #e86868">{{(" Menu.RPhAvgCurrent" | translate)}} (A)</th>
+    <th style="vertical-align: middle;background-color: #e86868">{{(" Menu.Unabalnce%" | translate)}}</th>
+
+    <th style="vertical-align: middle;background-color: #f2f27b">{{(" Menu.YPhAvgCurrent" | translate)}} (A)</th>
+    <th style="vertical-align: middle;background-color: #f2f27b">{{(" Menu.Unabalnce%" | translate)}}</th>
+
+    <th style="vertical-align: middle;background-color: #7e7ef1">{{("Menu.BPhAvgCurrent" | translate)}} (A)</th>
+    <th style="vertical-align: middle;background-color: #7e7ef1">{{("Menu.Unabalnce%" | translate)}}</th>
+
+</tr>
+<style>
+    thead tr:nth-child(2) th {
+        position: sticky;
+        top: 37px;
+        z-index: 1;
+    }
+</style>

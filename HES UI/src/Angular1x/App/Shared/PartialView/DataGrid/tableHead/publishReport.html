@@ -1,0 +1,12 @@
+<tr>
+    <th ng-if="vm.data.isShowSrNo" style="text-align: center;vertical-align: top;padding-left: 15px;">{{ 'Menu.SRNO' |
+        translate }}</th>
+    <th style="text-align: center; vertical-align: top;padding-left: 15px;"
+        ng-repeat="x in vm.data.headingData | filter:{visible : true} track by $index ">
+        {{ x.ColumnName }}
+    </th>
+    <th>
+        Action
+    </th>
+    <th style="width: 100%;"></th>
+</tr>

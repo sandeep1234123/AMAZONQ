@@ -1,0 +1,64 @@
+<header class="clearfix" ng-controller="HeaderCtrl">
+    <!-- Branding -->
+    <div class="branding {{main.settings.brandingColor}}"
+        style="width: 205px !important;padding: 5px 15px !important; ">
+        <a ui-sref="app.dashboard">
+            <div class="PGCIL_Name">
+                &nbsp;
+                <img class="lineTrafficLoadingIcon" src="{{homeLogoPath}}" height="35" alt="Loading..." />
+            </div>
+        </a>
+        <a href="javascript:;" class="offcanvas-toggle visible-xs-inline" offcanvas-sidebar>
+            <i class="fa fa-bars"></i></a>
+    </div>
+    <!-- Branding end -->
+    <!-- Left-side navigation -->
+    <ul class="nav-left pull-left list-unstyled list-inline">
+        <li class="sidebar-collapse divided-right">
+            <a href="javascript:;" collapse-sidebar>
+                <fa name="outdent"></fa>
+            </a>
+        </li>
+    </ul>
+    <!-- Left-side navigation end -->
+    <!-- Search -->
+    <!-- <div class="branding {{main.settings.brandingColor}}" style="width: auto;
+  font-size: 18px;
+   color: #004c9e;
+  font-weight: bold;
+  margin-left: 30%;
+  text-align: end;">{{ 'Menu.UtilityNameEnglish' | translate }}<br>{{ 'Menu.UtilityNameHindi' | translate }}
+        <img ng-if="showHeaderLogo2" class="lineTrafficLoadingIcon" src="{{headerLogo2Path}}" height="35"
+            alt="Loading..." />
+
+        <label style="    padding-top: 5px;padding-left: 5px;">{{headerLogo2Title}}</strong>
+    </div> -->
+    <div class="search" id="main-search" ng-hide="true">
+        <input type="text" class="form-control underline-input" placeholder="Search...">
+    </div>
+
+    <ul class="nav-right pull-right list-inline">
+        <li class="dropdown nav-profile" uib-dropdown>
+            <a href class="dropdown-toggle" uib-dropdown-toggle>
+                <img src="Angular1x/images/EmptyProfile.jpg" alt="" class="img-circle size-30x30">
+                <span>{{userName}} <fa ng-if="showHeader" name="angle-down"></fa></span>
+            </a>
+            <ul ng-if="showHeader" class="dropdown-menu animated littleFadeInRight" role="menu">
+                <li>
+                    <a href="#" ng-click="logout()">
+                        <fa name="sign-out"></fa>{{ 'Menu.Logout' | translate }}
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+    </ul>
+    <!-- Right-side navigation end -->
+
+</header>
+<style>
+    .littleFadeInRight {
+        position: absolute !important;
+    }
+</style>

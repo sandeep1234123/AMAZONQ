@@ -1,0 +1,238 @@
+<div class="row">
+    <table style="float: right;">
+        <tr ng-hide=" filter.showVoltageLoadedUnloaded">
+            <td style="padding-left: 50px;"></td>
+            <td ng-if="filter.showReportType" style="text-align: center;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.EnergyType' |translate}}</h4>
+            </td>
+            <td style="padding-left: 50px;"></td>
+            <td style="text-align: left;padding-left: 25px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.PeriodOfInterest' |translate}}</h4>
+            </td>
+            <td style="padding-left: 50px;"></td>
+            <td></td>
+        </tr>
+        <tr ng-show=" filter.showVoltageLoadedUnloaded">
+            <td style="text-align: left;width: 10%;padding-left: 25px;padding-bottom: 25px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.PeriodOfInterest' |translate}}</h4>
+            </td>
+            <td style=" text-align: left;padding-bottom: 25px;padding-left:70px;border-right: 3px solid;border-left:
+                3px solid;">
+                <h4 style="color:#afacac">{{
+                    filter.filterTitle |translate}}</h4>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td ng-hide=" filter.showVoltageLoadedUnloaded"></td>
+            <td ng-hide=" filter.showVoltageLoadedUnloaded" ng-if="filter.showReportType">
+                <select ng-change="onControlClick(filter.selectedReportType)" class="form-control" name="dropdown"
+                    id="dropdown" ng-model="filter.selectedReportType"
+                    ng-options="opt.value as opt.Name for opt in  filter.reportType">
+                </select>
+            </td>
+            <td ng-hide=" filter.showVoltageLoadedUnloaded"></td>
+            <td style="padding-left: 20px;">
+                <div style="display: inline;">
+                    <ul class="dashBoardDateRangePicker dashboardDatePickerMargin">
+                        <li>
+                            <a style="width: 175px;" href="javascript:;" class="btn btn-greensea no-border"
+                                ng-hide="false" aria-hidden="false">
+                                <input id="daterange" type="daterange" min-date="{{filter.minimumDate}}"
+                                    max-date={{filter.maximumDate}} readonly="readonly" ng-change="setDate()"
+                                    ng-model="filter.date" ranges="ranges"
+                                    class="rnagePickerinput ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched"
+                                    format={{filter.calendarFormat}} aria-invalid="false">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td ng-hide=" filter.showVoltageLoadedUnloaded"></td>
+
+            <td ng-show="filter.showVoltageLoadedUnloaded"
+                style="padding-left:55px;border-right: 3px solid;border-left: 3px solid;">
+                <div style="display: inline;">
+                    <div class="col-md-2">
+                        <div class="labelStyle ng-binding" style="text-align: left; ">{{filter.capacity}} kVA</div><br>
+                        <div style="margin-top: -26px; font-size: 12px; text-align: left; color: #333;">Capacity</div>
+                    </div>
+                </div>
+                <div style="display: inline;">
+                    <div class="col-md-2 custom-container" style="padding: 0px !important;border:2px solid green">
+                        <label class="custom-label">{{ 'Menu.Criteria1' |translate}}</label>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container" style="border-right: 1px solid #007bff;">
+                                <input class="placeholderInput custom-textbox" step="1" min="0"
+                                    ng-attr-max="{{getMaxValue(filter.criteria2)}}" ng-model="filter.criteria1" type="number"
+                                    ng-change="inputElementFocus(filter.criteria1,'Criteria1')" ng-blur="inputElementBlur(filter.criteria1,'Criteria1')"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: end;" disabled="true"
+                                    ng-model="filter.criteria1Value" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: inline;">
+                    <div class="col-md-2 custom-container" style="padding: 0px !important;border:2px solid yellow">
+                        <label class="custom-label">{{ 'Menu.Criteria2' |translate}}</label>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container" style="border-right: 1px solid #007bff;">
+                                <input class="placeholderInput custom-textbox" step="1" ng-attr-min="{{getMinValue(filter.criteria1)}}"
+                                    ng-attr-max="{{getMaxValue(filter.criteria3)}}" ng-model="filter.criteria2" type="number"
+                                    ng-change="inputElementFocus(filter.criteria2,'Criteria2')" ng-blur="inputElementBlur(filter.criteria2,'Criteria2')"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: end;" disabled="true"
+                                    ng-model="filter.criteria2Value" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: inline;">
+                    <div class="col-md-2 custom-container" style="padding: 0px !important;border:2px solid orange">
+                        <label class="custom-label">{{ 'Menu.Criteria3' |translate}}</label>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container" style="border-right: 1px solid #007bff;">
+                                <input class="placeholderInput custom-textbox" step="1" ng-attr-min="{{getMinValue(filter.criteria2)}}"
+                                    ng-attr-max="{{getMaxValue(filter.criteria4)}}" ng-model="filter.criteria3" type="number"
+                                    ng-change="inputElementFocus(filter.criteria3,'Criteria3')" ng-blur="inputElementBlur(filter.criteria3,'Criteria3')"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: end;" disabled="true"
+                                    ng-model="filter.criteria3Value" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: inline;">
+                    <div class="col-md-2 custom-container" style="padding: 0px !important;border:2px solid red">
+                        <label class="custom-label">{{ 'Menu.Criteria4' |translate}}</label>
+                        <div class="col-md-4" style="padding: 0px !important;">
+                            <div class="input-container" style="border-right: 1px solid #007bff;">
+                                <input class="placeholderInput custom-textbox" step="1" ng-attr-min="{{getMinValue(filter.criteria3)}}"
+                                    max="100" ng-model="filter.criteria4" type="number"
+                                    ng-change="inputElementFocus(filter.criteria4,'Criteria4')" ng-blur="inputElementBlur(filter.criteria4,'Criteria4')"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox " style="text-align: end;" disabled="true"
+                                    ng-model="filter.criteria4Value" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            <td class="shift" style="padding-left: 25px;padding-right: 10px;"> <button style="margin-right: 0px; "
+                    type="button" class="btn btn-primary applyButton" ng-click="applyFilter()">{{
+                    'Menu.Apply' |translate}}</button>
+                <button type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' |
+                    translate}}</button>
+            </td>
+        </tr>
+        <tr ng-show="filter.showVoltageLoadedUnloaded">
+            <td style="width:15%">
+            </td>
+            <td colspan=1 style="padding-top: 15px;padding-left: 70px;border-left: 3px solid;border-right: 3px solid;">
+                <label style="color: #afacac;font-weight: 100;">{{ 'Menu.CriteriaForUnLoaded' |translate}}</label>
+                <label style=" padding-left: 125px;color: #afacac;font-weight: 100;">{{ 'Menu.CriteriaForLoaded'
+                    |translate}}</label>
+            </td>
+        </tr>
+        <tr ng-show="filter.showVoltageLoadedUnloaded">
+            <td style="width:15%">
+
+            </td>
+            <td style="width:74%;padding-left: 70px;border-left: 3px solid;border-right: 3px solid;"">
+                <select style=" display: inline;width:15%;height: 35px;padding-left: 5px;" class="form-control"
+                name="dropdown" id="dropdown" ng-model="filter.unloadedCriteria"
+                ng-options="opt.value as opt.Name for opt in  filter.criteriaLoadedDropDown">
+                </select>
+                <div style="display:inline;padding-right: 45px;height: 35px;display: inline;width:8%;margin-left: -4px;" layout-wrap="" layout-gt-xs="row" class="layout-wrap layout-gt-xs-row">
+                    <div flex-gt-xs="50" class="flex-gt-xs-50" style="display: inline-block;">
+                        <div class="input-container" style="width:120px">
+                            <input class="form-control  placeholderInput" ng-model="filter.unloadedCriteriaValue" class="form-control input-sm" min="0" type="text" step="1">
+                            <div style="font-size: 10px;" class="placeholder">{{ 'Menu.HourMintueSymbol' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <select style=" display: inline;width:15%;height: 35px" class="form-control" name="dropdown"
+                    id="dropdown" ng-model="filter.loadedCriteria"
+                    ng-options="opt.value as opt.Name for opt in  filter.criteriaLoadedDropDown">
+                </select>
+
+                <div style="display:inline;padding-right: 0px;height: 35px;display: inline;width:8%;margin-left: -5px;" layout-wrap="" layout-gt-xs="row" class="layout-wrap layout-gt-xs-row">
+                    <div flex-gt-xs="50" class="flex-gt-xs-50" style="display: inline-block;">
+                        <div class="input-container" style="width:120px">
+                            <input class="form-control  placeholderInput" ng-model="filter.loadedCriteriaValue" class="form-control input-sm" min="0" type="text" step="1">
+                            <div style="font-size: 10px;" class="placeholder">{{ 'Menu.HourMintueSymbol' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+
+    </table>
+</div>
+<style>
+    .custom-container {
+        position: relative;
+        margin-left: 30px !important;
+        border-radius: 5px;
+    }
+
+    .custom-label {
+        position: absolute;
+        top: -12px;
+        left: 10px;
+        background-color: white;
+        padding: 0 5px;
+        font-weight: normal;
+        font-size: 12px;
+        color: #333;
+    }
+
+    .custom-textbox {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+
+    .labelStyle {
+        font-size: 20px;
+    }
+
+    .panelColorClass {
+        background: white !important
+    }
+
+    .dropdown-menu {
+        position: absolute !important;
+    }
+</style>

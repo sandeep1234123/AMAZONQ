@@ -1,0 +1,17 @@
+
+<tr class="{{record.rowClass}} {{($index % 2)==0? 'evenRow': ' oddRow'}} " 
+ng-repeat="record in [].constructor(10) track by $index ">
+    <td style="text-align: center;vertical-align: middle; ">{{vm.srNumber+$index}}</td>
+    <td ng-if="vm.data.isSim" style="vertical-align: middle;text-align: center;">{{vm.data.rowData[$index]['SIM']}}</td>
+    <td ng-if="vm.data.isModule" style="vertical-align: middle;text-align: center;">{{vm.data.rowData[$index]['IEMI']}}</td>
+    <td  style="vertical-align: middle; text-align: center;">{{vm.data.rowData[$index]['Timestamp']}}</td>
+    </td>
+</tr>
+<tr ng-if="vm.data.rowData[0].DisplayName=='No Record Found.' " class="{{record.rowClass}} {{($index % 2)==0? ' evenRow': ' oddRow'}} " ">
+    <td></td>
+    <td style="vertical-align: middle; ">{{record[vm.data.headingData[0].name]}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>

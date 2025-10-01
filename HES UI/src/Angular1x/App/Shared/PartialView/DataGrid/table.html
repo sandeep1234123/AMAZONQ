@@ -1,0 +1,231 @@
+﻿<div ng-if="!vm.data.headingData">
+    <img src="../../../../Angular1x/images/hourglass.gif" height="20" alt="Loading..." />
+</div>
+
+<div ng-if="vm.data.headingData">
+    <div class="row {{vm.data.showTableHeader==true ? 'titleHeader':'none'}}">
+        <style>
+            .reAlign {
+                margin-top: -44px;
+            }
+        </style>
+        <div class="col-md-5 tableHeaderClass">
+           <div>{{vm.data.customtableHeader}}</div>
+        </div>
+        <div class="col-md-offset-3 col-md-4 btn-toolbar {{vm.data.reAlignToolbar==true ? 'reAlign':'none'}} "
+            role="toolbar " style=" float: right; width: auto;padding-right: 40px;">
+           
+            <div ng-if="vm.data.showPaginationRow  && vm.data.serverPagination && !vm.data.isGrouping"
+                class="btn-group " role="group ">
+                <select class="form-control customGridRecordPerpage ng-pristine ng-untouched ng-valid ng-not-empty "
+                    ng-model="pageSize " ng-options="opt as opt for opt in vm.numberOfItems
+                    " ng-change="vm.resetPaging(pageSize) " aria-invalid="false ">
+                    <option label="10 " value="number:10 ">10</option>
+                    <option label="25 " value="number:25 ">25</option>
+                    <option label="50 " value="number:50 ">50</option>
+                    <option label="100 " value="number:100">100</option>
+                    <option label="500 " value="number:500 ">500</option>
+                </select>
+            </div>
+            <div class="btn-group spacer">
+                <input type="button" value="XLS " ng-if="vm.data.options.export " ng-click="vm.ExportToExcel() "
+                    style="margin-bottom:15px;margin-right:5%; "
+                    class="form-control btn btn-default pull-left customGridExport ng-scope ">
+            </div>
+            <div class="btn-group spacer" ng-if="vm.data.sortLabel!=null" style="margin-top: 5px;"
+            ng-init="showHoverDetails()">
+            <span ng-show='vm.data.sortOrder==null' class="popoverClass" style="cursor: pointer;" data-html="true" title="Order By:" data-content="{{vm.data.sortLabel|translate}} 
+                <b  style='color:blue;'>
+                    {{'Menu.SortOrderDesc'|translate}}
+                </b>" rel="popover" data-placement="bottom" data-trigger="hover"> <i class="fa fa-info-circle"
+                    style="
+        font-size: x-large;
+        color: blue;
+    " aria-hidden="true"></i>
+            </span>
+            <span ng-show='vm.data.sortOrder!=null' class="popoverClass" style="cursor: pointer;" data-html="true" title="Order By:" data-content="{{vm.data.sortLabel|translate}} 
+            <b  style='color:blue;'>
+                {{vm.data.sortOrder|translate}}
+            </b>" rel="popover" data-placement="bottom" data-trigger="hover"> <i class="fa fa-info-circle"
+                style="
+    font-size: x-large;
+    color: blue;
+" aria-hidden="true"></i>
+        </span>
+        </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div class="row gridSelectAllRow showMobileView " ng-if="vm.data.showCheckbox ">
+    <div class="col-md-12 ">
+        <label class="gridSelectAll ">Select All : </label>
+        <input type="checkbox " ng-model="vm.checkAll " ng-change="vm.onAllCheckboxChange() " />
+    </div>
+</div>
+<div class="row ">
+    <div class="form-group col-md-12 ">
+        <div id="{{vm.data.tableID}}" class="showDesktopView tableFixHead ">
+            <table class="table customTable {{vm.data.firstRow==1 ? 'firstRow': ''}} " style="white-space: nowrap;">
+                <thead ng-if="!vm.data.tableHeaderTemplateURL" class="customTableHeader " ng-init="srNo=0 ">
+                    <tr>
+                        <th ng-if="vm.data.showCheckbox ">
+                            <input type="checkbox " ng-model="vm.checkAll " ng-change="vm.onAllCheckboxChange() " />
+                        </th>
+                        <th ng-if="vm.data.isShowSrNo && !vm.data.isGrouping " class="firstActiontd  "
+                            style="word-wrap:normal "><span style="width: 42px;display: inline-block; ">{{ 'Menu.SRNO' |
+                                translate }}</th>
+
+                        <th class="customTableHeaderhover "
+                            ng-repeat="x in vm.data.headingData | filter:{visible : true} track by $index ">
+                            {{ vm.isEnableTranslation == true? ("Menu."+ x.name | translate): x.ColumnName }}
+
+                        </th>
+                        <th ng-if="vm.data.Actions && vm.data.Actions.length> 0">{{ 'Menu.ACTION' | translate }}</th>
+                        <th style="width: 100%;"></th>
+                    </tr>
+                </thead>
+
+                <thead ng-if="vm.data.tableHeaderTemplateURL" class="customTableHeader" ng-init="srNo=0"
+                    ng-include="vm.data.tableHeaderTemplateURL">
+                </thead>
+
+                <tbody ng-if="vm.data.isGrouping" ng-repeat="x in vm.data.tableData "
+                    ng-include="vm.data.tableBodyTemplateURL"></tbody>
+                <tbody ng-if="!vm.data.isGrouping" ng-include="vm.data.tableBodyTemplateURL">
+
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>
+<span style="
+font-size: small;
+font-style: italic;
+color: blue;
+padding-left: 10px;
+">{{ vm.data.informationText | translate }}</span>
+<div ng-if="vm.data.showPaginationRow">
+    <div class="row" ng-if="vm.data.serverPagination">
+        <div class="form-group col-sm-12">
+            <div class="dataTables_paginate paging_full_numbers">
+                <ul class="pagination">
+                    <li ng-class="{'disabled': pagination.currentPage == 0}" style="cursor:pointer">
+                        <a class="first" tabindex="0" ng-click="firstPage()">{{'Menu.FirstPage' | translate}}</a>
+                    </li>
+                    <li ng-class="{'disabled':pagination.currentPage == 0}" style="cursor:pointer">
+                        <a class="previous" tabindex="0" ng-click="previousPage()">{{'Menu.PreviousPage' |
+                            translate}}</a>
+                    </li>
+                    <li></li>
+                    <li class="active"><span class="" tabindex="0">{{ pagination.currentPage + 1 }}</span></li>
+                    <li
+                        ng-class="{'disabled': pagination.currentPage === pagination.totalNoOfPages - 1 || pagination.totalRecords === 0 }">
+                        <span
+                            ng-class="{'disabled': pagination.currentPage === pagination.totalNoOfPages - 1 || pagination.totalRecords === 0 }"
+                            class="next" data-dt-idx="3" tabindex="0" ng-click="nextPage()">{{'Menu.NextPage' |
+                            translate}}</span>
+                    </li>
+                    <li
+                        ng-class="{'disabled':pagination.currentPage === pagination.totalNoOfPages - 1 || pagination.totalRecords === 0 }">
+                        <span
+                            ng-class="{'disabled':pagination.currentPage === pagination.totalNoOfPages - 1 || pagination.totalRecords === 0 }"
+                            class="last" aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0"
+                            id="DataTables_Table_0_last" ng-click="lastPage()">{{'Menu.LastPage' | translate}}</span>
+                    </li>
+                </ul>
+                <i class="pull-right" style="
+    margin-top: 20px;
+">{{'Menu.Showing' | translate}} {{vm.srNumber}} {{'Menu.ShowingTo' | translate}} {{vm.srNumber+pageSize-1 <
+                        pagination.totalRecords ? vm.srNumber+pageSize -1 : pagination.totalRecords}} {{'Menu.ShowingOf'
+                        | translate}} {{pagination.totalRecords}} {{'Menu.ShowingItems' | translate}}</i>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="{{vm.exportTableId}}" class="row" style="display:none">
+        <table class="table customTable">
+            <thead style="border-style: solid;border-color: black;border-width: thin;">
+                <tr>
+                    <th style="border-style: solid;border-color: black;border-width: thin;"
+                        ng-repeat="x in vm.data.headingData  | filter:{visible : true}  track by $index">
+                        {{ vm.isEnableTranslation == true? ("Menu."+ x.name | translate): x.name }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.data.isGrouping" ng-repeat="x in vm.data.tableData track by $index"
+                style="border-style: solid;border-color: black;border-width: thin;">
+                <tr style="border-style: solid;border-color: black;border-width: thin;background-color:#D3D3D3;"
+                    class="groupHeader" ng-if="vm.data.isGrouping">
+                    <td style="border-style: solid;border-color: black;border-width: thin;"
+                        colspan="{{vm.data.headingData.length}}" ng-click="vm.collapseRows(x)">
+                        {{x.GroupName}}
+                    </td>
+                </tr>
+                <tr style="border-style: solid;border-color: black;border-width: thin;" class="{{record.rowClass}}"
+                    ng-repeat="record in x.GroupData | filter : vm.search() | orderBy:vm.propertyName:vm.reverse">
+                    <td style="border-style: solid;border-color: black;border-width: thin;"
+                        ng-repeat="col in vm.data.headingData  | filter:{visible : true}">
+                        <span> {{record[col.name]}}</span>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="!vm.data.isGrouping" style="border-style: solid;border-color: black;border-width: thin;">
+                <tr style="border-style: solid;border-color: black;border-width: thin;" class="{{record.rowClass}}"
+                    ng-repeat="record in  vm.data.rowData  | filter : vm.search() | orderBy:vm.propertyName:vm.reverse">
+                    <td style="border-style: solid;border-color: black;border-width: thin;"
+                        ng-repeat="col in vm.data.headingData  | filter:{visible : true}">
+                        <span> {{record[col.name]}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<style>
+    .popover .popover-content {
+        font-size: 15px;
+        color: black;
+        width: 120px;
+    }
+
+    .popover {
+        max-width: 800px;
+    }
+
+    .tableFixHead {
+        overflow-x: auto;
+        overflow-y: auto;
+        max-height: 390px;
+    }
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+    }
+
+    .tableFixHead thead th,
+    .tableFixHead thead td {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+    }
+
+    .tableFixHead thead th {
+        background: #c6c3c6;
+    }
+
+    .dropdown,
+    .dropup {
+        position: inherit !important;
+    }
+    thead tr:nth-child(2) th {
+      position: sticky;
+      top: 23px;
+      z-index: 1;
+    }
+</style>

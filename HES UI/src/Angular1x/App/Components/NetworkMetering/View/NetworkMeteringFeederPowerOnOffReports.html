@@ -1,0 +1,83 @@
+<style>
+    table th {
+        white-space: nowrap; /* Prevent text from wrapping */
+    }
+
+    table {
+        width: 100%;
+        table-layout: auto;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+</style>
+<div class="page page-datatables">
+      <!-- page header -->
+    <div class="pageheader">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                 <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.DTList">{{ 'Menu.FeederPowerOnOFF' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /page header -->
+     <!-- page content -->
+       <div class="pagecontent">
+         <section class="tile" fullscreen="isFullscreen02">
+             <!-- tile header -->
+                 <div class="tile-header dvd dvd-btm">
+                     <h1 class="custom-font"><strong>{{'Menu.FeederPowerOnOFF' | translate}}</strong></h1>
+                      <ul class="controls">
+                            <li id="FilterBackgroundColor" [ng-style]="">
+                                <i class="glyphicon glyphicon-filter gridFilterIcon"
+                                    title="Filter" ng-click="onFilterClick()"></i>
+                            </li>
+                            <!-- <li>
+                                <i class="glyphicon glyphicon-refresh gridFilterIcon button-success"
+                                    style="color: green;margin-top: 12px;" title="{{ 'Menu.Refresh' | translate}}"
+                                    ng-click="onRefreshClick()"></i>
+                            </li> -->
+                        </ul>
+                 </div>
+                   <!-- /tile header -->
+                     <!-- tile body -->
+                       <div class="tile-body table-custom" style="padding-top: 0px;">
+                        <div class="row panel" ng-if="showFilterPanel">
+                            <div class="col-md-12 panel-body">
+                                <div class="col-md-4 ">
+                                    <hes-Date-Picker maximum-date="filter.maxDate" 
+                                    minimum-date="filter.minDate" 
+                                    selected-value="filter.fromDate">
+                                    </hes-Date-Picker>
+                                </div>
+                                 <div class="col-md-4">
+                                     <hes-Date-Picker maximum-date="filter.maxDate" 
+                                     minimum-date="filter.fromDate" 
+                                     selected-value="filter.toDate">
+                                    </hes-Date-Picker>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <button class="btn btn-sm btn-primary"  ng-click="onSubmitClick()">View Report</button>
+                                 </div>
+                            </div>
+                        </div>
+                          <div class="tile-body table-custom" style="padding-top: 0px;">
+                            <alert alert-data="alertData"></alert>
+                            <form class="form-inline" >
+                                <hes-data-grid data="data" perform-action="performAction" ng-if="isShowLoading"></hes-data-grid>
+                            </form>
+                        </div>
+                       </div>
+                      <!-- /tile body -->
+         </section>
+       </div>
+</div>

@@ -1,0 +1,122 @@
+﻿
+<tr ng-if="vm.data.rowData.length>0" class="{{record.rowClass}} {{($index % 2)==0?' evenRow':' oddRow'}}"
+    ng-repeat="record in vm.data.rowData | filter : vm.search() | orderBy:vm.propertyName:vm.reverse| startFrom:currentPage*pageSize | limitTo:pageSize  track by $index">
+    <td ng-if="vm.data.showCheckbox">
+        <input type="checkbox" ng-model="record.CheckboxValue" />
+    </td>
+    <td ng-if="vm.data.isShowSrNo" style="background:  #c6c3c669;text-align: center;padding-left: 15px;
+border-right: 1px solid #c6c3c669;">{{vm.srNumber+$index}}</td>
+    <td style="padding-left: 15px;border-right: 1px solid #c6c3c669;"
+        ng-repeat="col in vm.data.headingData | filter:{visible : true}  track by $index" class="">
+        <div ng-if="vm.data.columnTemplateUrl" ng-include="vm.data.columnTemplateUrl"></div>
+        <div ng-if="col.name == vm.data.linkColumnName && !vm.data.columnTemplateUrl ">
+
+            <span data-toggle="tooltip" class="grid-link-cell" style="cursor: pointer;"
+                ng-click="onLinkAction(record,record[col.name])"> {{record[col.name]}}</span>
+        </div>
+        <div
+            ng-if="col.name == vm.data.linkCalculationColumn && !vm.data.columnTemplateUrl && vm.data.linkCalculationColumn!='' ">
+
+            <span data-toggle="tooltip" class="grid-link-cell" style="cursor: pointer;"
+                ng-click="onLinkAction(record,record[col.name])">Details</span>
+        </div>
+
+        <div ng-if="col.name == vm.data.linkColumnName1 && !vm.data.columnTemplateUrl && vm.data.linkColumnName1!='' ">
+            <span ng-if="record[col.name].length>1" class="grid-link-cell"
+                ng-click="onLinkAction(record,record[col.name])"> {{record[col.name]}}</span>
+        </div>
+        <div ng-if="col.name==vm.data.hoverColumn && vm.data.hoverColumn!=''">
+            <style>
+                .popover .popover-content {
+                    font-size: 15px;
+                    color: black;
+                    width: 100%;
+                }
+
+                .popover {
+                    max-width: 700px;
+                }
+
+                .popover .popover-title {
+                    font-size: 17px;
+                    color: black;
+                    font-weight: bold;
+                    text-align: center;
+                }
+            </style>
+
+            <span class="popoverClass" style="cursor: pointer;text-decoration: underline;color: blue;"
+                data-title="{{col.name}}" data-content="{{record[col.name]}}" rel="popover" data-placement="bottom"
+                ng-mouseover="showHoverDetails()" data-trigger="hover">{{formatDataForHoverColumn(record[col.name])}}
+            </span>
+        </div>
+        <span style="text-align: right;"
+            ng-if="col.name !='Status' && col.name !=vm.data.linkColumnName &&
+col.name !=vm.data.linkColumnName1 && col.name != vm.data.linkCalculationColumn && col.name !='FeederNameColumn' 
+&& col.name !='DTNameColumn' && col.name !='MeterIdColumn' && col.name!='IsActive' && col.name!='IsJobEnabled' 
+&& col.name!='DownloadStatus' && !vm.data.showSubLinkAction  && col.name != vm.data.hoverColumn  
+&& col.name !='Element' && !col.IsLink">
+{{FormatData(record[col.name],col.Format)}}</span>
+        <span style="text-align: right;" ng-if="col.name =='Element'"> {{("Menu."+record[col.name] | translate)}}</span>
+        <span ng-if="col.name =='Status'">
+            <div ng-if="record[col.name]==='Non-Communicating'"><i class="fa fa-circle" style="color:red"></i>
+            </div>
+            <div ng-if="record[col.name]==='Communicating'"><i class="fa fa-circle" style="color:green"></i>
+            </div>
+            <div
+                ng-if="record[col.name]!=='Non-Communicating' && record[col.name]!=='Communicating' && record[col.name]!=='Completed' && record[col.name]!=='Warning' && record[col.name]!=='Pending'">
+                {{record[col.name]}}</i>
+            </div>
+        </span>
+        <span ng-if="col.IsLink" data-toggle="tooltip" class="grid-link-cell ng-binding" style="cursor: pointer;"
+            ng-click="linkColumnClicked(col.name,record) " role="button"
+            tabindex="0">{{FormatLinkData(record,col,record[col.name])}}</span>
+        </span>
+    </td>
+    <td style="padding: 2px;" class="firstActiontd" ng-if="vm.data.Actions && vm.data.Actions.length > 0 
+&& vm.data.rowActionTemplateUrl 
+&& vm.data.rowData[0].ID!=null" ng-include="vm.data.rowActionTemplateUrl"></td>
+
+    <td style="padding: 2px;" class="firstActiontd"
+        ng-if="vm.data.Actions && vm.data.Actions.length > 0 && !vm.data.rowActionTemplateUrl"
+        ng-include="'Angular1x/App/Shared/PartialView/DataGrid/rowAction.html'" style="padding:2px"></td>
+    <td style="width: 100%;"></td>
+</tr>
+<tr class="customGridDetails; " ng-repeat-end="" ng-show="record.ShowRowDetails">
+    <td class="firstActiontd"></td>
+    <td ng-if="vm.data.Actions && vm.data.Actions.length > 0" class="firstActiontd"></td>
+    <td colspan="{{ vm.data.isShowSrNo?vm.data.numberOfColumn+1:vm.data.numberOfColumn}}" class="">
+        <table style="width: auto;">
+            <tr ng-repeat="col in vm.data.headingData  | filter:{visible : true}  track by $index"
+                ng-if="$index>=vm.data.numberOfColumn">
+                <td>
+                    <b class="pull-right">{{ vm.isEnableTranslation == true? ("Menu."+ col.name | translate): col.name
+                        }} &nbsp; :&nbsp;</b>
+                </td>
+                <td ng-if="!vm.data.showSubLinkAction">
+                    {{record[col.name]}}
+                </td>
+                <td ng-if="vm.data.showSubLinkAction">
+                    <span ng-if="vm.data.showBoolValue && record[col.name] > 0 "
+                        title="Instant count : {{record[col.name]}}" class="glyphicon glyphicon-ok success"
+                        style="color:#00FF00;"> </span>
+                    <span ng-if="vm.data.showBoolValue && record[col.name] < 1 && record[col.name] != '' "
+                        class="glyphicon glyphicon-remove" style="color:#FF0000;"> </span>
+                    <span ng-if="vm.data.showBoolValue && record[col.name] == ''"> -- </span>
+                    <span ng-if="!vm.data.showBoolValue && record[col.name]=='0'"> {{record[col.name]}}</span>
+                    <span class="grid-link-cell" data-toggle="modal" data-target="#myModal"
+                        ng-if="!vm.data.showBoolValue && record[col.name]!='0'" " ng-click="
+                        onLinkAction(record,col.name) "> {{record[col.name]}}</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr ng-if="vm.data.rowData.length==0">
+                <td></td>
+                <td style="vertical-align: middle; ">{{ 'Menu.NoRecordFound'|translate }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>

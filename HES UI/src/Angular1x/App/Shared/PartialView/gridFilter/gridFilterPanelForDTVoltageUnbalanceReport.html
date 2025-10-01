@@ -1,0 +1,142 @@
+<div class="row">
+    <table style="float: right;">
+        <tr ng-hide=" filter.showUnbalancedCurveFilter">
+            <td style="padding-left: 50px;"></td>
+            <td style="text-align: left;padding-left: 25px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.PeriodOfInterest' |translate}}</h4>
+            </td>
+            <td style="padding-left: 50px;"></td>
+            <td></td>
+        </tr>
+        <tr ng-show=" filter.showUnbalancedCurveFilter">
+            <td style="text-align: left;width: 10%;padding-left: 25px;padding-bottom: 25px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.PeriodOfInterest' |translate}}</h4>
+            </td>
+            <td style=" text-align: left;padding-bottom: 25px;padding-left:70px;border-right: 3px solid;border-left:
+                3px solid;">
+                <h4 style="color:#afacac">{{
+                    filter.filterTitle |translate}}</h4>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td ng-hide=" filter.showUnbalancedCurveFilter"></td>
+            <td style="padding-left: 20px;">
+                <div style="display: inline;">
+                    <ul class="dashBoardDateRangePicker dashboardDatePickerMargin">
+                        <li>
+                            <a style="width: 175px;" href="javascript:;" class="btn btn-greensea no-border"
+                                ng-hide="false" aria-hidden="false">
+                                <input id="daterange" type="daterange" min-date="{{filter.minimumDate}}"
+                                    max-date={{filter.maximumDate}} readonly="readonly" ng-change="setDate()"
+                                    ng-model="filter.date" ranges="ranges"
+                                    class="rnagePickerinput ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched"
+                                    format={{filter.calendarFormat}} aria-invalid="false">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+
+            <td ng-show="filter.showUnbalancedCurveFilter"
+                style="padding-left:40px;border-right: 3px solid;border-left: 3px solid;">
+
+                <div style="display: inline;" ng-repeat="item in filter.criteriaInputElement">
+                    <div class="col-md-2 custom-container"
+                        ng-style="{'padding': '0px !important', 'border': '2px solid ' + item.Color}">
+                        <label class="custom-label">{{item.Label}}</label>
+                        <div class="" style="padding: 0px !important;">
+                            <div class="input-container">
+                                <input class="placeholderInput custom-textbox" step="1"
+                                    ng-attr-min="{{getMinValue(filter['criteria'+item.MinValue])}}"
+                                    ng-attr-max="{{getMaxValue(filter['criteria'+item.MaxValue])}}"
+                                    ng-model="filter['criteria'+item.Id]" type="number"
+                                    ng-change="inputElementFocus(filter['criteria'+item.Id],item.Id)"
+                                    ng-blur="inputElementBlur(filter['criteria'+item.Id],item.Id)"
+                                    style="text-align: right;padding-right: 20px;">
+                                <div class="placeholder">%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            <td class="shift" style="padding-left: 25px;padding-right: 10px;"> <button style="margin-right: 0px; "
+                    type="button" class="btn btn-primary applyButton" ng-click="applyFilter()">{{
+                    'Menu.Apply' |translate}}</button>
+                <button type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' |
+                    translate}}</button>
+            </td>
+        </tr>
+        <tr ng-show="filter.showUnbalancedCurveFilter">
+            <td style="width:15%">
+            </td>
+            <td
+                style="padding-top: 15px;padding-left: 70px;border-left: 3px solid;border-right: 3px solid;text-align: left;">
+                <label style="color: #afacac;font-weight: 100;">{{ 'Menu.CriteriaForUnbalanced' |translate}}</label>
+            </td>
+        </tr>
+        <tr ng-show="filter.showUnbalancedCurveFilter">
+            <td style="width:15%">
+
+            </td>
+            <td style="width:74%;padding-left: 70px;border-left: 3px solid;border-right: 3px solid;text-align: left;">
+                <select style=" display: inline;width:15%;height: 35px;padding-left: 5px;" class="form-control"
+                    name="dropdown" id="dropdown" ng-model="filter.unbalancedCriteria"
+                    ng-options="opt.value as opt.Name for opt in  filter.criteriaunbalancedDropDown">
+                </select>
+                <div style="display:inline;padding-right: 45px;height: 35px;display: inline;width:8%;margin-left: -4px;"
+                    layout-wrap="" layout-gt-xs="row" class="layout-wrap layout-gt-xs-row">
+                    <div flex-gt-xs="50" class="flex-gt-xs-50" style="display: inline-block;">
+                        <div class="input-container" style="width:120px">
+                            <input class="form-control  placeholderInput" ng-model="filter.unbalancedCriteriaValue"
+                                class="form-control input-sm" min="0" type="text" step="1">
+                            <div style="font-size: 10px;" class="placeholder">{{ 'Menu.HourMintueSymbol' | translate }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<style>
+    .custom-container {
+        position: relative;
+        margin-left: 30px !important;
+        border-radius: 5px;
+    }
+
+    .custom-label {
+        position: absolute;
+        top: -12px;
+        left: 10px;
+        background-color: white;
+        padding: 0 5px;
+        font-weight: normal;
+        font-size: 12px;
+        color: #333;
+    }
+
+    .custom-textbox {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+
+    .labelStyle {
+        font-size: 20px;
+    }
+
+    .panelColorClass {
+        background: white !important
+    }
+
+    .dropdown-menu {
+        position: absolute !important;
+    }
+</style>

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Genus - MDMS</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Angular1x/styles/material.css" rel="stylesheet" />
+    <link href="Angular1x/styles/hesstyle.min.css" rel="stylesheet" />
+    <link href="Angular1x/styles/commoncss.min.css" rel="stylesheet" />
+    <link href="Angular1x/styles/highcharts.css" rel="stylesheet" />
+    <link href="Angular1x/styles/angular-datepicker.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="Angular1x/styles/font-awesome.min.css">
+    <link href="Angular1x/styles/sweetalert.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        #wdr-pivot-view>span>a {
+            display: none;
+        }
+
+        .loading {
+            opacity: 0;
+            transition: opacity .8s ease-in-out;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 11, 47, 1);
+            z-index: -1;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        app-root:empty+.loading {
+            opacity: 1;
+            z-index: 100;
+        }
+
+        app-root:empty+.loading h1 {
+            color: #EEE;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            vertical-align: middle;
+            transform: translate(0, -50%);
+        }
+
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: rgb(204, 80, 80);
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <app-root></app-root>
+    <div class="loading">
+
+        <h1><img src="Angular1x/images/Branding/Genus/Logo_Login.png" style=" height: 90px" /> <img
+                src="Angular1x/images/loadingdots.gif" style=" height: 90px" /></h1>
+    </div>
+
+
+    <script src="Angular1x/config/env.js"></script>
+    <script src="Angular1x/public/commonjs/vendor.0efcd0eb.js"></script>
+    <script src="Angular1x/scripts/highcharts/highcharts.js"></script>
+    <script src="Angular1x/scripts/highcharts/highcharts-more.js"></script>
+    <script src="Angular1x/scripts/highcharts/exporting.js"></script>
+    <script src="Angular1x/scripts/highcharts/export-data.js"></script>
+    <script src="Angular1x/scripts/highcharts/accessibility.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.7/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="Angular1x/scripts/jquery-ui.min.js"></script>
+    <script src="Angular1x/scripts/angular.js">
+    </script>
+    <script type="text/javascript" src="Angular1x/scripts/angular-md5.js"></script>
+    <script src="Angular1x/public/js/min/dependencies/hesscripts.min.js"></script>
+    <script src="Angular1x/public/js/min/dependencies/common.min.js"></script>
+
+    <script src="Angular1x/app.module.js"></script>
+
+
+    <!--Network Metering-->
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/DTListCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/DTFormCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/DTDetailsTabCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabDTInformation.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabPhaseVoltageReport.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabHighestCurrentReport.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabLoadReport.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabPFandNeturalCurrentReport.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabUnbalanceReport.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/FeederListCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/FeederFormCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/ManageDTFormCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/FeederDetailsTabCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabFeederInformation.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/DTAssociationInformation.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabFeederEnergyAudit.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/TabFeederEnergyAccounting.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/NetworkMeteringReportsCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/PublishReportCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/NetworkDashboardCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/HierarchyPartialViewController.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/NetworkMeteringDTMonthlyConsumptionReportsCtrl.js"></script>
+    <script src="Angular1x/App/Components/NetworkMetering/Controller/NetworkMeteringFeederPowerOnOffReportsCtrl.js"></script>
+<script src="Angular1x/App/Components/NetworkMetering/Controller/NetworkMeteringFeederSaifiSaidiReportCtrl.js"></script>
+
+
+
+    <script src="Angular1x/App/Shared/Charts/hcCombinedStackAndLineChart.js?v=12736482"></script>
+    <script src="Angular1x/App/Shared/Charts/hcPieChartWithCenterData.js?v=12736482"></script>
+    <script src="Angular1x/App/Shared/Charts/hcColumnRangeChart.js?v=12736482"></script>
+    <script src="Angular1x/App/Shared/Charts/hcLineChartWithTicks.js?v=12736482"></script>
+
+    <!--Directive Controllers-->
+
+    <script src="Angular1x/App/Directives/Controllers/DatagridCtrl.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Controllers/DatePickerCtrl.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Controllers/GridFilterCtrl.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Controllers/HeaderCtrl.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Controllers/ErrorCtrl.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Controllers/LoginCtrl.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Controllers/MainCtrl.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Controllers/autoCompleteController.js?v=12736482"></script>
+
+    <script src="Angular1x/App/Directives/Ddt/anchorTag.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/collapseSidebar.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/daterangepicker.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/gridFilter.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hesDataGrid.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hesDatePicker.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/lazyModel.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/navCollapse.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/pageLoader.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hcStatsPieChart.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hcStatsLineChart.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hcStatsStackedChart.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hcStackDashboardChart.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hcStackedChart.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/fullScreenLoader.js?v=12736482"></script>
+    <script src="Angular1x/App/Directives/Ddt/hesMeterNumberAutoComplete.js?v=12736482"></script>
+
+    <!--Services-->
+    <script src="Angular1x/App/Services/CommonCrudService.js?v=12736482"></script>
+    <script src="Angular1x/App/Services/URIService.js?v=12736482"></script>
+    <script src="Angular1x/App/Services/HierarchyService.js?v=12736482"></script>
+    <script src="Angular1x/App/Services/ToolsFactory.js?v=12736482"></script>
+    <script src="Angular1x/App/Services/NetworkMeteringService.js?v=12736482"></script>
+    <script src="Angular1x/App/Services/DataStructureFactory.js?v=12736482"></script>
+    <script src="Angular1x/App/Services/SecurityService.js?v=12736482"></script>
+    <script src="Angular1x/App/Services/LoaderService.js?v=12736482"></script>
+
+
+    <!--Shared-->
+    <script src="Angular1x/App/Shared/SideBar/SideBarCtrl.js?v=12736482"></script>
+
+
+    <!--Utility-->
+    <script src="Angular1x/App/Utility/AuthService.js?v=12736482"></script>
+    <script src="Angular1x/App/Utility/CommonDataFactory.js?v=12736482"></script>
+    <script src="Angular1x/App/Utility/config.js?v=12736482"></script>
+    <script src="Angular1x/App/Utility/ConfigService.js?v=12736482"></script>
+    <script src="Angular1x/App/Utility/DateRangePicker.js?v=12736482"></script>
+    <script src="Angular1x/App/Utility/localStorage.js?v=12736482"></script>
+    <script src="Angular1x/App/Utility/session.js?v=12736482"></script>
+    <script src="Angular1x/App/Utility/startFrom.js?v=12736482"></script>
+    <script src="Angular1x/scripts/Util.js?v=12736482"></script>
+
+    <script
+        src='//maps.googleapis.com/maps/api/js?key=AIzaSyBKEaXzFCW5XFpDbZ0-DaTOMjrIsWsXHIw&libraries=weather,geometry,visualization,places,drawing&language=en&v=3'></script>
+</body>
+
+</html>

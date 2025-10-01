@@ -1,0 +1,36 @@
+﻿<div class="row">
+    <div class="form-group col-md-4">
+        <label>{{ 'Menu.FromDate'  | translate }}</label>
+        <div layout-wrap layout-gt-xs="row">
+            <div flex-gt-xs="100">
+                <p class="input-group">
+                    <input type="text" name="gridFilterFromDate" enable-time="enableTime" class="form-control datePickerFont" datetime-picker="{{format}}" ng-model="filter.fromDate" is-open="date.fromDateOpen" button-bar="buttonBar" datepicker-options="fromDatepickerOptions" readonly />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default datePickerbtn" ng-click="fromDateOpenCalendar()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label>{{ 'Menu.ToDate'  | translate }}</label>
+        <div layout-wrap layout-gt-xs="row">
+            <div flex-gt-xs="100">
+                <p class="input-group">
+                    <input type="text" name="gridFilterToDate" enable-time="enableTime" class="form-control datePickerFont" datetime-picker="{{format}}" ng-model="filter.toDate" is-open="date.toDateOpen" button-bar="buttonBar" datepicker-options="toDatepickerOptions" readonly />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default datePickerbtn" ng-click="toDateOpenCalendar()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <div layout-wrap layout-gt-xs="row" class="filterRow">
+            <div flex-gt-xs="100">
+                <button type="button" class="btn btn-primary applyButton" ng-click="applyFilter()">{{ 'Menu.Apply' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

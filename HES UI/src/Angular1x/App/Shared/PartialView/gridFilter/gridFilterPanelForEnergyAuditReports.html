@@ -1,0 +1,274 @@
+<div class="row">
+    <table style="margin-left:5px">
+        <tr>
+            <td></td>
+            <td style="padding-right: 25px;" ng-show="filter.isMonthly && filter.publishReport.length > 0"
+                style="text-align: left;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.PeriodOfInterest' |translate}}</h4>
+            </td>
+            <td ng-show="!filter.isMonthly" style="text-align: left;padding-right:25px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.PeriodOfInterest' |translate}}</h4>
+            </td>
+            <td ng-show="filter.hierarchyFilter" style="text-align: left" ng-show="filter.showHierarchyDefinition">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.HierarchyDefinition' |translate}}</h4>
+            </td>
+            <td ng-show="filter.hierarchyFilter" style="text-align: left;" ng-repeat="item in filter.hierarchyDetails"
+                ng-disabled="item.enableDropdown">
+                <h4 style="color:#afacac;padding-left: 5px;" class="ng-binding">{{
+                    item.Name |translate}}<span style="color:red" ng-show="item.Mandatory">*</span>
+                </h4>
+            </td>
+
+            <td style="padding-left: 50px;"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="padding-right: 20px;" ng-show="filter.isMonthly && filter.publishReport.length > 0">
+                <select class="form-control" ng-model="filter.selectedpublishReport"
+                    ng-change="onControlClick('publishReport'+'-'+filter.selectedpublishReport)">
+                    <option ng-repeat="option in  filter.publishReport" value="{{option.Id}}">
+                        {{FormatData(option.StdyPrdStrtDt,'date')}} - {{FormatData(option.StdyPrdEndDt,'date')}}
+                    </option>
+                </select>
+            </td>
+            <td style="padding-top: 10px;padding-right: 20px;" ng-show="!filter.isMonthly">
+                <hes-Date-Picker maximum-date="filter.dailyMaxDate" minimum-date="filter.dailyMinDate"
+                    selected-value="filter.selectedDailyDateCalendar" enable-time=false></hes-Date-Picker>
+            </td>
+            <td ng-show="filter.hierarchyFilter" ng-show="filter.showHierarchyDefinition">
+                <select ng-change="onControlClick('hierarchyDefinition'+'~'+filter.selectedHierarchyDefinition)"
+                    class="form-control" ng-model="filter.selectedHierarchyDefinition">
+                    <option value="">Select</option>
+                    <option ng-repeat="option in  filter.hierarchyDefinition" value="{{option.DefinitionID}}">
+                        {{option.Name}}</option>
+
+                </select>
+            </td>
+            <td ng-show="filter.hierarchyFilter" ng-repeat="item in filter.hierarchyDetails" style="padding-left: 5px;">
+                <select ng-disabled="!item.enableDropdown"
+                    ng-change="onControlClick('hierarchyDetails'+'~'+filter['selectedHierarchyDetailsLevel' + item.Level]+'~'+item.Level)"
+                    class="form-control" ng-model="filter['selectedHierarchyDetailsLevel' + item.Level]">
+                    <option value="">Select</option>
+                    <option ng-repeat="option in filter['L' + item.Level]" value="{{option['L' + item.Level]}}">
+                        {{option['L' + item.Level + '_Name']}}</option>
+                </select>
+            </td>
+
+
+            <td class="shift" style="padding-left: 25px;padding-right: 10px;"> <button style="margin-right: 0px; "
+                    type="button" class="btn btn-primary applyButton" ng-click="applyFilter()">{{
+                    'Menu.Apply' |translate}}</button>
+                <button type="button" class="btn btn-default" ng-click="clearFilter()">{{ 'Menu.Clear' |
+                    translate}}</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="row">
+    <table style="margin-left:5px">
+        <tr ng-show="filter.showLoadingConditionFilter">
+            <td></td>
+            <td style=" padding-top:20px;"> 
+                <h4 style="color:#afacac" class="ng-binding" >{{
+                    'Menu.Filter' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedLoadingConditionFilter"
+                    ng-change="onControlClick('loadingContionFilter'+'-'+filter.selectedLoadingConditionFilter)">
+                    <option value="">Select</option>
+                    <option ng-repeat="option in  filter.loadingConditionReportFilter" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+
+            <td style=" padding-top: 20px;padding-left: 20px;"
+                ng-show="filter.selectedLoadingConditionFilter =='LoadingCondition'">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Condition' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedLoadingCondition">
+                    <option ng-repeat="option in  filter.loadingCondition" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;"
+                ng-show="filter.selectedLoadingConditionFilter =='LoadingCondition'">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Expression' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedLoadingConditionSign">
+                    <option ng-repeat="option in  filter.mathematicalSigns" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;"
+                ng-show="filter.selectedLoadingConditionFilter =='LoadingCondition'">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Value' |translate}}</h4>
+                <div class="input-container" style="border: 1px solid #cccccc;">
+                    <input class="placeholderInput custom-textbox" step="1" min="1" max="100"
+                        ng-model="filter.selectedLoadingConditionValue" type="number"
+                        style="text-align: right;padding-right: 20px;">
+                    <div class="placeholder">%</div>
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="filter.showunbalanceFilter">
+            <td></td>
+            <td style=" padding-top: 20px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Phase' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedPhase">
+                    <option ng-repeat="option in  filter.unBalancePhase" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Expression' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedPhaseSign">
+                    <option ng-repeat="option in  filter.mathematicalSigns" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Value' |translate}}</h4>
+                <div class="input-container" style="border: 1px solid #cccccc;width: 40%">
+
+                    <input class="placeholderInput custom-textbox" step="1" min="1" ng-model="filter.selectedPhaseValue"
+                        type="number" style="text-align: right;padding-right: 20px;">
+                    <div class="placeholder">%</div>
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="filter.showOperationRelaibilityFilter">
+            <td></td>
+            <td style="padding-top:20px;"> 
+                <h4 style="color:#afacac" class="ng-binding" >{{
+                    'Menu.Filter' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedOperationalRelaibilityFilterType">
+                    <option value="">Select</option>
+                    <option ng-repeat="option in  filter.operationalRelaibilityFilterValues" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;"
+                ng-show="filter.selectedOperationalRelaibilityFilterType =='LoadingCondition'">
+                <h4 style="color:#afacac" class="ng-binding">{{'Menu.Condition' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedLoadingConditionTime">
+                    <option ng-repeat="option in  filter.loadingCondition" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style="padding-top: 20px;padding-left: 20px;"
+            ng-show="filter.selectedOperationalRelaibilityFilterType =='LoadingCondition' ||
+            filter.selectedOperationalRelaibilityFilterType =='InterruptionDuration' ||
+            filter.selectedOperationalRelaibilityFilterType =='InterruptionNumber'">
+                <h4 style="color:#afacac" class="ng-binding">{{'Menu.Expression' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedOperationalRelaibilitySign">
+                    <option ng-repeat="option in  filter.mathematicalSigns" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;"
+                ng-show="filter.selectedOperationalRelaibilityFilterType =='LoadingCondition'">
+                <h4 style="color:#afacac" class="ng-binding">{{'Menu.Minutes' |translate}}</h4>
+                <div class="input-container" style="width:120px">
+                    <input class="form-control  placeholderInput" ng-model="filter.selectedLoadingConditionValueTime"
+                        class="form-control input-sm" min="0" type="text" step="1">
+                    <div style="font-size: 10px;" class="placeholder">{{ 'Menu.HourMintueSymbol' | translate }}
+                    </div>
+                </div>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;"
+                ng-show="filter.selectedOperationalRelaibilityFilterType =='InterruptionDuration'">
+                <h4 style="color:#afacac" class="ng-binding">{{'Menu.InterruptionDuration' |translate}}</h4>
+                <div class="input-container" style="border: 1px solid #cccccc;width:50%">
+                    <input class="placeholderInput custom-textbox" step="1" min="0"
+                        ng-model="filter.selectedInterruptionDuration" type="number" style="text-align: right;">
+                    <div class="placeholder">mins</div>
+                </div>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;"
+                ng-show="filter.selectedOperationalRelaibilityFilterType =='InterruptionNumber'">
+                <h4 style="color:#afacac" class="ng-binding">{{'Menu.InterruptionNumber' |translate}}</h4>
+                <div class="input-container" style="border: 1px solid #cccccc;width:50%">
+                    <input class="placeholderInput custom-textbox" step="1" min="0"
+                        ng-model="filter.selectedInterruptioNumber" type="number"
+                        style="text-align: right;padding-right: 20px;">
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="filter.showFeederLossFilter">
+            <td></td>
+            <td style=" padding-top: 20px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Expression' |translate}}</h4>
+                <select class="form-control" ng-model="filter.selectedFeederLossSign">
+                    <option ng-repeat="option in  filter.mathematicalSigns" value="{{option.value}}">
+                        {{option.Name}}
+                    </option>
+                </select>
+            </td>
+            <td style=" padding-top: 20px;padding-left: 20px;">
+                <h4 style="color:#afacac" class="ng-binding">{{
+                    'Menu.Loss' |translate}}</h4>
+                <div class="input-container" style="border: 1px solid #cccccc;">
+                    <input class="placeholderInput custom-textbox" step="1" min="1" max="100"
+                        ng-model="filter.selectedFeederLossValue" type="number"
+                        style="text-align: right;padding-right: 20px;">
+                    <div class="placeholder">%</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+<style>
+    .custom-container {
+        position: relative;
+        margin-left: 30px !important;
+        border-radius: 5px;
+    }
+
+    .custom-label {
+        position: absolute;
+        top: -12px;
+        left: 10px;
+        background-color: white;
+        padding: 0 5px;
+        font-weight: normal;
+        font-size: 12px;
+        color: #333;
+    }
+
+    .custom-textbox {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+
+    .labelStyle {
+        font-size: 20px;
+    }
+
+    .panelColorClass {
+        background: white !important
+    }
+
+    .dropdown-menu {
+        position: absolute !important;
+    }
+</style>

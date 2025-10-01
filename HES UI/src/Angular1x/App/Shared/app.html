@@ -1,0 +1,18 @@
+
+<div ng-controller="MainCtrl" id="wrap"  
+  autoscroll="false" 
+  class="no-js {{main.settings.activeColor}} header-fixed aside-fixed rightbar-hidden appWrapper" 
+  ng-class="{'header-fixed': true, 'header-static': false, 'aside-fixed': true, 'aside-static': false, 'rightbar-show': false, 'rightbar-hidden': true}">
+
+
+
+  <section ng-include="'Angular1x/App/Shared/Header/View/header.html'" id="header" class="{{main.settings.navbarHeaderColor}}" style="    border-bottom-style: ridge;
+  border-color: rgb(224,123,32);"></section>
+  <div id="controls">
+    <aside ng-include="'Angular1x/App/Shared/SideBar/View/nav.html'" id="sidebar" class="{{main.settings.sidebarColor}} aside-fixed" ng-class="{'aside-fixed':main.settings.asideFixed}"></aside>
+  </div>
+  <div class="view-container" ui-view-container>
+    <section ui-view id="content" autoscroll="false"></section>
+  </div>
+</div> 
+

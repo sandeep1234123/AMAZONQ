@@ -1,0 +1,75 @@
+<div class="page page-datatables">
+    <!-- page header -->
+    <!-- page header -->
+    <div class="pageheader">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="">{{ 'Menu.PublishReport' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- page content -->
+    <div class="pagecontent">
+        <!-- row -->
+
+        <div class="row">
+            <!-- col -->
+            <div class="col-md-12">
+                <section class="tile" fullscreen="isFullscreen02">
+                    <!-- tile header -->
+                    <div class="tile-header dvd dvd-btm">
+                        <h1 class="custom-font"><strong>{{ 'Menu.PublishReport' | translate }}</strong></h1>
+                        <ul class="controls">
+                            <li>
+                                <button style="margin-left: 10px;margin-right: 10px !important;
+                                margin-top: 8px;"  class="btn btn-info"
+                                    ng-click="back()">Back</button>
+                            </li>
+                            <li>
+                                <i class="glyphicon glyphicon-refresh gridFilterIcon button-success"
+                                    style="color: green;margin-top: 12px;" title="{{ 'Menu.Refresh' | translate}}"
+                                    ng-click="onRefreshClick()"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /tile header -->
+                    <!-- tile body -->
+                    <div class="tile-body table-custom" style="padding-top: 0px;">
+                        <grid-filter filter-data="filterData"  ng-if="showFilterPanel"> </grid-filter>
+                        <alert alert-data="alertData"></alert>
+                        <form class="form-inline">
+                            <hes-data-grid data="data" perform-action="performAction"></hes-data-grid>
+                        </form>
+                    </div>
+                    <!-- /tile body -->
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+</div>
+
+<style>
+    .btn-toolbar
+    {
+        padding-top: 10px;
+    }
+    .table tbody tr td:nth-child(1),
+    .table tbody tr td:nth-child(3),
+    .table tbody tr td:nth-child(4),
+    .table tbody tr td:nth-child(5),
+    .table tbody tr td:nth-child(6),
+    .table tbody tr td:nth-child(7) {
+        text-align: right !important;
+    }
+
+</style>

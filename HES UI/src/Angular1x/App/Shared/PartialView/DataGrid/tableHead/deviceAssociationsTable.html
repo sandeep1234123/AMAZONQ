@@ -1,0 +1,7 @@
+﻿<tr>
+    <th class="firstActiontd" style="word-wrap:normal;vertical-align: middle;font-size: 20px;">
+        <span style="width: 42px;display: inline-block;">{{ 'Menu.SRNO'  | translate }}</th>
+    <th ng-if="vm.data.isSim"  class="customTableHeaderhover" style="font-size: 20px;vertical-align: middle;text-align: center;">{{("Menu.SimNumber"| translate)}}</th>
+    <th  ng-if="vm.data.isModule" class="customTableHeaderhover"  style="font-size: 20px; vertical-align: middle;text-align: center;">{{("Menu.ModuleNumber" | translate)}}</th>
+    <th class="customTableHeaderhover"  style="font-size: 20px;vertical-align: middle;text-align: center;">{{("Menu.Timestamp"| translate)}}</th>
+</tr>

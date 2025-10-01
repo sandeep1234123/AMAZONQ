@@ -1,0 +1,42 @@
+<div id="sidebar-wrap" ng-controller="NavCtrl">
+
+    <uib-accordion close-others="oneAtTime" slimscroll="{height: '100%'}">
+        <div id="copyright" ng-if="windowWidth > 1200" class="FooterCopyRight" style="
+              margin-bottom: -4em;
+    position: inherit;
+    margin-top: 2em;
+            ">{{Version }}</div>
+        <uib-accordion-group is-open="status.isFirstOpen">
+            <ul id="navigation" nav-collapse ripple>
+
+
+
+                <li ui-sref-active="active" ng-class="{'open':$state.includes('app.mail')}"
+                    ng-show="isNetworkMeteringOptions">
+                    <a ui-sref="app.NetworkMetering">
+                        <fa name="fa fa-sitemap"></fa>
+                        <span>{{ 'Menu.NetworkMetering' | translate }}</span>
+                    </a>
+                    <ul>
+                        <li ng-repeat="item in sideMenu.networkMeteringItem"
+                            ng-class="{'active' : activeState === item.uiSref }">
+                            <a ui-sref={{item.uiSref}} ng-hide="item.isCompletelyHide || item.isDisableClass">
+                                <fa name="caret-right"></fa> {{ item.pageNameConstant | translate }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div id="copyright" ng-if="windowWidth > 800" class="FooterCopyRight" style="
+           margin-bottom: 3em;
+           margin-top:12em;
+           position:fixed;
+           text-align: left;
+            ">{{'Menu.CopyrightText' | translate }}
+            </div>
+        </uib-accordion-group>
+    </uib-accordion>
+
+
+</div>

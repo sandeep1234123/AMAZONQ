@@ -1,0 +1,163 @@
+﻿<div class="page page-datatables">
+    <!-- page header -->
+    <!-- page header -->
+    <div class="pageheader">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.MeteringReports">{{ papeTitle | translate }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- page content -->
+    <div class="pagecontent">
+        <!-- row -->
+
+        <div class="row">
+            <!-- col -->
+            <div class="col-md-12">
+                <section class="tile" fullscreen="isFullscreen02">
+                    <full-screen-loader></full-screen-loader>
+                    <!-- tile header -->
+                    <div class="tile-header dvd dvd-btm">
+                        <h1 class="custom-font"><strong>{{ papeTitle | translate }}</strong>
+                            <span>{{pageSubtitle}}</span></h1>
+                        <ul class="controls">
+                            <li>
+                                <button style="margin-left: 10px;margin-right: 10px !important;
+                                margin-top: 8px;" ng-if="!ispublished" class="btn btn-info"
+                                    ng-click="publish()">Publish</button>
+                            </li>
+                            <li id="FilterBackgroundColor" [ng-style]="">
+                                <i class="glyphicon glyphicon-filter gridFilterIcon"
+                                    title="{{ 'Menu.Filter' | translate }}" ng-click="onFilterClick()"></i>
+                            </li>
+                            <li>
+                                <i class="glyphicon glyphicon-refresh gridFilterIcon button-success"
+                                    style="color: green;margin-top: 12px;" title="{{ 'Menu.Refresh' | translate}}"
+                                    ng-click="onRefreshClick()"></i>
+                            </li>
+                            <li>
+                                <i class="fa fa-download gridFilterIcon button-success"
+                                    style="color: blue;margin-top: 12px;" title="{{ 'Menu.Download' | translate}}"
+                                    ng-click="onDownloadClick()"></i>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="table-custom menu" style="padding-top: 0px;">
+                        <div class="pageheader">
+                            <div class="page-bar">
+                                <ul class="nav-left page-breadcrumb" style="padding-top: 15px;">
+                                    <li ng-repeat="tab in Reports track by $index">
+                                        <a href="javascript:;" ng-click="tabClick(tab,$index,true)"
+                                            ng-class="selectedTabId === $index ? 'selected-outer-tab':'' ">{{tab.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border-top: 2px solid #42c2e9;  margin: 0px;margin-top: -10px;"
+                        class="col-md-12 horizontal-line ">
+                    </div>
+                    <div class="tile-body table-custom" style="padding-top: 0px;">
+                        <alert alert-data="alertDataForFilter"></alert>
+                        <grid-filter filter-data="filterData" ng-if="showFilterPanel"> </grid-filter>
+                        <alert alert-data="alertData"></alert>
+                        <form class="form-inline">
+                            <hes-data-grid ng-show="showReportData" data="data"></hes-data-grid>
+                        </form>
+                        <form class="form-inline">
+                            <hes-data-grid ng-show="showMissingData" data="missingData"></hes-data-grid>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+
+    <div class="modal" id="feederWise" style="padding-top:15%">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:1090px">
+                <div class="modal-header">
+                    <h4 class="modal-title">Feeder Wise Energy Audit for Feeder: {{feederCode}} ( {{formattedFromDate}}
+                        - {{formattedToDate}} )</h4>
+                </div>
+                <div class="modal-body" style="padding-top: 40px;">
+                    <div class="row col-md-12">
+                        <form class="form-inline">
+                            <hes-data-grid data="feederData"></hes-data-grid>
+                        </form>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"">
+                            {{ 'Menu.Close' | translate }}</button>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<style>
+    .btn-toolbar {
+        padding-top: 10px;
+        padding-right: 0px !important;
+    }
+
+    .tile .tile-header .btn {
+        margin-right: 0px !important;
+    }
+
+    .tableHeaderClass {
+        margin-top: 20px;
+        font-size: large;
+    }
+    .customTableHeaderhover:hover {
+    background-color: #fff;
+    color: white !important;
+    }
+      #MissingRecords td:nth-child(4),
+      #MissingRecords td:nth-child(5) {
+       text-align: right !important;
+    }
+    #MissingRecords td:nth-child(2) {
+       text-align: left !important;
+    }
+    
+    .table>thead>tr>th {
+        line-height: 0.428571 !important;
+    }
+    thead tr:nth-child(2) th {
+        position: sticky;
+        z-index: 1;
+    }
+    .evenRow
+    {
+        background-color: #F7F6F3 !important ;
+    }
+    .oddRow
+    {
+        background-color: white !important ;
+    }
+    table tbody tr td:nth-child(1)
+    {
+        text-align: right !important;
+    }
+    .uib-daypicker th {
+    background-color: white !important;
+}
+</style>

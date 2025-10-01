@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "Application 1";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white text-center">
+                    <h3><i class="fas fa-desktop me-2"></i>Application 1</h3>
+                    <p class="mb-0">Secure Business Application</p>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-lock fa-4x text-info mb-3"></i>
+                        <h4>Authentication Required</h4>
+                        <p class="text-muted">Please login through our SSO platform to access this application.</p>
+                    </div>
+                    
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a href="@Url.Action("Login")" class="btn btn-info btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login with SSO
+                        </a>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <i class="fas fa-shield-alt fa-2x text-success mb-2"></i>
+                            <h6>Secure Access</h6>
+                            <small class="text-muted">Role-based authentication</small>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                            <h6>Single Sign-On</h6>
+                            <small class="text-muted">One login for all apps</small>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fas fa-cog fa-2x text-warning mb-2"></i>
+                            <h6>Enterprise Ready</h6>
+                            <small class="text-muted">Keycloak powered</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        min-height: 100vh;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .btn-info {
+        background: linear-gradient(45deg, #17a2b8, #6f42c1);
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-info:hover {
+        background: linear-gradient(45deg, #138496, #5a2d91);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+</style>

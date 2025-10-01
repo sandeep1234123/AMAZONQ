@@ -1,0 +1,24 @@
+﻿<tr>
+    <th ng-if="vm.data.isShowSrNo" class="firstActionth" style="word-wrap:normal;vertical-align: middle;">
+        <span style="width: 42px;display: inline-block;">{{ 'Menu.SRNO' | translate }}
+    </th>
+    <th class="customTableHeaderhover" style="vertical-align: middle;">{{vm.data.headingData[0].ColumnName}}</th>
+    <th class="customTableHeaderhover" style="vertical-align: middle;">{{vm.data.headingData[1].ColumnName}} <span
+            ng-if="vm.data.headingData[1].ColumnName">kWh</span> </th>
+    <th class="customTableHeaderhover" style="vertical-align: middle;">{{vm.data.headingData[2].ColumnName}} <span
+            ng-if="vm.data.headingData[1].ColumnName">kWh</span> </th>
+    <th class="customTableHeaderhover" style="vertical-align: middle;">{{vm.data.headingData[3].ColumnName}} <span
+            ng-if="vm.data.headingData[1].ColumnName">kWh</span> </th>
+    <th class="customTableHeaderhover" style="vertical-align: middle;">{{vm.data.headingData[4].ColumnName}}</th>
+
+    <th class="customTableHeaderhover " ng-repeat="x in vm.filteredData track by $index">
+        {{ x.ColumnName }} (kWh)
+    </th>
+    <th></th>
+</tr>
+<style>
+    .customTableHeader th {
+        text-align: center;
+        border-right: 1px solid #c6c3c6 !important;
+    }
+</style>

@@ -1,0 +1,12 @@
+<tr>
+    <th ng-if="vm.data.isShowSrNo && !vm.data.isGrouping " class="firstActiontd  "
+        style="word-wrap:normal "><span style="width: 42px;display: inline-block; ">{{ 'Menu.SRNO' |
+            translate }}</th>
+
+    <th class="customTableHeaderhover "
+        ng-repeat="x in vm.data.headingData | filter:{visible : true} track by $index ">
+        {{ vm.isEnableTranslation == true? ("Menu."+ x.name | translate): x.ColumnName }}
+
+    </th>
+    <th style="width: 100%;"></th>
+</tr>

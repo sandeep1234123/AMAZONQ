@@ -1,0 +1,205 @@
+﻿<div class="page page-datatables page-chat">
+    <div class="pageheader dashboardMargin">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a ui-sref="app.dashboard"><i class="fa fa-home"></i>{{ 'Menu.ttl_HOME' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.Dashboard">{{ 'Menu.NetworkMetering' | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="app.NetworkMetering.DTList">{{ mainTitle | translate }}</a>
+                </li>
+                <li>
+                    <a ui-sref="">{{ pageTitle | translate }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ng-if="!hideShowValue.isProcessing && reportFor=='DT'" ng-controller="DTDetailsTabCtrl"
+    onload="onload(2,requestDetails,'Reports')" ng-include="partialViewPath"></div>
+    <div ng-if="!hideShowValue.isProcessing && reportFor=='Feeder'" ng-controller="FeederDetailsTabCtrl"
+    onload="onload(2,requestDetails,'Reports')" ng-include="partialViewPath">
+</div>
+    <div class="row">
+        <!-- col -->
+        <div class="col-md-12" style="margin-top: -7px;">
+            <section class="tile" fullscreen="isFullscreen02" style="margin-bottom: 0px;">
+                <!-- tile header -->
+                <div class="tile-header dvd dvd-btm">
+                    <h1 class="custom-font">
+                        <strong>{{ pageTitle|translate }}</strong>&nbsp;{{'Menu.Report' | translate }}
+                    </h1>
+                    <ul class="controls">
+                        <li style="border: solid 1px rgb(224, 222, 222);border-bottom-color: white;border-top-color: white;"
+                            id="dateFilter">
+                            <i class="glyphicon glyphicon-filter gridFilterIcon" title="{{ 'Menu.Filter' | translate}}"
+                                ng-click="onFilterClick()"></i>
+                        </li>
+                        <li style="border: solid 1px rgb(224, 222, 222);border-bottom-color: white;border-top-color: white;background-color: rgb(225, 236, 244);display: none;"
+                            title="{{ 'Menu.DailyReport' | translate}}" id="dayFilter"
+                            ng-click="onReportViewType('daily')">
+                            <img style="margin: 12px" class="icon-padding" src='/Angular1x/images/Daily.png' />
+                        </li>
+                        <li style="border: solid 1px rgb(224, 222, 222);border-bottom-color: white;border-top-color: white;display: none;"
+                            title="{{ 'Menu.MonthlyReport' | translate}}" id="monthFilter"
+                            ng-click="onReportViewType('monthly')">
+                            <img style="margin: 12px" class="icon-padding" src='/Angular1x/images/Monthly.png' />
+                        </li>
+                        <li ng-if="hideShowValue.isValueCurve"
+                            style="border: solid 1px rgb(224, 222, 222);border-bottom-color: white;border-top-color: white;padding-top: 10px;">
+                            <div class="material-switch pull-right" style="margin-left: 12px; margin-right: 12px;">
+                                <input type="checkbox" class="checkbox" value=false id="showSegmentsID" disabled="true">
+                                <label for="showSegmentsID" class="label-primary"></label>
+                            </div>
+                        </li>
+                        <li
+                            style="border: solid 1px rgb(224, 222, 222);border-bottom-color: white;border-top-color: white;padding-top: 7px;">
+                            <i class="glyphicon glyphicon-refresh gridFilterIcon button-success"
+                                style="color: green;margin-top: 5px;" title="{{ 'Menu.Refresh' | translate}}"
+                                ng-click="refresh()"></i>
+                        </li>
+
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+    <grid-filter filter-data="filterData" ng-if="showFilterPanel" style="padding-right: 0%; "> </grid-filter>
+
+    <section class="tile bgTileColor" fullscreen="isFullscreen03">
+        <div class="row" style="display: flex;">
+            <div class="col-md-12" style="font-size: 15px;">
+                <div class="panel panel-info" style="height: auto;">
+                    <div class="panel-heading" style="height: 43px;">
+                        <span>{{ 'Menu.Graph'|translate }}</span>
+                        <button id="durationButtonID" ng-click="showDurationCurve()" style="background-color: #E1ECF4;color:#337ab7 
+                            " type="button" class="btn btn-primary graphButtonStyle"><i style="float: left;
+                            padding-right: 5px;padding-top: 5px;" class="fa fa-area-chart"></i>{{ 'Menu.DurationCurve'
+                            |
+                            translate }}</button>
+
+                        <button id="valueButtonID" ng-click="showValueCurve()"
+                            style="color:white;background-color: #337ab7;" type="button "
+                            class="btn btn-primary graphButtonStyle"><i style="padding-right: 5px;padding-top: 5px;"
+                                class="fa fa-line-chart"></i>{{ 'Menu.ProfileCurve' | translate
+                            }}</button>
+                    </div>
+                    <div class="panel-body" ng-if="hideShowValue.isGraphAvailable">
+
+                        <div ng-if="hideShowValue.showValueGraph">
+                            <hc-line-chart-with-ticks style="height: 400px;width:100%;display: block;"
+                                data="lineChartData">
+                            </hc-line-chart-with-ticks>
+                        </div>
+                        <div ng-if="hideShowValue.showDurationGraph">
+                            <hc-line-chart-with-ticks style="height: 400px;width:100%;display: block;"
+                                data="durtionCurveData">
+                            </hc-line-chart-with-ticks>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="font-size: 15px;">
+                <div class="panel panel-info" style="height: auto;">
+                    <div class="panel-heading">{{ 'Menu.Data'|translate }}</div>
+                    <div class="panel-body" style="padding: 1px;">
+                        <form class="form-inline">
+                            <hes-data-grid ng-hide="hideShowValue.showLoadingCurve" data="gridData"
+                                perform-action="performAction" on-link-action="onLinkAction"></hes-data-grid>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<style>
+    b,
+    .textAlignVertical {
+        vertical-align: -webkit-baseline-middle;
+    }
+
+    .reAlign {
+        margin-top: 0px;
+    }
+
+    .spacingTop {
+        margin-top: 10px;
+    }
+
+    table {
+        font-size: 15px;
+    }
+
+    .displayInline {
+        display: inline;
+    }
+
+    .paramMarginfLeft {
+        margin-left: 50px;
+    }
+
+    .customGridExport {
+        margin-bottom: 5px !important;
+        margin-top: 5px !important;
+    }
+
+    .reAlign {
+        padding-right: 36px !important;
+        margin-top: -45px !important;
+    }
+
+   
+</style>
+<style>
+    .table tbody tr td:nth-child(1),
+    .table tbody tr td:nth-child(3),
+    .table tbody tr td:nth-child(4),
+    .table tbody tr td:nth-child(5),
+    .table tbody tr td:nth-child(6) {
+        text-align: right !important;
+    }
+
+    .table tbody tr td:nth-child(2) {
+        text-align: center !important;
+    }
+
+    th {
+        text-align: center;
+    }
+</style>
+<style>
+    .material-switch>label::after {
+        height: 20px !important;
+        margin-top: -4px !important;
+        position: absolute;
+        width: 20px !important;
+    }
+
+    .material-switch>label::before {
+        height: 12px !important;
+        margin-top: -4px !important;
+        width: 40px !important;
+    }
+
+    .graphButtonStyle {
+        cursor: pointer !important;
+        float: right !important;
+        margin-right: 5px !important;
+        margin-top: -8px !important;
+        height: 38px !important;
+        font-size: 20px !important;
+    }
+
+    .material-switch>label::after {
+        background: #b2b2b2 !important;
+    }
+    material-switch>label {
+        cursor: not-allowed !important;
+    }
+</style>

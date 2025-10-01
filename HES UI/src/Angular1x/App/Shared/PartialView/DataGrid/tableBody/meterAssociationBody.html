@@ -1,0 +1,47 @@
+<tr ng-if="vm.data.rowData.length > 0" class=" {{record.rowClass}}" ng-repeat="record in vm.data.rowData | filter : vm.search() | orderBy:vm.propertyName:vm.reverse| startFrom:currentPage*pageSize
+    | limitTo:pageSize track by $index ">
+    <td ng-if="vm.data.isShowSrNo " style="text-align: right;" class="verticalAlign"> {{vm.srNumber+$index}}</td>
+
+    <td class="verticalAlign" style="text-align: center;">{{record[vm.data.headingData[0].name]}}</td>
+    <td>
+        <div class="text-nowrap">{{FormatData(record[vm.data.headingData[1].name],'date')}}</div>
+        <div class="small text-medium-emphasis text-nowrap">
+            <span ng-if="record[vm.data.headingData[2].name]">{{record[vm.data.headingData[2].name]}} kWh</span>
+            <span ng-if="record[vm.data.headingData[3].name]"> | {{record[vm.data.headingData[3].name]}} kVAh</span>
+        </div>
+    </td>
+    <td>
+        <div class="text-nowrap">{{FormatData(record[vm.data.headingData[4].name],'date')}}</div>
+        <div class="small text-medium-emphasis text-nowrap">
+            <span ng-if="record[vm.data.headingData[5].name]">{{record[vm.data.headingData[5].name]}} kWh</span>
+            <span ng-if="record[vm.data.headingData[6].name]"> | {{record[vm.data.headingData[6].name]}} kVAh</span>
+        </div>
+    </td>
+
+    <td style="vertical-align: middle;">{{record[vm.data.headingData[7].name]}}</td>
+</tr>
+
+
+
+
+<tr ng-if="vm.data.rowData.length==0">
+    <td></td>
+    <td style=" vertical-align: middle; ">{{'Menu.NoRecordFound'|translate }}</td>
+    <td></td>
+    <td></td>
+
+</tr>
+<style>
+    td {
+        text-align: center;
+    }
+
+    .verticalAlign {
+        vertical-align: middle !important;
+    }
+
+    .text-medium-emphasis {
+        color: rgba(44, 56, 74, .681) !important;
+        font-weight: 700px;
+    }
+</style>
