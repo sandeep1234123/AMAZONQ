@@ -12,15 +12,71 @@
                     <h4>User Information</h4>
                 </div>
                 <div class="card-body">
-                    <p><strong>Name:</strong> @ViewBag.UserName</p>
-                    <p><strong>Email:</strong> @ViewBag.Email</p>
-                    <p><strong>User ID:</strong> @ViewBag.UserId</p>
-                    <p><strong>Roles:</strong> 
-                        @if (ViewBag.Roles != null)
-                        {
-                            @string.Join(", ", ViewBag.Roles)
-                        }
-                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-user"></i> User Information</h6>
+                            <p><strong>Name:</strong> @ViewBag.UserName</p>
+                            <p><strong>Email:</strong> @ViewBag.Email</p>
+                            <p><strong>User ID:</strong> @ViewBag.UserId</p>
+                            <p><strong>Roles:</strong> 
+                                @if (ViewBag.Roles != null)
+                                {
+                                    <span class="badge bg-primary me-1">@string.Join("</span> <span class='badge bg-primary me-1'>", ViewBag.Roles)</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-shield-alt"></i> Authentication Details</h6>
+                            <p><strong>Method:</strong> 
+                                <span class="badge bg-success">@(ViewBag.AuthMethod ?? "Keycloak SSO")</span>
+                            </p>
+                            <p><strong>Identity Provider:</strong> 
+                                @if (ViewBag.IdentityProvider?.ToString().Contains("ldap") == true || ViewBag.IdentityProvider?.ToString().Contains("ad") == true)
+                                {
+                                    <span class="badge bg-info"><i class="fas fa-building"></i> Active Directory</span>
+                                }
+                                else if (ViewBag.IdentityProvider?.ToString().Contains("google") == true)
+                                {
+                                    <span class="badge bg-warning"><i class="fab fa-google"></i> Google</span>
+                                }
+                                else if (ViewBag.IdentityProvider?.ToString().Contains("microsoft") == true)
+                                {
+                                    <span class="badge bg-primary"><i class="fab fa-microsoft"></i> Microsoft 365</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@(ViewBag.IdentityProvider ?? "Keycloak")</span>
+                                }
+                            </p>
+                            <p><strong>SSO Status:</strong> 
+                                @if (ViewBag.SSOActive == true)
+                                {
+                                    <span class="badge bg-success"><i class="fas fa-check-circle"></i> Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning"><i class="fas fa-exclamation-triangle"></i> Inactive</span>
+                                }
+                            </p>
+                            <p><strong>Session:</strong> 
+                                <span class="badge bg-info">Cross-App Enabled</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="alert alert-success">
+                        <h6><i class="fas fa-info-circle"></i> Authentication Flow Completed</h6>
+                        <ol class="mb-0 small">
+                            <li>✅ User submitted credentials to Keycloak</li>
+                            <li>✅ Keycloak redirected to Identity Provider (IDP)</li>
+                            <li>✅ IDP authenticated user successfully</li>
+                            <li>✅ Keycloak validated authentication conditions</li>
+                            <li>✅ User returned to Application 3 with valid session</li>
+                            <li>✅ SSO enabled across all authorized applications</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
         </div>

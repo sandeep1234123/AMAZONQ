@@ -28,8 +28,11 @@
                 
                 <hr>
                 <div class="text-center">
-                    <p>Or login with SSO:</p>
-                    <a href="/Home/Index" class="btn btn-outline-primary">SSO Login via Keycloak</a>
+                    <p><strong>Recommended:</strong> Use Active Directory</p>
+                    <a asp-action="LoginWithAD" class="btn btn-success w-100 mb-2">
+                        <i class="fas fa-building"></i> Login with Active Directory
+                    </a>
+                    <small class="text-muted">Uses your company credentials via Keycloak SSO</small>
                 </div>
             </div>
         </div>

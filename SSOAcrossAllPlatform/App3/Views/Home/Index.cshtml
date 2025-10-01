@@ -4,14 +4,164 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Application 3</h1>
-    <p>Please login to access the application features.</p>
+    <p class="lead">Secure access with Active Directory integration</p>
+    
+    <!-- SSO Status Indicator -->
+    <div class="mb-3">
+        @if (ViewBag.SSOActive == true)
+        {
+            <span class="badge bg-success fs-6">
+                <i class="fas fa-check-circle"></i> SSO Active - Cross-app authentication enabled
+            </span>
+        }
+        else if (ViewBag.KeycloakAvailable == true)
+        {
+            <span class="badge bg-warning fs-6">
+                <i class="fas fa-clock"></i> SSO Available - No active session
+            </span>
+        }
+        else
+        {
+            <span class="badge bg-danger fs-6">
+                <i class="fas fa-times-circle"></i> SSO Unavailable - Keycloak offline
+            </span>
+        }
+    </div>
     
     @if (!string.IsNullOrEmpty(ViewBag.Error))
     {
-        <div class="alert alert-danger">@ViewBag.Error</div>
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i> @ViewBag.Error
+        </div>
     }
     
-    <div class="mt-4">
-        <a asp-action="Login" class="btn btn-primary">Login to Application 3</a>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-shield-alt"></i> Authentication Options</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.SSOActive == true)
+                    {
+                        <!-- SSO is active - show SSO options -->
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> <strong>SSO Session Active!</strong> 
+                            You can access other applications without re-authentication.
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a href="http://localhost:5101" class="btn btn-outline-info btn-lg">
+                                <i class="fas fa-external-link-alt"></i> Go to Application 1
+                            </a>
+                            <a href="http://localhost:5102" class="btn btn-outline-success btn-lg">
+                                <i class="fas fa-external-link-alt"></i> Go to Application 2
+                            </a>
+                            <a href="http://localhost:5000" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-home"></i> Common Login Portal
+                            </a>
+                        </div>
+                    }
+                    else if (ViewBag.KeycloakAvailable == true)
+                    {
+                        <!-- Keycloak available but no SSO - show AD login -->
+                        <div class="alert alert-warning">
+                            <i class="fas fa-key"></i> <strong>Authentication Required</strong> 
+                            Please login with your Active Directory credentials.
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a asp-action="LoginWithAD" class="btn btn-success btn-lg pulse-button">
+                                <i class="fas fa-building"></i> Login with Active Directory
+                            </a>
+                            <div class="small text-muted mt-2">
+                                <strong>Authentication Flow:</strong><br>
+                                1. Keycloak receives your request<br>
+                                2. Redirects to Active Directory (IDP)<br>
+                                3. AD validates your credentials<br>
+                                4. Returns you to App3 with SSO enabled
+                            </div>
+                            <hr>
+                            <a asp-action="Login" class="btn btn-outline-primary">
+                                <i class="fas fa-user"></i> Local Login (Fallback)
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Keycloak unavailable - show local login only -->
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i> <strong>SSO Service Unavailable</strong> 
+                            Active Directory authentication is currently offline. Use local login.
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a asp-action="Login" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user"></i> Local Login
+                            </a>
+                            <button class="btn btn-outline-secondary" onclick="location.reload()">
+                                <i class="fas fa-sync-alt"></i> Retry Connection
+                            </button>
+                        </div>
+                    }
+                    
+                    <div class="mt-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-users"></i> Test Credentials</h6>
+                                <div class="small text-muted">
+                                    <strong>Keycloak Users:</strong><br>
+                                    • <strong>sandeepkumar1464</strong> / Admin_123<br>
+                                    • Email: sandeepkumar1464@gmail.com<br>
+                                    • Roles: app1-user, app2-user, app3-user
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-cog"></i> System Status</h6>
+                                <div class="small">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Keycloak:</span>
+                                        <span class="@(ViewBag.KeycloakAvailable == true ? "text-success" : "text-danger")">
+                                            @(ViewBag.KeycloakAvailable == true ? "Online" : "Offline")
+                                        </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>SSO Session:</span>
+                                        <span class="@(ViewBag.SSOActive == true ? "text-success" : "text-warning")">
+                                            @(ViewBag.SSOActive == true ? "Active" : "None")
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+.pulse-button {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.badge {
+    font-size: 0.9em !important;
+}
+</style>
+
+<script>
+// Auto-refresh status every 30 seconds
+setInterval(function() {
+    if (!@(ViewBag.KeycloakAvailable?.ToString().ToLower() ?? "false")) {
+        console.log('Checking Keycloak status...');
+        // Could add AJAX call to check status without full page reload
+    }
+}, 30000);
+</script>
