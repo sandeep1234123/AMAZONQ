@@ -79,9 +79,64 @@ public class HomeController : Controller
         _logger.LogInformation("Local authentication attempt for user: {Username}", username);
         
         // Local authentication for App3 (fallback when Keycloak unavailable)
-        if (username == "app3user" && password == "App3Pass123")
+        // Accept same users as Keycloak SSO
+        var validCredentials = new Dictionary<string, string>
+        {
+            { "admin", "Admin123!" },
+            { "app3-test", "Test123!" },
+            { "multi-user", "Multi123!" },
+            { "manager", "Manager123!" },
+            { "app3user", "App3Pass123" } // Legacy fallback
+        };
+        
+        if (validCredentials.ContainsKey(username) && validCredentials[username] == password)
         {
             _logger.LogInformation("Local authentication successful for {Username}", username);
+            
+            // Create local authentication claims to simulate SSO user
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, username),
+                new Claim("preferred_username", username),
+                new Claim("sub", Guid.NewGuid().ToString()),
+                new Claim("email", $"{username}@ssoplatform.com")
+            };
+            
+            // Add appropriate roles based on user
+            switch (username)
+            {
+                case "admin":
+                    claims.AddRange(new[] {
+                        new Claim(ClaimTypes.Role, "admin"),
+                        new Claim(ClaimTypes.Role, "app1-user"),
+                        new Claim(ClaimTypes.Role, "app2-user"),
+                        new Claim(ClaimTypes.Role, "app3-user")
+                    });
+                    break;
+                case "app3-test":
+                case "app3user":
+                    claims.Add(new Claim(ClaimTypes.Role, "app3-user"));
+                    break;
+                case "multi-user":
+                    claims.AddRange(new[] {
+                        new Claim(ClaimTypes.Role, "app1-user"),
+                        new Claim(ClaimTypes.Role, "app2-user")
+                    });
+                    break;
+                case "manager":
+                    claims.AddRange(new[] {
+                        new Claim(ClaimTypes.Role, "app1-user"),
+                        new Claim(ClaimTypes.Role, "app2-user"),
+                        new Claim(ClaimTypes.Role, "app3-user")
+                    });
+                    break;
+            }
+            
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            
             return RedirectToAction("Dashboard");
         }
         
@@ -164,7 +219,7 @@ public class HomeController : Controller
         {
             using var httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(5);
-            var response = await httpClient.GetAsync("http://localhost:8080/realms/sso-realm/.well-known/openid-configuration");
+            var response = await httpClient.GetAsync("http://localhost:8081/realms/sso-realm/.well-known/openid-configuration");
             return response.IsSuccessStatusCode;
         }
         catch

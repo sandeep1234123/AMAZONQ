@@ -82,7 +82,7 @@
                             </div>
                             <h6>Keycloak Details</h6>
                             <ul class="list-unstyled small">
-                                <li><strong>Authority:</strong> http://localhost:8080/realms/sso-realm</li>
+                                <li><strong>Authority:</strong> http://localhost:8081/realms/sso-realm</li>
                                 <li><strong>Client ID:</strong> common-login</li>
                                 <li><strong>Token Issuer:</strong> @(User.FindFirst("iss")?.Value ?? "N/A")</li>
                                 <li><strong>Audience:</strong> @(User.FindFirst("aud")?.Value ?? "N/A")</li>
