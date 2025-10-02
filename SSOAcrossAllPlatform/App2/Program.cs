@@ -60,6 +60,15 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("app2-user", "admin"));
 });
 
+// Configure Kestrel server options to fix HTTP 431 error
+builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestHeadersTotalSize = 65536; // 64KB
+    options.Limits.MaxRequestHeaderCount = 200;
+    options.Limits.MaxRequestLineSize = 16384; // 16KB
+    options.Limits.MaxRequestBufferSize = 1048576; // 1MB
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

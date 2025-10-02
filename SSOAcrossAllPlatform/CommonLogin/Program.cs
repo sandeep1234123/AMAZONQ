@@ -79,12 +79,13 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-// Configure Kestrel server options
+// Configure Kestrel server options to fix HTTP 431 error
 builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
 {
-    options.Limits.MaxRequestHeadersTotalSize = 32768; // 32KB
-    options.Limits.MaxRequestHeaderCount = 100;
-    options.Limits.MaxRequestLineSize = 8192;
+    options.Limits.MaxRequestHeadersTotalSize = 65536; // 64KB (increased)
+    options.Limits.MaxRequestHeaderCount = 200; // Increased
+    options.Limits.MaxRequestLineSize = 16384; // 16KB (increased)
+    options.Limits.MaxRequestBufferSize = 1048576; // 1MB
 });
 
 var app = builder.Build();
