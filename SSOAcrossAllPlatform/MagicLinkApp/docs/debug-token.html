@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Magic Link Token</title>
+</head>
+<body>
+    <h2>Token Debug</h2>
+    <script>
+        // Your token from the URL
+        const token = "eyJFbWFpbCI6InNhbmRlZXBrdW1hcjE0NjRAZ21haWwuY29tIiwiVGltZXN0YW1wIjoxNzU5NTEyNzIxLCJSYW5kb20iOiJLRjR3OVVDL2V5TlU4aTdCQ2dQQWhCVUJBdGs2R29nMHNcdTAwMkI3clhcdTAwMkJ0U3NRRT0ifQ==";
+        
+        try {
+            // Decode Base64
+            const decoded = atob(token);
+            console.log("Decoded JSON:", decoded);
+            
+            // Parse JSON
+            const parsed = JSON.parse(decoded);
+            console.log("Parsed object:", parsed);
+            
+            document.body.innerHTML += "<h3>Decoded Token:</h3>";
+            document.body.innerHTML += "<pre>" + JSON.stringify(parsed, null, 2) + "</pre>";
+            
+            // Check timestamp
+            const now = Math.floor(Date.now() / 1000);
+            const tokenTime = parsed.Timestamp;
+            const diff = now - tokenTime;
+            
+            document.body.innerHTML += "<h3>Time Check:</h3>";
+            document.body.innerHTML += "<p>Token timestamp: " + new Date(tokenTime * 1000) + "</p>";
+            document.body.innerHTML += "<p>Current time: " + new Date() + "</p>";
+            document.body.innerHTML += "<p>Difference: " + diff + " seconds</p>";
+            document.body.innerHTML += "<p>Expired: " + (diff > 900 ? "YES" : "NO") + " (15 min = 900 sec)</p>";
+            
+        } catch (e) {
+            console.error("Error decoding token:", e);
+            document.body.innerHTML += "<p style='color: red;'>Error decoding token: " + e.message + "</p>";
+        }
+    </script>
+</body>
+</html>

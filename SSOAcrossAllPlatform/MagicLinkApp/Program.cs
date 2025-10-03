@@ -3,6 +3,17 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel to handle large headers (fix HTTP 431)
+builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestHeadersTotalSize = 65536; // 64KB
+    options.Limits.MaxRequestHeaderCount = 200;
+    options.Limits.MaxRequestLineSize = 16384; // 16KB
+});
+
+// Register services
+builder.Services.AddScoped<MagicLinkApp.Services.MagicLinkTokenService>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

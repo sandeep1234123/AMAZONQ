@@ -1,0 +1,119 @@
+/* Magic Link App Custom Styles */
+
+.magic-link-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.magic-link-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.magic-link-header h1 {
+    color: #2c3e50;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.magic-link-header p {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+}
+
+.magic-icon {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+.form-floating {
+    margin-bottom: 1.5rem;
+}
+
+.btn-magic {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 12px 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-magic:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.alert-magic {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem 1.5rem;
+}
+
+.loading-spinner {
+    display: none;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.magic-link-sent {
+    text-align: center;
+    padding: 2rem;
+}
+
+.magic-link-sent .check-icon {
+    font-size: 4rem;
+    color: #27ae60;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ecf0f1;
+}
+
+.footer-links a {
+    color: #7f8c8d;
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+.footer-links a:hover {
+    color: #3498db;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .magic-link-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .magic-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* Animation for success state */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
