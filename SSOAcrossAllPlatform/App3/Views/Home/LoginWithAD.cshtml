@@ -1,0 +1,143 @@
+@{
+    ViewData["Title"] = "Active Directory Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white text-center">
+                    <h3><i class="fas fa-building me-2"></i>Active Directory Login</h3>
+                    <p class="mb-0">Application 3 - Secure Access</p>
+                </div>
+                <div class="card-body p-4">
+                    @if (!string.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>@ViewBag.Error
+                        </div>
+                    }
+                    
+                    <div class="text-center mb-4">
+                        <i class="fas fa-shield-alt fa-4x text-success mb-3"></i>
+                        <h5>Enter your Active Directory credentials</h5>
+                        <small class="text-muted">Use your company domain account</small>
+                    </div>
+
+                    <form method="post" asp-action="LoginWithAD">
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-user me-2"></i>Username
+                            </label>
+                            <input type="text" class="form-control" name="username" placeholder="Enter your AD username" required>
+                            <small class="text-muted">Without domain (e.g., john.doe)</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-lock me-2"></i>Password
+                            </label>
+                            <input type="password" class="form-control" name="password" placeholder="Enter your AD password" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-globe me-2"></i>Domain
+                            </label>
+                            <select class="form-control" name="domain">
+                                <option value="COMPANY">COMPANY</option>
+                                <option value="CORP">CORP</option>
+                                <option value="LOCAL">LOCAL</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Authenticate with AD
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center">
+                        <div class="divider my-3">
+                            <span class="text-muted">OR</span>
+                        </div>
+                        
+                        <a href="@Url.Action("Login")" class="btn btn-outline-primary">
+                            <i class="fas fa-user me-2"></i>Use Local Login
+                        </a>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <div class="card bg-light">
+                            <div class="card-body p-3">
+                                <h6 class="card-title"><i class="fas fa-info-circle me-2"></i>Test Credentials</h6>
+                                <div class="small">
+                                    <strong>AD Users:</strong><br>
+                                    • ad / AD123!<br>
+                                    • admin / Admin123!<br>
+                                    • manager / Manager123!<br>
+                                    <strong>Domain:</strong> COMPANY
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer text-center bg-light">
+                    <small class="text-muted">
+                        <a href="@Url.Action("Index")" class="text-decoration-none me-3">
+                            <i class="fas fa-home me-1"></i>Back to Home
+                        </a>
+                        <a href="http://localhost:5000" class="text-decoration-none">
+                            <i class="fas fa-link me-1"></i>SSO Portal
+                        </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        min-height: 100vh;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .divider {
+        position: relative;
+    }
+    
+    .divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #dee2e6;
+    }
+    
+    .divider span {
+        background: white;
+        padding: 0 15px;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+</style>

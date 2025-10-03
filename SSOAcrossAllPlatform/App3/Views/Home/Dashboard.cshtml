@@ -19,9 +19,9 @@
                             <p><strong>Email:</strong> @ViewBag.Email</p>
                             <p><strong>User ID:</strong> @ViewBag.UserId</p>
                             <p><strong>Roles:</strong> 
-                                @if (ViewBag.Roles != null)
+                                @if (ViewBag.UserRoles != null)
                                 {
-                                    <span class="badge bg-primary me-1">@string.Join("</span> <span class='badge bg-primary me-1'>", ViewBag.Roles)</span>
+                                    <span class="badge bg-primary me-1">@string.Join("</span> <span class='badge bg-primary me-1'>", ViewBag.UserRoles)</span>
                                 }
                             </p>
                         </div>
@@ -89,8 +89,15 @@
                 <div class="card-body">
                     <a asp-action="Features" class="btn btn-primary mb-2 w-100">App3 Features</a>
                     <a href="http://localhost:5000" class="btn btn-outline-secondary mb-2 w-100">Common Login</a>
-                    <a href="http://localhost:5101" class="btn btn-outline-info mb-2 w-100">Go to App1</a>
-                    <a href="http://localhost:5102" class="btn btn-outline-success mb-2 w-100">Go to App2</a>
+                    
+                    @if (ViewBag.Applications != null)
+                    {
+                        <h6 class="mt-3">Authorized Applications:</h6>
+                        @foreach (var app in ViewBag.Applications)
+                        {
+                            <a href="@app.Url" class="btn btn-outline-info mb-2 w-100">@app.DisplayName</a>
+                        }
+                    }
                 </div>
             </div>
         </div>

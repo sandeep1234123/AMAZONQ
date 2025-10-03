@@ -33,6 +33,26 @@
         <div class="alert alert-warning">
             <i class="fas fa-exclamation-triangle"></i> @ViewBag.Error
         </div>
+        
+        @if (ViewBag.Error.ToString().Contains("sso_not_active"))
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> <strong>SSO is not active.</strong> Please use Active Directory login.
+            </div>
+            
+            <div class="text-center mb-4">
+                <a href="@Url.Action("LoginWithAD")" class="btn btn-success btn-lg pulse-button">
+                    <i class="fas fa-building me-2"></i>Login with Active Directory
+                </a>
+                <div class="small text-muted mt-2">
+                    <strong>Direct AD Authentication:</strong><br>
+                    1. App3 receives your AD credentials<br>
+                    2. Validates directly with Active Directory<br>
+                    3. Creates local authentication session<br>
+                    4. Grants access to App3 Dashboard
+                </div>
+            </div>
+        }
     }
     
     <div class="row justify-content-center mt-4">
@@ -69,15 +89,15 @@
                             Please login with your Active Directory credentials.
                         </div>
                         <div class="d-grid gap-2">
-                            <a asp-action="LoginWithAD" class="btn btn-success btn-lg pulse-button">
+                            <a href="/Home/LoginWithAD" class="btn btn-success btn-lg pulse-button">
                                 <i class="fas fa-building"></i> Login with Active Directory
                             </a>
                             <div class="small text-muted mt-2">
                                 <strong>Authentication Flow:</strong><br>
-                                1. Keycloak receives your request<br>
-                                2. Redirects to Active Directory (IDP)<br>
-                                3. AD validates your credentials<br>
-                                4. Returns you to App3 with SSO enabled
+                                1. App3 receives your AD credentials<br>
+                                2. Validates directly with Active Directory<br>
+                                3. Creates local authentication session<br>
+                                4. Grants access to App3 Dashboard
                             </div>
                             <hr>
                             <a asp-action="Login" class="btn btn-outline-primary">

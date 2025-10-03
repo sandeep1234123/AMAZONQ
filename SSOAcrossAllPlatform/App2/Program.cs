@@ -22,7 +22,7 @@ builder.Services.AddAuthentication(options =>
     options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     options.ExpireTimeSpan = TimeSpan.FromHours(8);
     options.SlidingExpiration = true;
-    options.LoginPath = "/Home/Login";
+    options.LoginPath = "/Home/Index";
 })
 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
@@ -39,6 +39,9 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = true;
     
+    options.TokenValidationParameters.NameClaimType = "preferred_username";
+    options.TokenValidationParameters.RoleClaimType = "realm_access.roles";
+    
     options.Events = new OpenIdConnectEvents
     {
         OnRemoteFailure = context =>
@@ -50,6 +53,26 @@ builder.Services.AddAuthentication(options =>
                 context.HandleResponse();
             }
             return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            var identity = context.Principal.Identity as System.Security.Claims.ClaimsIdentity;
+            
+            // Extract roles from realm_access
+            var realmAccess = context.Principal.FindFirst("realm_access")?.Value;
+            if (!string.IsNullOrEmpty(realmAccess))
+            {
+                var realmData = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(realmAccess);
+                if (realmData.TryGetProperty("roles", out var rolesElement))
+                {
+                    foreach (var role in rolesElement.EnumerateArray())
+                    {
+                        identity.AddClaim(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, role.GetString()));
+                    }
+                }
+            }
+            
+            return Task.CompletedTask;
         }
     };
 });
@@ -57,7 +80,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("App2Access", policy =>
-        policy.RequireRole("app2-user", "admin"));
+        policy.RequireRole("app2-user", "admin", "manager", "multi-user"));
 });
 
 // Configure Kestrel server options to fix HTTP 431 error
@@ -89,5 +112,27 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Add route for authenticated users to go directly to Dashboard
+app.MapGet("/", async (HttpContext context) =>
+{
+    if (context.User.Identity?.IsAuthenticated == true)
+    {
+        context.Response.Redirect("/Home/Dashboard");
+    }
+    else
+    {
+        context.Response.Redirect("/Home/Index");
+    }
+    await Task.CompletedTask;
+});
+
+// Ensure Keycloak config values are present
+if (string.IsNullOrEmpty(keycloakConfig["Authority"]) ||
+    string.IsNullOrEmpty(keycloakConfig["ClientId"]) ||
+    string.IsNullOrEmpty(keycloakConfig["ClientSecret"]))
+{
+    throw new Exception("Keycloak configuration is missing required values.");
+}
 
 app.Run();

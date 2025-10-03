@@ -18,7 +18,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
 {
-    options.Cookie.Name = "SSOPlatform.Auth";
+    options.Cookie.Name = "CommonLogin.Auth";
     options.Cookie.SameSite = SameSiteMode.Lax;
     options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     options.Cookie.HttpOnly = true;
@@ -43,24 +43,42 @@ builder.Services.AddAuthentication(options =>
     options.SignedOutRedirectUri = "http://localhost:5000";
     options.SignedOutCallbackPath = "/signout-callback-oidc";
     
+    options.TokenValidationParameters.NameClaimType = "preferred_username";
+    options.TokenValidationParameters.RoleClaimType = "realm_access.roles";
+    
     options.Events = new OpenIdConnectEvents
     {
         OnTokenValidated = context =>
         {
-            // Add custom claims processing if needed
+            var identity = context.Principal.Identity as System.Security.Claims.ClaimsIdentity;
+            
+            // Extract roles from realm_access
+            var realmAccess = context.Principal.FindFirst("realm_access")?.Value;
+            if (!string.IsNullOrEmpty(realmAccess))
+            {
+                var realmData = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(realmAccess);
+                if (realmData.TryGetProperty("roles", out var rolesElement))
+                {
+                    foreach (var role in rolesElement.EnumerateArray())
+                    {
+                        identity.AddClaim(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, role.GetString()));
+                    }
+                }
+            }
+            
             return Task.CompletedTask;
         },
         OnAuthenticationFailed = context =>
         {
             // Clear any existing authentication cookies
-            context.Response.Cookies.Delete("SSOPlatform.Auth");
+            context.Response.Cookies.Delete("SSO.Auth");
             context.Response.Redirect("/Home/Index?error=auth_failed");
             context.HandleResponse();
             return Task.CompletedTask;
         },
         OnRemoteFailure = context =>
         {
-            context.Response.Cookies.Delete("SSOPlatform.Auth");
+            context.Response.Cookies.Delete("SSO.Auth");
             context.Response.Redirect("/Home/Index?error=remote_failure");
             context.HandleResponse();
             return Task.CompletedTask;

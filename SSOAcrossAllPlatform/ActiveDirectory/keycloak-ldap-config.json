@@ -1,0 +1,76 @@
+{
+  "ldap-configuration": {
+    "displayName": "Active Directory",
+    "priority": 0,
+    "importEnabled": true,
+    "editMode": "READ_ONLY",
+    "syncRegistrations": false,
+    "vendor": "ad",
+    "usernameLDAPAttribute": "sAMAccountName",
+    "rdnLDAPAttribute": "cn",
+    "uuidLDAPAttribute": "objectGUID",
+    "userObjectClasses": "person, organizationalPerson, user",
+    "connectionUrl": "ldap://your-ad-server:389",
+    "usersDn": "CN=Users,DC=yourdomain,DC=com",
+    "bindType": "simple",
+    "bindDn": "CN=service-account,CN=Users,DC=yourdomain,DC=com",
+    "bindCredential": "your-service-account-password",
+    "searchScope": "2",
+    "validatePasswordPolicy": false,
+    "trustEmail": false,
+    "useTruststoreSpi": "ldapsOnly",
+    "connectionPooling": true,
+    "connectionTimeout": "10000",
+    "readTimeout": "10000",
+    "pagination": true
+  },
+  "attribute-mappers": [
+    {
+      "name": "email",
+      "providerId": "user-attribute-ldap-mapper",
+      "config": {
+        "ldap.attribute": "mail",
+        "user.model.attribute": "email",
+        "read.only": "true",
+        "always.read.value.from.ldap": "false"
+      }
+    },
+    {
+      "name": "first name",
+      "providerId": "user-attribute-ldap-mapper",
+      "config": {
+        "ldap.attribute": "givenName",
+        "user.model.attribute": "firstName",
+        "read.only": "true",
+        "always.read.value.from.ldap": "false"
+      }
+    },
+    {
+      "name": "last name",
+      "providerId": "user-attribute-ldap-mapper",
+      "config": {
+        "ldap.attribute": "sn",
+        "user.model.attribute": "lastName",
+        "read.only": "true",
+        "always.read.value.from.ldap": "false"
+      }
+    },
+    {
+      "name": "group-mapper",
+      "providerId": "group-ldap-mapper",
+      "config": {
+        "groups.dn": "CN=Groups,DC=yourdomain,DC=com",
+        "group.name.ldap.attribute": "cn",
+        "group.object.classes": "group",
+        "preserve.group.inheritance": "true",
+        "membership.ldap.attribute": "member",
+        "membership.attribute.type": "DN",
+        "groups.ldap.filter": "",
+        "mode": "READ_ONLY",
+        "user.roles.retrieve.strategy": "LOAD_GROUPS_BY_MEMBER_ATTRIBUTE",
+        "mapped.group.attributes": "",
+        "drop.non.existing.groups.during.sync": "false"
+      }
+    }
+  ]
+}

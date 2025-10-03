@@ -36,7 +36,7 @@
                                     <ul class="list-unstyled mb-0">
                                         <li><strong>Name:</strong> @ViewBag.UserName</li>
                                         <li><strong>Email:</strong> @ViewBag.Email</li>
-                                        <li><strong>Roles:</strong> @string.Join(", ", (List<string>)ViewBag.Roles)</li>
+                                        <li><strong>Roles:</strong> @(ViewBag.UserRoles != null ? string.Join(", ", (List<string>)ViewBag.UserRoles) : "No roles")</li>
                                         <li><strong>Application:</strong> @ViewBag.AppName</li>
                                     </ul>
                                 </div>
