@@ -168,7 +168,7 @@ public class HomeController : Controller
     private async Task<bool> IsValidUser(string email)
     {
         // In production, check against Keycloak API
-        // For demo, accept any email with @gmail.com
+        // For demo, accept any email with @gmail.com or @company.com
         return email.Contains("@gmail.com") || email.Contains("@company.com");
     }
 
