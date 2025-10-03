@@ -1,0 +1,140 @@
+@{
+    ViewData["Title"] = "Magic Link Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4><i class="fas fa-magic"></i> Magic Link App - Dashboard</h4>
+                    <p class="mb-0">Passwordless Authentication Successful</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-user"></i> User Information</h5>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Name:</strong></td>
+                                    <td>@ViewBag.UserName</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email:</strong></td>
+                                    <td>@ViewBag.Email</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>User ID:</strong></td>
+                                    <td><code>@ViewBag.UserId</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Roles:</strong></td>
+                                    <td>
+                                        @if (ViewBag.Roles != null && ((List<string>)ViewBag.Roles).Any())
+                                        {
+                                            @foreach (var role in (List<string>)ViewBag.Roles)
+                                            {
+                                                <span class="badge bg-primary me-1">@role</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No roles assigned</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-shield-alt"></i> Authentication Details</h5>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Method:</strong></td>
+                                    <td><span class="badge bg-success">@ViewBag.AuthMethod</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Provider:</strong></td>
+                                    <td><span class="badge bg-info">Keycloak SSO</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Session:</strong></td>
+                                    <td><span class="badge bg-warning">Cross-App Enabled</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Security:</strong></td>
+                                    <td><span class="badge bg-secondary">Passwordless</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-info-circle"></i> Magic Link Authentication Flow Completed</h6>
+                        <ol class="mb-0 small">
+                            <li>✅ User requested Magic Link via email</li>
+                            <li>✅ Secure token generated with 15-minute expiry</li>
+                            <li>✅ Magic Link sent to registered email address</li>
+                            <li>✅ User clicked Magic Link for authentication</li>
+                            <li>✅ Keycloak validated token and authenticated user</li>
+                            <li>✅ SSO session established across all applications</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-apps"></i> SSO Application Access</h5>
+                </div>
+                <div class="card-body">
+                    <p>With Magic Link authentication, you now have SSO access to:</p>
+                    <div class="d-grid gap-2">
+                        <a href="http://localhost:5000" class="btn btn-outline-secondary">
+                            <i class="fas fa-home"></i> Common Login Portal
+                        </a>
+                        <a href="http://localhost:5101" class="btn btn-outline-info">
+                            <i class="fas fa-external-link-alt"></i> Application 1
+                        </a>
+                        <a href="http://localhost:5102" class="btn btn-outline-success">
+                            <i class="fas fa-external-link-alt"></i> Application 2
+                        </a>
+                        <a href="http://localhost:5103" class="btn btn-outline-warning">
+                            <i class="fas fa-external-link-alt"></i> Application 3
+                        </a>
+                    </div>
+                    <small class="text-muted mt-2 d-block">
+                        No re-authentication required for these applications.
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-cog"></i> Account Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" onclick="location.reload()">
+                            <i class="fas fa-sync-alt"></i> Refresh Session
+                        </button>
+                        <a href="/" class="btn btn-outline-secondary">
+                            <i class="fas fa-magic"></i> Send New Magic Link
+                        </a>
+                        <a asp-action="Logout" class="btn btn-outline-danger">
+                            <i class="fas fa-sign-out-alt"></i> Logout from All Apps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">

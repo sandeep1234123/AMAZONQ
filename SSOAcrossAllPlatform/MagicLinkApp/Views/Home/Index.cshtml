@@ -1,0 +1,128 @@
+@{
+    ViewData["Title"] = "Magic Link Authentication";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3><i class="fas fa-magic"></i> Magic Link Login</h3>
+                    <p class="mb-0">Passwordless Authentication</p>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(ViewBag.Success))
+                    {
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle"></i> @ViewBag.Success
+                            <hr>
+                            <small class="text-muted">
+                                <strong>For Demo:</strong> Check the console/logs for the Magic Link URL since email is simulated.
+                            </small>
+                        </div>
+                    }
+                    
+                    @if (!string.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i> @ViewBag.Error
+                        </div>
+                    }
+                    
+                    @if (string.IsNullOrEmpty(ViewBag.Success))
+                    {
+                        <form asp-action="SendMagicLink" method="post">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">
+                                    <i class="fas fa-envelope"></i> Email Address
+                                </label>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       placeholder="Enter your email address" required 
+                                       value="sandeepkumar1464@gmail.com">
+                                <div class="form-text">
+                                    We'll send you a secure Magic Link to login without a password.
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-paper-plane"></i> Send Magic Link
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <hr>
+                        
+                        <div class="text-center">
+                            <h6><i class="fas fa-info-circle"></i> How Magic Link Works</h6>
+                            <ol class="text-start small text-muted">
+                                <li>Enter your email address</li>
+                                <li>Receive secure Magic Link via email</li>
+                                <li>Click the link to authenticate via Keycloak</li>
+                                <li>Access application with SSO enabled</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <h6><i class="fas fa-users"></i> Test Users</h6>
+                            <div class="small text-muted">
+                                • sandeepkumar1464@gmail.com<br>
+                                • Any @gmail.com or @company.com email
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center">
+                            <a href="/" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left"></i> Send Another Magic Link
+                            </a>
+                        </div>
+                    }
+                </div>
+                <div class="card-footer text-center text-muted">
+                    <small>
+                        <i class="fas fa-shield-alt"></i> Secured by Keycloak SSO
+                    </small>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <h6>Access Other Applications</h6>
+                <div class="btn-group" role="group">
+                    <a href="http://localhost:5000" class="btn btn-outline-secondary btn-sm">Common Login</a>
+                    <a href="http://localhost:5101" class="btn btn-outline-info btn-sm">App1</a>
+                    <a href="http://localhost:5102" class="btn btn-outline-success btn-sm">App2</a>
+                    <a href="http://localhost:5103" class="btn btn-outline-warning btn-sm">App3</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #004085);
+}
+
+.alert {
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+</style>
