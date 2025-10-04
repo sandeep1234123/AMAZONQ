@@ -30,11 +30,11 @@
                                 <tr>
                                     <td><strong>Roles:</strong></td>
                                     <td>
-                                        @if (ViewBag.Roles != null && ((List<string>)ViewBag.Roles).Any())
+                                        @if (ViewBag.Roles != null && ((IEnumerable<string>)ViewBag.Roles).Any())
                                         {
-                                            @foreach (var role in (List<string>)ViewBag.Roles)
+                                            foreach (var role in (IEnumerable<string>)ViewBag.Roles)
                                             {
-                                                <span class="badge bg-primary me-1">@role</span>
+                                                <p>@role</p>
                                             }
                                         }
                                         else
