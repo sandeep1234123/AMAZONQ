@@ -11,9 +11,6 @@ builder.Services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServe
     options.Limits.MaxRequestLineSize = 16384; // 16KB
 });
 
-// Register services
-builder.Services.AddScoped<MagicLinkApp.Services.MagicLinkTokenService>();
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

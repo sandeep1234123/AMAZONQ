@@ -179,7 +179,7 @@ Click: Test connection
   "email": "sandeepkumar1464@gmail.com",
   "preferred_username": "magictest",
   "realm_access": {
-    "roles": ["magic-user", "app-user"]
+    "roles": ["magic-user"]
   }
 }
 ```
